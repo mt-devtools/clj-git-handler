@@ -61,7 +61,15 @@
 ```
 
 ```
+@example
+(ignore! "my-file.ext" "My ignored files")
+=>
+"\n# My ignored files\nmy-file.ext\n"
+```
+
+```
 @return (string)
+Returns with the updated .gitignore file's content.
 ```
 
 <details>
@@ -77,18 +85,18 @@
         (letfn [(block-exists?    [block-name] (string/contains-part? gitignore (str "# "block-name)))
                 (write-gitignore! [gitignore]  (println (str "git.api adding pattern to .gitignore: \""pattern"\""))
                                                (io/write-file! ".gitignore" gitignore {:create? true})
-                                               (return gitignore)
-                    (cond (ignored? pattern)
-                          (return gitignore)
-                          (block-exists? block-name)
-                          (let [gitignore (str (string/to-first-occurence gitignore (str "# "block-name))
-                                               (str "\n"pattern)
-                                               (string/after-first-occurence gitignore (str "# "block-name)))]
-                               (write-gitignore! gitignore))
-                          :else
-                          (let [gitignore (str (string/ends-with! gitignore "\n")
-                                               (str "\n# "block-name"\n"pattern"\n"))]
-                               (write-gitignore! gitignore))))]))))
+                                               (return gitignore))]
+               (cond (ignored? pattern)
+                     (return gitignore)
+                     (block-exists? block-name)
+                     (let [gitignore (str (string/to-first-occurence gitignore (str "# "block-name))
+                                          (str "\n"pattern)
+                                          (string/after-first-occurence gitignore (str "# "block-name)))]
+                          (write-gitignore! gitignore))
+                     :else
+                     (let [gitignore (str (string/ends-with! gitignore "\n")
+                                          (str "\n# "block-name"\n"pattern"\n"))]
+                          (write-gitignore! gitignore)))))))
 ```
 
 </details>

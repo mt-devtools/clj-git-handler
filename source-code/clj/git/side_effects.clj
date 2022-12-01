@@ -37,7 +37,13 @@
   ; @usage
   ; (ignore! "my-file.ext" "My ignored files")
   ;
+  ; @example
+  ; (ignore! "my-file.ext" "My ignored files")
+  ; =>
+  ; "\n# My ignored files\nmy-file.ext\n"
+  ;
   ; @return (string)
+  ; Returns with the updated .gitignore file's content.
   ([pattern]
    (ignore! pattern "git-api"))
 
