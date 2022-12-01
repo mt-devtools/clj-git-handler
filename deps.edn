@@ -3,4 +3,4 @@
  :deps  {bithandshake/cljc-fruits  {:git/url "https://github.com/bithandshake/cljc-fruits"
                                     :sha     "3a95da77c8f4c679a7ff51aa083c618e7416f17b"}
          bithandshake/io-api       {:git/url "https://github.com/bithandshake/io-api"
-                                    :sha     "7b471dfd36cc54b2dc7cc2a73bd4b74e6b824cd4"}}}
+                                    :sha     "31b0751188721c6423c25034814213f1320fe063"}}}
