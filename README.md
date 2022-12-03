@@ -21,7 +21,7 @@ Check out the latest commit on the [release branch](https://github.com/bithandsh
 
 ### Documentation
 
-The <strong>git-api</strong> documentation is [available here](documentation/COVER.md).
+The <strong>git-api</strong> functional documentation is [available here](documentation/COVER.md).
 
 ### Changelog
 

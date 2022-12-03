@@ -1,11 +1,11 @@
 
 # <strong>git-api</strong>
 
-<p>Documentation of the <strong>git-api</strong> Clojure / ClojureScript library</p>
+<p>Documentation of the <strong>git-api</strong> Clojure library</p>
 
 <strong>[README](../README.md) > DOCUMENTATION</strong>
 
-### Public namespaces
+### Clojure namespaces
 
 * [git.api](clj/git/API.md) [clj]
 
