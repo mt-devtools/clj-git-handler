@@ -1,8 +1,6 @@
 
 # git-api
 
-...
-
 ### Overview
 
 The <strong>git-api</strong> is a simple Clojure tool for managing Git.
