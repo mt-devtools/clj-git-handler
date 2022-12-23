@@ -15,8 +15,8 @@
 
 ```
 @param (map)(opt) options
- {:filepath (string)(opt)
-   Default: ".gitignore"}
+{:filepath (string)(opt)
+  Default: ".gitignore"}
 ```
 
 ```
@@ -66,10 +66,10 @@
 ```
 @param (string) pattern
 @param (map)(opt) options
- {:block (string)(opt)
-   Default: "git-api"
-  :filepath (string)(opt)
-   Default: ".gitignore"}
+{:group (string)(opt)
+  Default: "git-api"
+ :filepath (string)(opt)
+  Default: ".gitignore"}
 ```
 
 ```
@@ -79,7 +79,7 @@
 
 ```
 @usage
-(ignore! "my-file.ext" {:block "My ignored files"})
+(ignore! "my-file.ext" {:group "My ignored files"})
 ```
 
 ```
@@ -89,7 +89,7 @@
 
 ```
 @example
-(ignore! "my-file.ext" {:block "My ignored files"})
+(ignore! "my-file.ext" {:group "My ignored files"})
 =>
 "\n# My ignored files\nmy-file.ext\n"
 ```
@@ -107,22 +107,22 @@ Returns with the updated .gitignore file's content.
   ([pattern]
    (ignore! pattern {}))
 
-  ([pattern {:keys [block] :or {block "git-api"} :as options}]
+  ([pattern {:keys [group] :or {group "git-api"} :as options}]
    (let [gitignore (get-gitignore options)]
-        (letfn [(block-exists?    [block]     (string/contains-part? gitignore (str "# "block)))
+        (letfn [(group-exists?    [group]     (string/contains-part? gitignore (str "# "group)))
                 (write-gitignore! [gitignore] (println (str "git.api adding pattern to .gitignore: \""pattern"\""))
                                               (io/write-file! ".gitignore" gitignore {:create? true})
                                               (return gitignore))]
                (cond (ignored?      pattern options)
                      (return        gitignore)
-                     (block-exists? block)
-                     (let [gitignore (str (string/to-first-occurence gitignore (str "# "block))
+                     (group-exists? group)
+                     (let [gitignore (str (string/to-first-occurence gitignore (str "# "group))
                                           (str "\n"pattern)
-                                          (string/after-first-occurence gitignore (str "# "block)))]
+                                          (string/after-first-occurence gitignore (str "# "group)))]
                           (write-gitignore! gitignore))
                      :else
                      (let [gitignore (str (string/ends-with! gitignore "\n")
-                                          (str "\n# "block"\n"pattern"\n"))]
+                                          (str "\n# "group"\n"pattern"\n"))]
                           (write-gitignore! gitignore)))))))
 ```
 
@@ -147,8 +147,8 @@ Returns with the updated .gitignore file's content.
 ```
 @param (string) pattern
 @param (map)(opt) options
- {:filepath (string)(opt)
-   Default: ".gitignore"}
+{:filepath (string)(opt)
+  Default: ".gitignore"}
 ```
 
 ```
