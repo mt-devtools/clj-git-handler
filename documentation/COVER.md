@@ -1,8 +1,7 @@
 
-
 # git-api documentation
 
-Documentation of the [git-api](https://github.com/bithandshake-hq/git-api) Clojure library
+Documentation of the [git-api](https://github.com/bithandshake/git-api) Clojure library
 
 ##### [README](../README.md) > DOCUMENTATION
 
