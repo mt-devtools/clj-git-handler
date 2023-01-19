@@ -52,9 +52,11 @@
   ; @param (string) commit-sha
   [options submodule-path commit-sha]
   (let [repository-name (get-in @detector.state/DETECTED-SUBMODULES [submodule-path :repository-name])]
+       (println "Successful pushing from:" submodule-path)
+       (println "Returned commit SHA:" commit-sha)
+       (println "Updating" repository-name "dependency in the following submodules deps.edn files:")
        (doseq [[% _] @detector.state/DETECTED-SUBMODULES]
               (when (reader.helpers/depends-on? % repository-name)
-                    (println "updating" repository-name "in" % "...")
                     (if-let [deps-edn (get-updated-deps-edn options % repository-name commit-sha)]
                             (io/write-file! (str % "/deps.edn") deps-edn)
                             (core.helpers/error-catched (str "Error updating deps.edn of submodule: " %)))))))
@@ -67,12 +69,12 @@
   ; @param (string) submodule-path
   [options submodule-path]
   (println "-------------")
-  (println "updating submodule:" submodule-path "...")
+  (println "Updating submodule:" submodule-path "...")
   (cache-local-changes! options submodule-path)
   (if (updater.helpers/submodule-local-changed? submodule-path)
       (if-let [branch (updater.helpers/get-config-item options submodule-path :branch "main")]
               (if-let [commit-message (updater.helpers/get-next-commit-message options submodule-path branch)]
-                      (do (println "pushing commit:" commit-message "from submodule:" submodule-path " to branch: " branch " ...")
+                      (do (println "Pushing commit:" commit-message "from submodule:" submodule-path "to branch:" branch "...")
                           (let [{:keys [exit] :as dbg} (push-cached-changes! options submodule-path branch commit-message)]
                                (if (= 0 exit)
                                    (if-let [latest-local-commit-sha (updater.helpers/get-latest-local-commit-sha options submodule-path branch)]
@@ -81,7 +83,7 @@
                                    (core.helpers/error-catched (str "Error pushing submodule: " submodule-path " to branch: " branch)
                                                                (str "--" dbg)))))
                       (core.helpers/error-catched (str "Error creating commit message for: " submodule-path))))
-      (println "submodule unchanged:" submodule-path)))
+      (println "Submodule unchanged:" submodule-path)))
 
 (defn update-submodules!
   ; @param (map) options
