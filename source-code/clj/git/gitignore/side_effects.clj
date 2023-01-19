@@ -1,52 +1,19 @@
 
-(ns git.side-effects
-    (:require [candy.api  :refer [return]]
-              [git.config :as config]
-              [io.api     :as io]
-              [string.api :as string]))
+(ns git.gitignore.side-effects
+    (:require [candy.api             :refer [return]]
+              [git.gitignore.config  :as gitignore.config]
+              [git.gitignore.helpers :as gitignore.helpers]
+              [io.api                :as io]
+              [string.api            :as string]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
-
-(defn get-gitignore
-  ; @param (map)(opt) options
-  ; {:filepath (string)(opt)
-  ;   Default: ".gitignore"}
-  ;
-  ; @usage
-  ; (get-gitignore)
-  ;
-  ; @usage
-  ; (get-gitignore {:filepath "my-directory/.gitignore"})
-  ;
-  ; @return (string)
-  ([]
-   (get-gitignore {}))
-
-  ([{:keys [filepath] :or {filepath config/DEFAULT-GITIGNORE-FILEPATH}}]
-   (io/read-file filepath)))
-
-(defn ignored?
-  ; @param (string) pattern
-  ; @param (map)(opt) options
-  ; {:filepath (string)(opt)
-  ;   Default: ".gitignore"}
-  ;
-  ; @usage
-  ; (ignored? "my-file.ext")
-  ;
-  ; @usage
-  ; (ignored? "my-file.ext" {:filepath "my-directory/.gitignore"})
-  ;
-  ; @return (boolean)
-  ([pattern]
-   (ignored? pattern {}))
-
-  ([pattern options]
-   (string/contains-part? (get-gitignore options)
-                          (str "\n"pattern"\n"))))
 
 (defn ignore!
+  ; @description
+  ; Writes the given pattern to the .gitignore file.
+  ; You can specify a group to the added pattern by passing the :group property.
+  ;
   ; @param (string) pattern
   ; @param (map)(opt) options
   ; {:group (string)(opt)
@@ -74,13 +41,13 @@
    (ignore! pattern {}))
 
   ([pattern {:keys [group] :or {group "git-api"} :as options}]
-   (let [gitignore (get-gitignore options)]
+   (let [gitignore (gitignore.helpers/get-gitignore options)]
         (letfn [(group-exists?    [group]     (string/contains-part? gitignore (str "# "group)))
                 (write-gitignore! [gitignore] (println (str "git.api adding pattern to .gitignore: \""pattern"\""))
                                               (io/write-file! ".gitignore" gitignore {:create? true})
                                               (return gitignore))]
-               (cond (ignored?      pattern options)
-                     (return        gitignore)
+               (cond (gitignore.helpers/ignored? pattern options)
+                     (return gitignore)
                      (group-exists? group)
                      (let [gitignore (str (string/to-first-occurence gitignore (str "# "group))
                                           (str "\n"pattern)

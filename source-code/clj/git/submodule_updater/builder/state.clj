@@ -1,8 +1,8 @@
 
-(ns git.config)
+(ns git.submodule-updater.builder.state)
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @constant (string)
-(def DEFAULT-GITIGNORE-FILEPATH ".gitignore")
+; @constant (map)
+(def DEPENDENCY-TREE (atom []))
