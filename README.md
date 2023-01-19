@@ -45,13 +45,13 @@ the `.gitignore` file.
 (ignore! "my-file.txt")
 ```
 
-You can specify where you `.gitignore` file is placed.
+You can specify where is your `.gitignore` file placed.
 
 ```
 (ignore! "my-file.txt" {:filepath "my-directory/.gitignore"})
 ```
 
-You can group your added patterns in the `.gitignore` file.
+You can group the added patterns in the `.gitignore` file.
 
 ```
 (ignore! "my-file.txt" {:group "My ignored files"})
@@ -78,7 +78,7 @@ it takes the returned commit SHA and updates the other submodules's deps.edn fil
 if they depend on the pushed submodule.
 
 By using default options, the function detects submodules in the `submodules` folder,
-pushes the changes to `main` branch and uses timestamps as commit messages.
+pushes changes to `main` branches and uses timestamps as commit messages.
 
 ```
 (update-submodule-dependencies!)
@@ -91,7 +91,7 @@ property.
 (update-submodule-dependencies! {:source-paths ["my-submodules"])
 ```
 
-To set the default branch and commit message generator function of all submodules,
+To set the default branch and commit message generator function for all submodules,
 use the `:default` property.
 
 ```

@@ -42,7 +42,7 @@
           (if-let [current-depended-sha (updater.helpers/get-current-depended-sha submodule-path repository-name)]
                   (do (if (= current-depended-sha commit-sha)
                           (println (str             submodule-path "/deps.edn already updated"))
-                          (println (str "updating " submodule-path "/deps.edn")))
+                          (println (str "Updating " submodule-path "/deps.edn")))
                       (string/replace-part deps-edn current-depended-sha commit-sha))
                   (core.helpers/error-catched (str "Error reading commit SHA of submodule: " submodule-path)))))
 
@@ -54,7 +54,7 @@
   (let [repository-name (get-in @detector.state/DETECTED-SUBMODULES [submodule-path :repository-name])]
        (println "Successful pushing from:" submodule-path)
        (println "Returned commit SHA:" commit-sha)
-       (println "Updating" repository-name "dependency in the following submodules deps.edn files:")
+       (println "Updating" repository-name "dependency in the following submodule deps.edn files:")
        (doseq [[% _] @detector.state/DETECTED-SUBMODULES]
               (when (reader.helpers/depends-on? % repository-name)
                     (if-let [deps-edn (get-updated-deps-edn options % repository-name commit-sha)]
