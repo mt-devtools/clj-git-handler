@@ -220,10 +220,10 @@ Pushes the changed submodules and updates the other submodules' deps.edn
 files with the returned commit SHA.
 You can specify which folders in your project contains submodules,
 by default the function updates submodules in the "/submodules" folder.
-By passing the :default property you can use your own commit message generator
+By using the :default property you can use your own commit message generator
 function and change the default branch, by default the function uses the current
 timestamp as commit messages and the "main" branch to push commits.
-In addition you can specify these settings for each submodule by passing
+In addition you can specify these settings for each submodule by using
 the :config property.
 ```
 
