@@ -91,7 +91,7 @@ property.
 (update-submodule-dependencies! {:source-paths ["my-submodules"])
 ```
 
-To set the default branch and commit message generator function for all submodules,
+To set the default branch or commit message generator function for all submodules,
 use the `:default` property.
 
 ```
