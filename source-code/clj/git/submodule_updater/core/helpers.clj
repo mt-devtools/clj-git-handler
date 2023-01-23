@@ -1,8 +1,8 @@
 
 (ns git.submodule-updater.core.helpers
-    (:require [candy.api                            :refer [return]]
-              [git.submodule-updater.detector.state :as detector.state]
+    (:require [git.submodule-updater.detector.state :as detector.state]
               [io.api                               :as io]
+              [noop.api                             :refer [return]]
               [string.api                           :as string]))
 
 ;; ----------------------------------------------------------------------------

@@ -1,10 +1,10 @@
 
 (ns git.submodule-updater.builder.helpers
-    (:require [candy.api                            :refer [return]]
-              [git.submodule-updater.builder.state  :as builder.state]
+    (:require [git.submodule-updater.builder.state  :as builder.state]
               [git.submodule-updater.core.helpers   :as core.helpers]
               [git.submodule-updater.detector.state :as detector.state]
-              [git.submodule-updater.reader.state   :as reader.state]))
+              [git.submodule-updater.reader.state   :as reader.state]
+              [noop.api                             :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,7 +20,7 @@
 (defn dependency-tree-built?
   ; @return (boolean)
   []
-  ; Checks whether the dependency tree complete or some submodule missing yet
+  ; Checks whether the dependency tree is complete or some submodule missing yet
   (letfn [(f [[submodule-path _]]
              (submodule-added-to-dependency-tree? submodule-path))]
          (every? f @detector.state/DETECTED-SUBMODULES)))

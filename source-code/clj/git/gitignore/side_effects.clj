@@ -1,9 +1,9 @@
 
 (ns git.gitignore.side-effects
-    (:require [candy.api             :refer [return]]
-              [git.gitignore.config  :as gitignore.config]
+    (:require [git.gitignore.config  :as gitignore.config]
               [git.gitignore.helpers :as gitignore.helpers]
               [io.api                :as io]
+              [noop.api              :refer [return]]
               [string.api            :as string]))
 
 ;; ----------------------------------------------------------------------------
