@@ -75,7 +75,7 @@ function detects git submodules in the specified folders and builds a dependency
 After the dependency tree built, the function iterates over the detected submodules
 and pushes the changes to the specified branches. After every successful pushing
 it takes the returned commit SHA and updates the other submodules's deps.edn files
-if they depend on the pushed submodule.
+whit it (if they depend on the pushed submodule).
 
 By using default options, the function detects submodules in the `submodules` folder,
 pushes changes to `main` branches and uses timestamps as commit messages.
