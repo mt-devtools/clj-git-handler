@@ -1,10 +1,10 @@
 
 (ns git.gitignore.side-effects
-    (:require [git.gitignore.config  :as gitignore.config]
-              [git.gitignore.helpers :as gitignore.helpers]
-              [io.api                :as io]
-              [noop.api              :refer [return]]
-              [string.api            :as string]))
+    (:require [git.gitignore.config :as gitignore.config]
+              [git.gitignore.env    :as gitignore.env]
+              [io.api               :as io]
+              [noop.api             :refer [return]]
+              [string.api           :as string]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -41,12 +41,12 @@
    (ignore! pattern {}))
 
   ([pattern {:keys [group] :or {group "git-api"} :as options}]
-   (let [gitignore (gitignore.helpers/get-gitignore options)]
+   (let [gitignore (gitignore.env/get-gitignore options)]
         (letfn [(group-exists?    [group]     (string/contains-part? gitignore (str "# "group)))
                 (write-gitignore! [gitignore] (println (str "git.api adding pattern to .gitignore: \""pattern"\""))
                                               (io/write-file! ".gitignore" gitignore {:create? true})
                                               (return gitignore))]
-               (cond (gitignore.helpers/ignored? pattern options)
+               (cond (gitignore.env/ignored? pattern options)
                      (return gitignore)
                      (group-exists? group)
                      (let [gitignore (str (string/to-first-occurence gitignore (str "# "group))

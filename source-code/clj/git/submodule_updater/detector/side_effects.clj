@@ -1,6 +1,6 @@
 
 (ns git.submodule-updater.detector.side-effects
-    (:require [git.submodule-updater.core.helpers   :as core.helpers]
+    (:require [git.submodule-updater.core.utils     :as core.utils]
               [git.submodule-updater.detector.state :as detector.state]
               [io.api                               :as io]
               [string.api                           :as string]
@@ -38,7 +38,7 @@
                           (when-let [git-url (-> config (string/after-first-occurence  "[remote \"origin\"]" {:return? false})
                                                         (string/after-first-occurence  "url = "              {:return? false})
                                                         (string/before-first-occurence "\n"))]
-                                  (if-let [repository-name (core.helpers/git-url->repository-name git-url)]
+                                  (if-let [repository-name (core.utils/git-url->repository-name git-url)]
                                           (store-detected-submodule! subdirectory-path {:git-url git-url :repository-name repository-name})))))))
 
 (defn detect-submodules!

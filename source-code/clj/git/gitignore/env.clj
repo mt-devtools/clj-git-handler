@@ -1,5 +1,5 @@
 
-(ns git.gitignore.helpers
+(ns git.gitignore.env
     (:require [git.gitignore.config :as gitignore.config]
               [io.api               :as io]
               [string.api           :as string]))

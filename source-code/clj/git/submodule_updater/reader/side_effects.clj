@@ -1,7 +1,7 @@
 
 (ns git.submodule-updater.reader.side-effects
     (:require [git.submodule-updater.detector.state :as detector.state]
-              [git.submodule-updater.reader.helpers :as reader.helpers]
+              [git.submodule-updater.reader.env     :as reader.env]
               [git.submodule-updater.reader.state   :as reader.state]
               [io.api                               :as io]
               [vector.api                           :as vector]))
@@ -33,7 +33,7 @@
   ;    be qualified as an inner dependency and will be stored in the INNER-DEPENDENCIES atom.
   (if-let [{:keys [deps]} (io/read-edn-file (str submodule-path "/deps.edn"))]
           (doseq [[dependency-name {:git/keys [url] :as dependency-props}] deps]
-                 (if (reader.helpers/inner-dependency? url)
+                 (if (reader.env/inner-dependency? url)
                      (store-inner-dependency! submodule-path dependency-name dependency-props)))))
 
 (defn read-submodules!

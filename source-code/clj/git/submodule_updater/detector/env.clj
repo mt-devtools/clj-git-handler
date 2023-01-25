@@ -1,5 +1,5 @@
 
-(ns git.submodule-updater.detector.helpers
+(ns git.submodule-updater.detector.env
     (:require [git.submodule-updater.detector.state :as detector.state]))
 
 ;; ----------------------------------------------------------------------------

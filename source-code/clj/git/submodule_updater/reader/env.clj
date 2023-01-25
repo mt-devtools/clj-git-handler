@@ -1,6 +1,6 @@
 
-(ns git.submodule-updater.reader.helpers
-    (:require [git.submodule-updater.core.helpers   :as core.helpers]
+(ns git.submodule-updater.reader.env
+    (:require [git.submodule-updater.core.utils     :as core.utils]
               [git.submodule-updater.detector.state :as detector.state]
               [git.submodule-updater.reader.state   :as reader.state]))
 
@@ -15,8 +15,8 @@
   ; Takes a git URL and iterates over the previously detected submodules.
   ; If one of the detected submodules has the same URL qualifies it as an inner
   ; dependency.
-  (letfn [(f [[_ %]] (= (core.helpers/git-url->repository-name (:git-url %))
-                        (core.helpers/git-url->repository-name   git-url)))]
+  (letfn [(f [[_ %]] (= (core.utils/git-url->repository-name (:git-url %))
+                        (core.utils/git-url->repository-name   git-url)))]
          (some f @detector.state/DETECTED-SUBMODULES)))
 
 (defn get-submodule-inner-dependencies

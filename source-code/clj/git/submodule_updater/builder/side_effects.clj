@@ -1,10 +1,10 @@
 
 (ns git.submodule-updater.builder.side-effects
-    (:require [git.submodule-updater.builder.helpers :as builder.helpers]
-              [git.submodule-updater.core.helpers    :as core.helpers]
-              [git.submodule-updater.builder.state   :as builder.state]
-              [git.submodule-updater.detector.state  :as detector.state]
-              [vector.api                            :as vector]))
+    (:require [git.submodule-updater.builder.env    :as builder.env]
+              [git.submodule-updater.core.env       :as core.env]
+              [git.submodule-updater.builder.state  :as builder.state]
+              [git.submodule-updater.detector.state :as detector.state]
+              [vector.api                           :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -21,13 +21,13 @@
   ; Builds a dependency tree of inner dependencies in the host project
   ; detected in the specified source directories
   (if (< (or kill-switch 0) 48) ; <- Stops a runaway recursion
-      (if-not (builder.helpers/dependency-tree-built?)
+      (if-not (builder.env/dependency-tree-built?)
               (do (doseq [[submodule-path _] @detector.state/DETECTED-SUBMODULES]
-                         (if-not (builder.helpers/submodule-added-to-dependency-tree? submodule-path)
-                                 (if (builder.helpers/submodule-non-depend? submodule-path)
+                         (if-not (builder.env/submodule-added-to-dependency-tree? submodule-path)
+                                 (if (builder.env/submodule-non-depend? submodule-path)
                                      (swap! builder.state/DEPENDENCY-TREE vector/conj-item [submodule-path]))))
 
                   ; Calls itself recursively ...
                   (build-dependency-tree! options (inc (or kill-switch 0)))))
-      (core.helpers/error-catched "Building dependency tree stopped by kill switch, error while recursing!"
-                                  "Unresolved dependencies:" (builder.helpers/get-unresolved-dependencies))))
+      (core.env/error-catched "Building dependency tree stopped by kill switch, error while recursing!"
+                              "Unresolved dependencies:" (builder.env/get-unresolved-dependencies))))

@@ -1,7 +1,7 @@
 
-(ns git.submodule-updater.builder.helpers
+(ns git.submodule-updater.builder.env
     (:require [git.submodule-updater.builder.state  :as builder.state]
-              [git.submodule-updater.core.helpers   :as core.helpers]
+              [git.submodule-updater.core.env       :as core.env]
               [git.submodule-updater.detector.state :as detector.state]
               [git.submodule-updater.reader.state   :as reader.state]
               [noop.api                             :refer [return]]))
@@ -47,7 +47,7 @@
   ; or all of its inner dependencies are already added to the dependency tree.
   (if-let [dependencies (get @reader.state/INNER-DEPENDENCIES submodule-path)]
           (letfn [(f [[dep-name url sha]]
-                     (-> url core.helpers/git-url->submodule-path submodule-added-to-dependency-tree?))]
+                     (-> url core.env/git-url->submodule-path submodule-added-to-dependency-tree?))]
                  (every? f dependencies))
           (return :submodule-has-no-inner-dependencies)))
 
