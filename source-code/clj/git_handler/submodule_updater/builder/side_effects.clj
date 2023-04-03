@@ -1,10 +1,10 @@
 
-(ns git.submodule-updater.builder.side-effects
-    (:require [git.submodule-updater.builder.env    :as builder.env]
-              [git.submodule-updater.core.env       :as core.env]
-              [git.submodule-updater.builder.state  :as builder.state]
-              [git.submodule-updater.detector.state :as detector.state]
-              [vector.api                           :as vector]))
+(ns git-handler.submodule-updater.builder.side-effects
+    (:require [git-handler.submodule-updater.builder.env    :as builder.env]
+              [git-handler.submodule-updater.core.env       :as core.env]
+              [git-handler.submodule-updater.builder.state  :as builder.state]
+              [git-handler.submodule-updater.detector.state :as detector.state]
+              [vector.api                                   :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

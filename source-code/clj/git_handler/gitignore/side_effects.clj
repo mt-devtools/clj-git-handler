@@ -1,10 +1,10 @@
 
-(ns git.gitignore.side-effects
-    (:require [git.gitignore.config :as gitignore.config]
-              [git.gitignore.env    :as gitignore.env]
-              [io.api               :as io]
-              [noop.api             :refer [return]]
-              [string.api           :as string]))
+(ns git-handler.gitignore.side-effects
+    (:require [git-handler.gitignore.config :as gitignore.config]
+              [git-handler.gitignore.env    :as gitignore.env]
+              [io.api                       :as io]
+              [noop.api                     :refer [return]]
+              [string.api                   :as string]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

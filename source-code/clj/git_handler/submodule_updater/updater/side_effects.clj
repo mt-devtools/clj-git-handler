@@ -1,15 +1,15 @@
 
-(ns git.submodule-updater.updater.side-effects
-    (:require [clj-jgit.porcelain                   :as porcelain]
-              [clojure.java.shell                   :as shell]
-              [git.submodule-updater.builder.state  :as builder.state]
-              [git.submodule-updater.core.env       :as core.env]
-              [git.submodule-updater.detector.state :as detector.state]
-              [git.submodule-updater.reader.env     :as reader.env]
-              [git.submodule-updater.updater.env    :as updater.env]
-              [io.api                               :as io]
-              [string.api                           :as string]
-              [vector.api                           :as vector]))
+(ns git-handler.submodule-updater.updater.side-effects
+    (:require [clj-jgit.porcelain                           :as porcelain]
+              [clojure.java.shell                           :as shell]
+              [git-handler.submodule-updater.builder.state  :as builder.state]
+              [git-handler.submodule-updater.core.env       :as core.env]
+              [git-handler.submodule-updater.detector.state :as detector.state]
+              [git-handler.submodule-updater.reader.env     :as reader.env]
+              [git-handler.submodule-updater.updater.env    :as updater.env]
+              [io.api                                       :as io]
+              [string.api                                   :as string]
+              [vector.api                                   :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,10 +1,10 @@
 
-(ns git.submodule-updater.reader.side-effects
-    (:require [git.submodule-updater.detector.state :as detector.state]
-              [git.submodule-updater.reader.env     :as reader.env]
-              [git.submodule-updater.reader.state   :as reader.state]
-              [io.api                               :as io]
-              [vector.api                           :as vector]))
+(ns git-handler.submodule-updater.reader.side-effects
+    (:require [git-handler.submodule-updater.detector.state :as detector.state]
+              [git-handler.submodule-updater.reader.env     :as reader.env]
+              [git-handler.submodule-updater.reader.state   :as reader.state]
+              [io.api                                       :as io]
+              [vector.api                                   :as vector]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

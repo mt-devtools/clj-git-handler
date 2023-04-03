@@ -1,5 +1,5 @@
 
-(ns git.submodule-updater.core.utils
+(ns git-handler.submodule-updater.core.utils
     (:require [string.api :as string]))
 
 ;; ----------------------------------------------------------------------------

@@ -1,10 +1,10 @@
 
-(ns git.submodule-updater.builder.env
-    (:require [git.submodule-updater.builder.state  :as builder.state]
-              [git.submodule-updater.core.env       :as core.env]
-              [git.submodule-updater.detector.state :as detector.state]
-              [git.submodule-updater.reader.state   :as reader.state]
-              [noop.api                             :refer [return]]))
+(ns git-handler.submodule-updater.builder.env
+    (:require [git-handler.submodule-updater.builder.state  :as builder.state]
+              [git-handler.submodule-updater.core.env       :as core.env]
+              [git-handler.submodule-updater.detector.state :as detector.state]
+              [git-handler.submodule-updater.reader.state   :as reader.state]
+              [noop.api                                     :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

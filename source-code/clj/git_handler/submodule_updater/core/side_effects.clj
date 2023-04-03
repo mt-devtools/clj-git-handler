@@ -1,9 +1,9 @@
 
-(ns git.submodule-updater.core.side-effects
-    (:require [git.submodule-updater.builder.side-effects  :as builder.side-effects]
-              [git.submodule-updater.detector.side-effects :as detector.side-effects]
-              [git.submodule-updater.reader.side-effects   :as reader.side-effects]
-              [git.submodule-updater.updater.side-effects  :as updater.side-effects]))
+(ns git-handler.submodule-updater.core.side-effects
+    (:require [git-handler.submodule-updater.builder.side-effects  :as builder.side-effects]
+              [git-handler.submodule-updater.detector.side-effects :as detector.side-effects]
+              [git-handler.submodule-updater.reader.side-effects   :as reader.side-effects]
+              [git-handler.submodule-updater.updater.side-effects  :as updater.side-effects]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

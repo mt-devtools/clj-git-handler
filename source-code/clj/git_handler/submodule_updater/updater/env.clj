@@ -1,12 +1,12 @@
 
-(ns git.submodule-updater.updater.env
-    (:require [clojure.java.shell                 :as shell]
-              [git.submodule-updater.core.env     :as core.env]
-              [git.submodule-updater.core.utils   :as core.utils]
-              [git.submodule-updater.detector.env :as detector.env]
-              [io.api                             :as io]
-              [string.api                         :as string]
-              [time.api                           :as time]))
+(ns git-handler.submodule-updater.updater.env
+    (:require [clojure.java.shell                         :as shell]
+              [git-handler.submodule-updater.core.env     :as core.env]
+              [git-handler.submodule-updater.core.utils   :as core.utils]
+              [git-handler.submodule-updater.detector.env :as detector.env]
+              [io.api                                     :as io]
+              [string.api                                 :as string]
+              [time.api                                   :as time]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

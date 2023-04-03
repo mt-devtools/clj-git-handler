@@ -1,9 +1,9 @@
 
-(ns git.submodule-updater.core.env
-    (:require [git.submodule-updater.core.utils     :as core.utils]
-              [git.submodule-updater.detector.state :as detector.state]
-              [io.api                               :as io]
-              [noop.api                             :refer [return]]))
+(ns git-handler.submodule-updater.core.env
+    (:require [git-handler.submodule-updater.core.utils     :as core.utils]
+              [git-handler.submodule-updater.detector.state :as detector.state]
+              [io.api                                       :as io]
+              [noop.api                                     :refer [return]]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

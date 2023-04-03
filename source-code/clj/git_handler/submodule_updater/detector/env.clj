@@ -1,6 +1,6 @@
 
-(ns git.submodule-updater.detector.env
-    (:require [git.submodule-updater.detector.state :as detector.state]))
+(ns git-handler.submodule-updater.detector.env
+    (:require [git-handler.submodule-updater.detector.state :as detector.state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

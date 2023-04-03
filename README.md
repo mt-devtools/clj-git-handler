@@ -1,28 +1,28 @@
 
-# clj-git
+# clj-git-handler
 
 ### Overview
 
-The <strong>clj-git</strong> is a simple Clojure tool for managing Git.
+The <strong>clj-git-handler</strong> is a simple Clojure tool for managing Git.
 
 ### deps.edn
 
 ```
-{:deps {bithandshake/clj-git {:git/url "https://github.com/bithandshake/clj-git"
-                              :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}
+{:deps {bithandshake/clj-git-handler {:git/url "https://github.com/bithandshake/clj-git-handler"
+                                      :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}
 ```
 
 ### Current version
 
-Check out the latest commit on the [release branch](https://github.com/bithandshake/clj-git/tree/release).
+Check out the latest commit on the [release branch](https://github.com/bithandshake/clj-git-handler/tree/release).
 
 ### Documentation
 
-The <strong>clj-git</strong> functional documentation is [available here](documentation/COVER.md).
+The <strong>clj-git-handler</strong> functional documentation is [available here](documentation/COVER.md).
 
 ### Changelog
 
-You can track the changes of the <strong>clj-git</strong> library [here](CHANGES.md).
+You can track the changes of the <strong>clj-git-handler</strong> library [here](CHANGES.md).
 
 ### Index
 

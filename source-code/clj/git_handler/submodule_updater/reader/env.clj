@@ -1,8 +1,8 @@
 
-(ns git.submodule-updater.reader.env
-    (:require [git.submodule-updater.core.utils     :as core.utils]
-              [git.submodule-updater.detector.state :as detector.state]
-              [git.submodule-updater.reader.state   :as reader.state]))
+(ns git-handler.submodule-updater.reader.env
+    (:require [git-handler.submodule-updater.core.utils     :as core.utils]
+              [git-handler.submodule-updater.detector.state :as detector.state]
+              [git-handler.submodule-updater.reader.state   :as reader.state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
