@@ -12,6 +12,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-config-item
+  ; @ignore
+  ;
   ; @param (map) options
   ; @param (string) submodule-path
   ; @param (*) config-key
@@ -28,6 +30,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn submodule-local-changed?
+  ; @ignore
+  ;
   ; @param (string) submodule-path
   [_]
   ; cached = staged
@@ -38,6 +42,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-current-depended-sha
+  ; @ignore
+  ;
   ; @param (string) submodule-path
   ; @param (string) repository-name
   ;
@@ -60,6 +66,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-latest-local-commit-sha
+  ; @ignore
+  ;
   ; @param (map) options
   ; @param (string) submodule-path
   ; @param (string) branch
@@ -78,6 +86,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-latest-local-commit-message
+  ; @ignore
+  ;
   ; @param (map) options
   ; @param (string) submodule-path
   ; @param (string) branch
@@ -95,6 +105,8 @@
                                    (str "--" dbg)))))
 
 (defn get-next-commit-message
+  ; @ignore
+  ;
   ; @param (map) options
   ; {:config (map)(opt)
   ;   {"author/my-repository" {:branch (string)(opt)

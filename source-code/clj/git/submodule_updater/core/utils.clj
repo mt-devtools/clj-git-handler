@@ -6,6 +6,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn git-url->repository-name
+  ; @ignore
+  ;
   ; @description
   ; Extracts the "author/repository-name" from the given 'git-url'.
   ;

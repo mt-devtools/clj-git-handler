@@ -6,6 +6,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn submodule-path->git-url
+  ; @ignore
+  ;
   ; @param (string) submodule-path
   ;
   ; @usage

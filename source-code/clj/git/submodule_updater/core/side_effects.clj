@@ -9,6 +9,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn update-submodule-dependencies!
+  ; @ignore
+  ;
   ; @description
   ; Pushes the changed submodules and updates the other submodules' deps.edn
   ; files with the returned commit SHA.

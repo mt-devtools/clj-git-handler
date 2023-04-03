@@ -10,6 +10,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn build-dependency-tree!
+  ; @ignore
+  ;
   ; @param (map) options
   ; @param (integer)(opt) kill-switch
   [options & [kill-switch]]

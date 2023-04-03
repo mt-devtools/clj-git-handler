@@ -9,6 +9,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn error-catched
+  ; @ignore
+  ;
   ; @param (list of strings) error-message
   [& error-message]
   (doseq [line error-message]
@@ -19,6 +21,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn git-url->submodule-path
+  ; @ignore
+  ;
   ; @description
   ; Iterates over the detected submodules and finds which submodule has the same
   ; 'git-url' stored in the SUBMODULES atom.

@@ -8,6 +8,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn inner-dependency?
+  ; @ignore
+  ;
   ; @param (string) git-url
   ;
   ; @return (boolean)
@@ -20,6 +22,8 @@
          (some f @detector.state/DETECTED-SUBMODULES)))
 
 (defn get-submodule-inner-dependencies
+  ; @ignore
+  ;
   ; @param (string) submodule-path
   ;
   ; @return (boolean)
@@ -27,6 +31,8 @@
   (get @reader.state/INNER-DEPENDENCIES submodule-path))
 
 (defn depends-on?
+  ; @ignore
+  ;
   ; @param (string) submodule-path
   ; @param (string) repository-name
   ;

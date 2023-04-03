@@ -4,6 +4,8 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+; @ignore
+;
 ; @constant (map)
 ; {"submodules/my-repository" [["author/another-repository"
 ;                               "git@github.com:author/another-repository"

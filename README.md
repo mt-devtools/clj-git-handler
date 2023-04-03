@@ -1,28 +1,28 @@
 
-# git-api
+# clj-git
 
 ### Overview
 
-The <strong>git-api</strong> is a simple Clojure tool for managing Git.
+The <strong>clj-git</strong> is a simple Clojure tool for managing Git.
 
 ### deps.edn
 
 ```
-{:deps {bithandshake/git-api {:git/url "https://github.com/bithandshake/git-api"
+{:deps {bithandshake/clj-git {:git/url "https://github.com/bithandshake/clj-git"
                               :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}
 ```
 
 ### Current version
 
-Check out the latest commit on the [release branch](https://github.com/bithandshake/git-api/tree/release).
+Check out the latest commit on the [release branch](https://github.com/bithandshake/clj-git/tree/release).
 
 ### Documentation
 
-The <strong>git-api</strong> functional documentation is [available here](documentation/COVER.md).
+The <strong>clj-git</strong> functional documentation is [available here](documentation/COVER.md).
 
 ### Changelog
 
-You can track the changes of the <strong>git-api</strong> library [here](CHANGES.md).
+You can track the changes of the <strong>clj-git</strong> library [here](CHANGES.md).
 
 ### Index
 
@@ -30,7 +30,7 @@ You can track the changes of the <strong>git-api</strong> library [here](CHANGES
 
 - [How to check whether a pattern is added to the `.gitignore` file?](#how-to-check-whether-a-pattern-is-added-to-the-gitignore-file)
 
-- [How update submodule dependencies?](#how-to-update-submodule-dependencies)
+- [How to update submodule dependencies?](#how-to-update-submodule-dependencies)
 
 # Usage
 
@@ -71,13 +71,13 @@ a pattern is added to the `.gitignore` file.
 > This function only operates in Clojure projects using deps.edn to manage their dependencies!
 
 The [`git.api/update-submodule-dependencies!`](documentation/clj/git/API.md/#update-submodule-dependencies)
-function detects git submodules in the specified folders and builds a dependency tree.
+function detects git submodules within the specified folders and builds a dependency tree.
 After the dependency tree built, the function iterates over the detected submodules
-and pushes the changes to the specified branches. After every successful pushing
+to push the changes to the specified branches. After every successfully pushing
 it takes the returned commit SHA and updates the other submodules's deps.edn files
-whit it (if they depend on the pushed submodule).
+whit it (only if they depend on the pushed submodule).
 
-By using default options, the function detects submodules in the `submodules` folder,
+By using the default options, this function detects submodules in the `submodules` folder,
 pushes changes to `main` branches and uses timestamps as commit messages.
 
 ```
@@ -100,7 +100,7 @@ use the `:default` property.
                                            :commit-message-f my-commit-message-f}})
 ```
 
-To set a specific branch and commit message generator function for each submodule,
+To set a specific branch or commit message generator function for specific submodules,
 use the `:config` property.
 
 ```

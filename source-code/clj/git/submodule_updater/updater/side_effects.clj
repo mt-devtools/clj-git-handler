@@ -15,12 +15,16 @@
 ;; ----------------------------------------------------------------------------
 
 (defn cache-local-changes!
+  ; @ignore
+  ;
   ; @param (map) options
   ; @param (string) submodule-path
   [_ _]
   (shell/sh "git" "add" "."))
 
 (defn push-cached-changes!
+  ; @ignore
+  ;
   ; @param (map) options
   ; @param (string) submodule-path
   ; @param (string) branch
@@ -33,6 +37,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-updated-deps-edn
+  ; @ignore
+  ;
   ; @param (map) options
   ; @param (string) submodule-path
   ; @param (string) repository-name
@@ -47,6 +53,8 @@
                   (core.env/error-catched (str "Error reading commit SHA of submodule: " submodule-path)))))
 
 (defn update-dependency-in-other-submodules!
+  ; @ignore
+  ;
   ; @param (map) options
   ; @param (string) submodule-path
   ; @param (string) commit-sha
@@ -65,6 +73,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- update-submodule!
+  ; @ignore
+  ;
   ; @param (map) options
   ; @param (string) submodule-path
   [options submodule-path]

@@ -17,7 +17,7 @@
   ; @param (string) pattern
   ; @param (map)(opt) options
   ; {:group (string)(opt)
-  ;   Default: "git-api"
+  ;   Default: "git.api"
   ;  :filepath (string)(opt)
   ;   Default: ".gitignore"}
   ;
@@ -40,7 +40,7 @@
   ([pattern]
    (ignore! pattern {}))
 
-  ([pattern {:keys [group] :or {group "git-api"} :as options}]
+  ([pattern {:keys [group] :or {group "git.api"} :as options}]
    (let [gitignore (gitignore.env/get-gitignore options)]
         (letfn [(group-exists?    [group]     (string/contains-part? gitignore (str "# "group)))
                 (write-gitignore! [gitignore] (println (str "git.api adding pattern to .gitignore: \""pattern"\""))

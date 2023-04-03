@@ -10,6 +10,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- store-detected-submodule!
+  ; @ignore
+  ;
   ; @param (string) submodule-path
   ; @param (map) submodule-props
   [submodule-path submodule-props]
@@ -19,6 +21,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- detect-submodule!
+  ; @ignore
+  ;
   ; @param (string) subdirectory-path
   [subdirectory-path]
   ; Git submodules has a .git file instead of a .git directory.
@@ -42,6 +46,8 @@
                                           (store-detected-submodule! subdirectory-path {:git-url git-url :repository-name repository-name})))))))
 
 (defn detect-submodules!
+  ; @ignore
+  ;
   ; @param (map) options
   ; {:source-paths (strings in vector)(opt)
   ;   Default: ["submodules"]}

@@ -10,6 +10,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- store-inner-dependency!
+  ; @ignore
+  ;
   ; @param (string) submodule-path
   ; @param (string) dependency-name
   ; @param (map) dependency-props
@@ -23,6 +25,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn- read-submodule!
+  ; @ignore
+  ;
   ; @param (string) submodule-path
   ; @param (map) submodule-props
   ; {:git-url (string)}
@@ -37,6 +41,8 @@
                      (store-inner-dependency! submodule-path dependency-name dependency-props)))))
 
 (defn read-submodules!
+  ; @ignore
+  ;
   ; @param (map) options
   [_]
   ; Iterates over the detected submodules and passes the submodule paths and

@@ -10,6 +10,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn submodule-added-to-dependency-tree?
+  ; @ignore
+  ;
   ; @param (string) submodule-path
   ;
   ; @return (boolean)
@@ -18,6 +20,8 @@
          (some f @builder.state/DEPENDENCY-TREE)))
 
 (defn dependency-tree-built?
+  ; @ignore
+  ;
   ; @return (boolean)
   []
   ; Checks whether the dependency tree is complete or some submodule missing yet
@@ -29,6 +33,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn submodule-has-inner-dependencies?
+  ; @ignore
+  ;
   ; @param (string) submodule-path
   ;
   ; @return (boolean)
@@ -39,6 +45,8 @@
                (-> dependencies empty? not))))
 
 (defn submodule-non-depend?
+  ; @ignore
+  ;
   ; @param (string) submodule-path
   ;
   ; @return (boolean)
@@ -55,6 +63,8 @@
 ;; ----------------------------------------------------------------------------
 
 (defn get-unresolved-dependencies
+  ; @ignore
+  ;
   ; @return (strings in vector)
   []
   (letfn [(f [result [submodule-path _]]
