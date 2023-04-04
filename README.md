@@ -36,7 +36,7 @@ You can track the changes of the <strong>clj-git-handler</strong> library [here]
 
 ### How to add pattern to the `.gitignore` file?
 
-The [`git.api/ignore!`](documentation/clj/git/API.md/#ignore) function adds a pattern
+The [`git-handler.api/ignore!`](documentation/clj/git/API.md/#ignore) function adds a pattern
 the `.gitignore` file.
 
 - The return value will be the modified `.gitignore` file's content.
@@ -59,7 +59,7 @@ You can group the added patterns in the `.gitignore` file.
 
 ### How to check whether a pattern is added to the `.gitignore` file?
 
-The [`git.api/ignored?`](documentation/clj/git/API.md/#ignored) function checks whether
+The [`git-handler.api/ignored?`](documentation/clj/git/API.md/#ignored) function checks whether
 a pattern is added to the `.gitignore` file.
 
 ```
@@ -70,12 +70,13 @@ a pattern is added to the `.gitignore` file.
 
 > This function only operates in Clojure projects using deps.edn to manage their dependencies!
 
-The [`git.api/update-submodule-dependencies!`](documentation/clj/git/API.md/#update-submodule-dependencies)
-function detects git submodules within the specified folders and builds a dependency tree.
+The [`git-handler.api/update-submodule-dependencies!`](documentation/clj/git/API.md/#update-submodule-dependencies)
+function detects git submodules within the specified folders and builds a dependency tree
+of all found submodules and their relations found in the deps.edn files.
 After the dependency tree built, the function iterates over the detected submodules
-to push the changes to the specified branches. After every successfully pushing
+to push their changes to the specified branches. After every successfully pushing
 it takes the returned commit SHA and updates the other submodules's deps.edn files
-whit it (only if they depend on the pushed submodule).
+whit it (only if they depend on the just pushed submodule).
 
 By using the default options, this function detects submodules in the `submodules` folder,
 pushes changes to `main` branches and uses timestamps as commit messages.
@@ -91,8 +92,8 @@ property.
 (update-submodule-dependencies! {:source-paths ["my-submodules"])
 ```
 
-To set the default branch or commit message generator function for all submodules,
-use the `:default` property.
+To set the default branch or default commit message generator function for all
+submodules, use the `:default` property.
 
 ```
 (defn my-commit-message-f [latest-commit-message] ...)
@@ -100,8 +101,8 @@ use the `:default` property.
                                            :commit-message-f my-commit-message-f}})
 ```
 
-To set a specific branch or commit message generator function for specific submodules,
-use the `:config` property.
+To set a specific branch or specific commit message generator function for
+specific submodules, use the `:config` property.
 
 ```
 (defn my-commit-message-f [latest-commit-message] ...)

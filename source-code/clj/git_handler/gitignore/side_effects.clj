@@ -17,7 +17,7 @@
   ; @param (string) pattern
   ; @param (map)(opt) options
   ; {:group (string)(opt)
-  ;   Default: "git.api"
+  ;   Default: "clj-git-handler"
   ;  :filepath (string)(opt)
   ;   Default: ".gitignore"}
   ;
@@ -40,10 +40,10 @@
   ([pattern]
    (ignore! pattern {}))
 
-  ([pattern {:keys [group] :or {group "git.api"} :as options}]
+  ([pattern {:keys [group] :or {group "clj-git-handler"} :as options}]
    (let [gitignore (gitignore.env/get-gitignore options)]
         (letfn [(group-exists?    [group]     (string/contains-part? gitignore (str "# "group)))
-                (write-gitignore! [gitignore] (println (str "git.api adding pattern to .gitignore: \""pattern"\""))
+                (write-gitignore! [gitignore] (println (str "clj-git-handler adding pattern to .gitignore: \""pattern"\""))
                                               (io/write-file! ".gitignore" gitignore {:create? true})
                                               (return gitignore))]
                (cond (gitignore.env/ignored? pattern options)
