@@ -20,6 +20,7 @@
   ; @param (map) options
   ; @param (string) submodule-path
   [_ _]
+  (println "Caching local changes ...")
   (shell/sh "git" "add" "."))
 
 (defn push-cached-changes!
