@@ -55,7 +55,6 @@
   ; 1. Detects the subdirectories on the give paths.
   ; 2. Iterates over the subdirectory list and passes the found subdirectory paths
   ;    to the detect-submodule! function.
-
   (reset! detector.state/DETECTED-SUBMODULES nil)
   (letfn [(f [subdirectory-paths source-path] (vector/concat-items subdirectory-paths (io/subdirectory-list source-path)))]
          (let [subdirectory-paths (reduce f [] source-paths)]
