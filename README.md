@@ -74,9 +74,9 @@ The [`git-handler.api/update-submodule-dependencies!`](documentation/clj/git/API
 function detects git submodules within the specified folders and builds a dependency tree
 of all found submodules and their relations found in the deps.edn files.
 After the dependency tree built, the function iterates over the detected submodules
-to push their changes to the specified branches. After every successfully pushing
+to push their changes to the specified branch. After every successfully pushing
 it takes the returned commit SHA and updates the other submodules's deps.edn files
-whit it (only if they depend on the just pushed submodule).
+whit it (only if they depend on the recently pushed submodule).
 
 By using the default options, this function detects submodules in the `submodules` folder,
 pushes changes to `main` branches and uses timestamps as commit messages.
