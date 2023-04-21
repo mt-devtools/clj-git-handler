@@ -24,6 +24,8 @@ The <strong>clj-git-handler</strong> functional documentation is [available here
 
 You can track the changes of the <strong>clj-git-handler</strong> library [here](CHANGES.md).
 
+# Usage
+
 ### Index
 
 - [How to add pattern to the `.gitignore` file?](#how-to-add-pattern-to-the-gitignore-file)
@@ -31,8 +33,6 @@ You can track the changes of the <strong>clj-git-handler</strong> library [here]
 - [How to check whether a pattern is added to the `.gitignore` file?](#how-to-check-whether-a-pattern-is-added-to-the-gitignore-file)
 
 - [How to update submodule dependencies?](#how-to-update-submodule-dependencies)
-
-# Usage
 
 ### How to add pattern to the `.gitignore` file?
 
