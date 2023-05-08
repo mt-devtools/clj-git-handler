@@ -21,7 +21,8 @@
   ; @param (string) submodule-path
   [_ _]
   (println "Caching local changes ...")
-  (shell/sh "git" "add" "."))
+  (shell/sh "git" "add" ".")
+  (println "sup"))
 
 (defn push-cached-changes!
   ; @ignore
@@ -82,6 +83,7 @@
   (println "-------------")
   (println "Updating submodule:" submodule-path "...")
   (cache-local-changes! options submodule-path)
+  (println "sup2")
   (if (updater.env/submodule-local-changed? submodule-path)
       (if-let [branch (updater.env/get-config-item options submodule-path :branch "main")]
               (if-let [commit-message (updater.env/get-next-commit-message options submodule-path branch)]
