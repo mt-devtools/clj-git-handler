@@ -95,7 +95,8 @@
                                            (core.env/error-catched (str "Error getting the latest local commit SHA of: " submodule-path " on branch: " branch)))
                                    (core.env/error-catched (str "Error pushing submodule: " submodule-path " to branch: " branch
                                                                (str "--" dbg))))))
-                      (core.env/error-catched (str "Error creating commit message for: " submodule-path))))
+                      (core.env/error-catched (str "Error creating commit message for: " submodule-path)))
+             (println "ez?"))
       (println "Submodule unchanged:" submodule-path)))
 
 (defn update-submodules!
