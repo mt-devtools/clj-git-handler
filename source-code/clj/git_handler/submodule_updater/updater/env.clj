@@ -121,6 +121,7 @@
   [options submodule-path branch]
   (if-let [commit-message-f (get-config-item options submodule-path :commit-message-f (fn [%] (time/timestamp-string)))]
           (if-let [latest-local-commit-message (get-latest-local-commit-message options submodule-path branch)]
-                  (commit-message-f latest-local-commit-message)
+                  (try (commit-message-f latest-local-commit-message)
+                       (catch Exception e (println e)))
                   (core.env/error-catched (str "Cannot read latest local commit message of submodule: " submodule-path " on branch: " branch)))
           (core.env/error-catched (str "Unable to read config item: " submodule-path))))
