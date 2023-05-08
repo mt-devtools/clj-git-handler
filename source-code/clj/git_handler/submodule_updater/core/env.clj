@@ -13,7 +13,6 @@
   ;
   ; @param (list of strings) error-message
   [& error-message]
-  (println "ege")
   (doseq [line error-message]
          (println line))
   (throw :error-catched))
