@@ -21,8 +21,7 @@
   ; @param (string) submodule-path
   [_ _]
   (println "Caching local changes ...")
-  (shell/sh "git" "add" ".")
-  (println "sup"))
+  (shell/sh "git" "add" "."))
 
 (defn push-cached-changes!
   ; @ignore
@@ -83,10 +82,9 @@
   (println "-------------")
   (println "Updating submodule:" submodule-path "...")
   (cache-local-changes! options submodule-path)
-  (println "sup2")
   (if (updater.env/submodule-local-changed? submodule-path)
-      (do (println "x")
-        (if-let [branch (updater.env/get-config-item options submodule-path :branch "main")]
+      (if-let [branch (updater.env/get-config-item options submodule-path :branch "main")]
+              (do (println "va")
                 (if-let [commit-message (updater.env/get-next-commit-message options submodule-path branch)]
                         (do (println "Pushing commit:" commit-message "from submodule:" submodule-path "to branch:" branch "...")
                             (let [{:keys [exit] :as dbg} (push-cached-changes! options submodule-path branch commit-message)]
@@ -96,8 +94,8 @@
                                              (core.env/error-catched (str "Error getting the latest local commit SHA of: " submodule-path " on branch: " branch)))
                                      (core.env/error-catched (str "Error pushing submodule: " submodule-path " to branch: " branch
                                                                  (str "--" dbg))))))
-                        (core.env/error-catched (str "Error creating commit message for: " submodule-path)))
-                (core.env/error-catched (str "Unable to read config item: " submodule-path))))
+                        (core.env/error-catched (str "Error creating commit message for: " submodule-path))))
+              (core.env/error-catched (str "Unable to read config item: " submodule-path)))
       (println "Submodule unchanged:" submodule-path)))
 
 (defn update-submodules!
