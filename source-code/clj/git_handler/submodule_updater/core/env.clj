@@ -26,7 +26,7 @@
   ; @description
   ; Iterates over the detected submodules and finds which submodule has the same
   ; 'git-url' stored in the SUBMODULES atom.
-  ; If a submodule has the same 'git-url', returns with the matching submodule's path
+  ; If a submodule has the same 'git-url', returns the matching submodule's path
   ; (found in the SUBMODULES atom).
   ;
   ; It can read four types of 'git-url' by using the 'git-url->repository-name' function.
