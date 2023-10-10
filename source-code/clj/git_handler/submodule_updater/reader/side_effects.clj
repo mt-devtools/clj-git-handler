@@ -34,7 +34,7 @@
   ; 1. Reads the submodule's deps.edn file
   ; 2. Iterates over the dependencies
   ; 3. If a previously detected submodule found in the dependency list, it will
-  ;    be qualified as an inner dependency and will be stored in the INNER-DEPENDENCIES atom.
+  ;    be declared as an inner dependency and will be stored in the INNER-DEPENDENCIES atom.
   (if-let [{:keys [deps]} (io/read-edn-file (str submodule-path "/deps.edn"))]
           (doseq [[dependency-name {:git/keys [url] :as dependency-props}] deps]
                  (if (reader.env/inner-dependency? url)
