@@ -109,7 +109,7 @@ You can specify a group to the added pattern by passing the :group property.
 
 ```
 @return (string)
-returns the updated .gitignore file's content.
+Returns the updated .gitignore file's content.
 ```
 
 <details>

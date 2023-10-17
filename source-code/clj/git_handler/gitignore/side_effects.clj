@@ -36,7 +36,7 @@
   ; "\n# My ignored files\nmy-file.ext\n"
   ;
   ; @return (string)
-  ; returns the updated .gitignore file's content.
+  ; Returns the updated .gitignore file's content.
   ([pattern]
    (ignore! pattern {}))
 
