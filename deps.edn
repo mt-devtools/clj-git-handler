@@ -3,8 +3,8 @@
  :deps  {clj-git/clj-jgit         {:git/url "https://github.com/clj-jgit/clj-jgit"
                                    :sha     "55bfc2d49d38ac47663db19d38accf71d76fc551"}
          bithandshake/cljc-fruits {:git/url "https://github.com/bithandshake/cljc-fruits"
-                                   :sha     "b7604fc296c2f8fef7be1dae03745eb5eda3c122"}
+                                   :sha     "493e89256298f81c45e8dec4c8ee256bcee9c854"}
          bithandshake/cljc-io     {:git/url "https://github.com/bithandshake/cljc-io"
-                                   :sha     "7e89763e7147504e1b87d68f7493375aa659302c"}
+                                   :sha     "a0917aca1dc50323f8e3a66f9a615ffa0bc2bb4c"}
          bithandshake/cljc-time   {:git/url "https://github.com/bithandshake/cljc-time"
                                    :sha     "9d3aa0414b2e5ecbdeeb12b9ea956f40fb4d332b"}}}
