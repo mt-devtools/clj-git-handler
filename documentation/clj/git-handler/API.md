@@ -125,10 +125,10 @@ Returns the updated .gitignore file's content.
         (letfn [(group-exists?    [group]     (string/contains-part? gitignore (str "# "group)))
                 (write-gitignore! [gitignore] (println (str "clj-git-handler adding pattern to .gitignore: \""pattern"\""))
                                               (io/write-file! ".gitignore" gitignore {:create? true})
-                                              (return gitignore))]
+                                              (-> gitignore))]
                (cond (gitignore.env/ignored? pattern options)
-                     (return gitignore)
-                     (group-exists? group)
+                     (-> gitignore)
+                     (-> group group-exists?)
                      (let [gitignore (str (string/to-first-occurence gitignore (str "# "group))
                                           (str "\n"pattern)
                                           (string/after-first-occurence gitignore (str "# "group)))]

@@ -2,8 +2,7 @@
 (ns git-handler.submodule-updater.core.env
     (:require [git-handler.submodule-updater.core.utils     :as core.utils]
               [git-handler.submodule-updater.detector.state :as detector.state]
-              [io.api                                       :as io]
-              [noop.api                                     :refer [return]]))
+              [io.api                                       :as io]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -41,5 +40,5 @@
   (letfn [(f [[submodule-path submodule-props]]
              (if (= (core.utils/git-url->repository-name   git-url)
                     (core.utils/git-url->repository-name (:git-url submodule-props)))
-                 (return submodule-path)))]
+                 (-> submodule-path)))]
          (some f @detector.state/DETECTED-SUBMODULES)))

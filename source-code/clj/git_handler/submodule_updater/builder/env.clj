@@ -3,8 +3,7 @@
     (:require [git-handler.submodule-updater.builder.state  :as builder.state]
               [git-handler.submodule-updater.core.env       :as core.env]
               [git-handler.submodule-updater.detector.state :as detector.state]
-              [git-handler.submodule-updater.reader.state   :as reader.state]
-              [noop.api                                     :refer [return]]))
+              [git-handler.submodule-updater.reader.state   :as reader.state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -57,7 +56,7 @@
           (letfn [(f [[dep-name url sha]]
                      (-> url core.env/git-url->submodule-path submodule-added-to-dependency-tree?))]
                  (every? f dependencies))
-          (return :submodule-has-no-inner-dependencies)))
+          :submodule-has-no-inner-dependencies))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -70,6 +69,6 @@
   (letfn [(f [result [submodule-path _]]
              (if (or (submodule-added-to-dependency-tree? submodule-path)
                      (submodule-non-depend?               submodule-path))
-                 (return result)
-                 (conj   result submodule-path)))]
+                 (->   result)
+                 (conj result submodule-path)))]
          (reduce f [] @detector.state/DETECTED-SUBMODULES)))
