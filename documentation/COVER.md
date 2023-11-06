@@ -1,7 +1,11 @@
 
-# clj-git-handler documentation
+### clj-git-handler
 
-Documentation of the [clj-git-handler](https://github.com/bithandshake/clj-git-handler) Clojure library
+Functional documentation of the [clj-git-handler](https://github.com/bithandshake/clj-git-handler) Clojure library
+
+---
+
+
 
 ##### [README](../README.md) > DOCUMENTATION
 
@@ -11,5 +15,5 @@ Documentation of the [clj-git-handler](https://github.com/bithandshake/clj-git-h
 
 ---
 
-This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.
+<sub>This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.</sub>
 

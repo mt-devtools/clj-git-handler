@@ -87,7 +87,7 @@
               (if-let [commit-message (updater.env/get-next-commit-message options submodule-path branch)]
                       (do (println "Pushing commit:" commit-message "from submodule:" submodule-path "to branch:" branch "...")
                           (let [{:keys [exit] :as dbg} (push-cached-changes! options submodule-path branch commit-message)]
-                               (if (= 0 exit)
+                               (if (-> exit zero?)
                                    (if-let [latest-local-commit-sha (updater.env/get-latest-local-commit-sha options submodule-path branch)]
                                            (update-dependency-in-other-submodules! options submodule-path latest-local-commit-sha)
                                            (core.env/error-catched (str "Error getting the latest local commit SHA of: " submodule-path " on branch: " branch)))

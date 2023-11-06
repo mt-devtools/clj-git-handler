@@ -16,8 +16,8 @@
   ; @param (integer)(opt) kill-switch
   [options & [kill-switch]]
 
-  ; Uses the kill-switch to determines whether the function is applied first time.
-  ; When it called first time, clears the DEPENDENCY-TREE atom.
+  ; Uses the kill-switch to determine whether the function is applied first time.
+  ; When it is called the first time, it clears the DEPENDENCY-TREE atom.
   (if-not kill-switch (reset! builder.state/DEPENDENCY-TREE nil))
 
   ; Builds a dependency tree of inner dependencies in the host project

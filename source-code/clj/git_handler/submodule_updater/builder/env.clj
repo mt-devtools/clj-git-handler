@@ -23,7 +23,7 @@
   ;
   ; @return (boolean)
   []
-  ; Checks whether the dependency tree is complete or some submodule missing yet
+  ; Checks whether the dependency tree is complete or some submodules missing yet
   (letfn [(f [[submodule-path _]]
              (submodule-added-to-dependency-tree? submodule-path))]
          (every? f @detector.state/DETECTED-SUBMODULES)))
@@ -38,7 +38,7 @@
   ;
   ; @return (boolean)
   [submodule-path]
-  ; Some submodule does not depend on other INNER submodules
+  ; Some submodules don't depend on other INNER submodules
   (if-let [dependencies (get @reader.state/INNER-DEPENDENCIES submodule-path)]
           (and (-> dependencies vector?)
                (-> dependencies empty? not))))

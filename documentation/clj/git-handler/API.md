@@ -1,5 +1,9 @@
 
-# git-handler.api Clojure namespace
+### git-handler.api
+
+Functional documentation of the git-handler.api Clojure namespace
+
+---
 
 ##### [README](../../../README.md) > [DOCUMENTATION](../../COVER.md) > git-handler.api
 
@@ -12,6 +16,8 @@
 - [ignored?](#ignored)
 
 - [update-submodule-dependencies!](#update-submodule-dependencies)
+
+---
 
 ### get-gitignore
 
@@ -297,5 +303,5 @@ the :config property.
 
 ---
 
-This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.
+<sub>This documentation is generated with the [clj-docs-generator](https://github.com/bithandshake/clj-docs-generator) engine.</sub>
 
