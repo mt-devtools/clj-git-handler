@@ -26,6 +26,9 @@ You can track the changes of the <strong>clj-git-handler</strong> library [here]
 
 # Usage
 
+> Some parameters of the following functions and some further functions are not discussed in this file.
+  To learn more about the available functionality, check out the [functional documentation](documentation/COVER.md)!
+
 ### Index
 
 - [How to add pattern to the `.gitignore` file?](#how-to-add-pattern-to-the-gitignore-file)
