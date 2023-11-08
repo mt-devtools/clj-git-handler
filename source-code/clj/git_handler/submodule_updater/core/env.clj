@@ -57,7 +57,6 @@
   ; @return (*)
   [options submodule-path config-key & [default-value]]
   (if-let [repository-name (-> submodule-path submodule-updater.detector.env/submodule-path->git-url core.utils/git-url->repository-name)]
-          (do  (println "path:" [repository-name config-key])
-            (or (get-in options [repository-name config-key])
-                (get-in options [:default        config-key] default-value)))
+          (or (get-in options [:config repository-name config-key])
+              (get-in options [:default                config-key] default-value))
           (core.errors/error-catched (str "Cannot derive repository name from submodule path: '" submodule-path "'"))))
