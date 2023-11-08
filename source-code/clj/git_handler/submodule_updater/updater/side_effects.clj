@@ -99,6 +99,7 @@
                   (do (println "submodule-path:" submodule-path)
                       (println "options:" options)
                       (println "target-branch:" target-branch)
+                      (println "repository-name:"(-> submodule-path git-handler.submodule-updater.detector.env/submodule-path->git-url git-handler.core.utils/git-url->repository-name))
                       (core.errors/error-catched (str "Submodule '" submodule-path"' is checked out on another branch than the provided '" target-branch "' target branch"))))
               (core.errors/error-catched (str "Unable to read config item ':target-branch' for submodule: '" submodule-path "'")))
       (println (str "Submodule unchanged: '" submodule-path "'"))))
