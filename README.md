@@ -71,24 +71,24 @@ a pattern is added to the `.gitignore` file.
 
 ### How to update submodule dependencies?
 
-> This function only operates in Clojure projects using deps.edn to manage their dependencies!
+> This function only operates in Clojure projects using deps.edn to manage dependencies!
 
 The [`git-handler.api/update-submodule-dependencies!`](documentation/clj/git/API.md/#update-submodule-dependencies)
 function detects git submodules within the specified folders and builds a dependency tree
-of all found submodules and their relations found in the deps.edn files.
-After the dependency tree built, the function iterates over the detected submodules
-to push their changes to the specified branch. After every successfully pushing
-it takes the returned commit SHA and updates the other submodules's deps.edn files
-whit it (only if they depend on the recently pushed submodule).
+of all found submodules and their relations to each other (using the deps.edn files to figure out relations).
+After the dependency tree is built, the function iterates over the detected submodules
+to push their local changes to the specified branch. After every successful pushing
+it takes the returned commit SHA and updates every other submodules's deps.edn file
+whith it (only if they depend on the pushed submodule).
 
-By using the default options, this function detects submodules in the `submodules` folder,
+With default options, this function detects submodules in the `submodules` folder,
 pushes changes to `main` branches and uses timestamps as commit messages.
 
 ```
 (update-submodule-dependencies!)
 ```
 
-To specify which folders contains submodules in your project, use the `:source-paths`
+To specify which folders contain submodules in your project, use the `:source-paths`
 property.
 
 ```
