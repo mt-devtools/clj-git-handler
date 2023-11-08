@@ -1,5 +1,5 @@
 
-(ns git-handler.submodule-updater.core.utils
+(ns git-handler.core.utils
     (:require [string.api :as string]))
 
 ;; ----------------------------------------------------------------------------
@@ -9,13 +9,12 @@
   ; @ignore
   ;
   ; @description
-  ; Extracts the "author/repository-name" from the given 'git-url'.
-  ;
-  ; It can read four types of 'git-url':
-  ; - "git@github.com:author/repository"
-  ; - "git@github.com:author/repository.git"
-  ; - "https://github.com/author/repository"
-  ; - "https://github.com/author/repository.git"
+  ; - Extracts the 'author/repository-name' from the given 'git-url'.
+  ; - It can read four types of 'git-url':
+  ;   - 'git@github.com:author/repository'
+  ;   - 'git@github.com:author/repository.git'
+  ;   - 'https://github.com/author/repository'
+  ;   - 'https://github.com/author/repository.git'
   ;
   ; @param (string) git-url
   ;

@@ -1,35 +1,18 @@
 
 (ns git-handler.submodule-updater.updater.env
     (:require [clojure.java.shell                         :as shell]
-              [git-handler.submodule-updater.core.env     :as core.env]
-              [git-handler.submodule-updater.core.utils   :as core.utils]
-              [git-handler.submodule-updater.detector.env :as detector.env]
-              [io.api                                     :as io]
+              [git-handler.core.env                       :as core.env]
+              [git-handler.core.errors                    :as core.errors]
+              [git-handler.core.utils                     :as core.utils]
+              [git-handler.submodule-updater.core.env     :as submodule-updater.core.env]
+              [git-handler.submodule-updater.detector.env :as submodule-updater.detector.env]
               [string.api                                 :as string]
               [time.api                                   :as time]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-config-item
-  ; @ignore
-  ;
-  ; @param (map) options
-  ; @param (string) submodule-path
-  ; @param (*) config-key
-  ; @param (*) default-value
-  ;
-  ; @return (*)
-  [options submodule-path config-key & [default-value]]
-  (if-let [repository-name (-> submodule-path detector.env/submodule-path->git-url core.utils/git-url->repository-name)]
-          (or (get-in options [repository-name config-key])
-              (get-in options [:default        config-key] default-value))
-          (core.env/error-catched (str "Cannot derive repository name from submodule path: " submodule-path))))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn submodule-local-changed?
+(defn submodule-locally-changed?
   ; @ignore
   ;
   ; @param (string) submodule-path
@@ -44,6 +27,10 @@
 (defn get-current-depended-sha
   ; @ignore
   ;
+  ; @description
+  ; Reads the current commit SHA of the 'repository-name' from the deps.edn file
+  ; of the given submodule path.
+  ;
   ; @param (string) submodule-path
   ; @param (string) repository-name
   ;
@@ -52,15 +39,13 @@
   ;
   ; @return (string)
   [submodule-path repository-name]
-  ; Reads the current commit SHA of the repository-name from the deps.edn file
-  ; of the given submodule path
-  (if-let [deps-edn (io/read-file (str submodule-path "/deps.edn"))]
+  (if-let [deps-edn (core.env/read-submodule-deps-edn submodule-path)]
           (or (-> deps-edn (string/after-first-occurence  repository-name {:return? false})
                            (string/after-first-occurence  ":sha"          {:return? false})
                            (string/after-first-occurence  "\""            {:return? false})
                            (string/before-first-occurence "\""            {:return? false}))
-              (core.env/error-catched (str "Cannot read current depended SHA from submodule: " submodule-path " of dependency: " repository-name)))
-          (core.env/error-catched (str "Cannot read the deps.edn file in submodule: " submodule-path))))
+              (core.errors/error-catched (str "Cannot read current depended SHA from submodule: '" submodule-path "' of dependency: '" repository-name "'")))
+          (core.errors/error-catched (str "Cannot read the deps.edn file in submodule: '" submodule-path "'"))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -80,7 +65,7 @@
                    (string/before-first-occurence "\n"     {:return? false})
                    (string/trim)
                    (string/use-nil))
-           (core.env/error-catched (str "Cannot read latest commit SHA of submodule: " submodule-path " on branch: " branch)))))
+           (core.errors/error-catched (str "Cannot read latest commit SHA of submodule: '" submodule-path "' on branch: '" branch "'")))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -101,27 +86,27 @@
                    (string/before-first-occurence "\n"    {:return? false})
                    (string/trim)
                    (string/use-nil))
-           (core.env/error-catched (str "Cannot read latest commit message of submodule: " submodule-path " on branch: " branch)
-                                   (str "--" dbg)))))
+           (core.errors/error-catched (str "Cannot read latest commit message of submodule: '" submodule-path "' on branch: '" branch "'")
+                                      (str "Error: " dbg)))))
 
 (defn get-next-commit-message
   ; @ignore
   ;
   ; @param (map) options
   ; {:config (map)(opt)
-  ;   {"author/my-repository" {:branch (string)(opt)
-  ;                            :commit-message-f (function)(opt)}}
+  ;   {"author/my-repository" {:commit-message-f (function)(opt)
+  ;                            :target-branch (string)(opt)}}
   ;  :default (map)(opt)
-  ;   {:branch (string)(opt)
-  ;    :commit-message-f (function)(opt)}}
+  ;   {:commit-message-f (function)(opt)
+  ;    :target-branch (string)(opt)}}
   ; @param (string) submodule-path
   ; @param (string) branch
   ;
   ; @return (string)
   [options submodule-path branch]
-  (if-let [commit-message-f (get-config-item options submodule-path :commit-message-f (fn [%] (time/timestamp-string)))]
+  (if-let [commit-message-f (submodule-updater.core.env/get-config-item options submodule-path :commit-message-f (fn [%] (time/timestamp-string)))]
           (if-let [latest-local-commit-message (get-latest-local-commit-message options submodule-path branch)]
                   (try (commit-message-f latest-local-commit-message)
                        (catch Exception e nil))
-                  (core.env/error-catched (str "Cannot read latest local commit message of submodule: " submodule-path " on branch: " branch)))
-          (core.env/error-catched (str "Unable to read config item: " submodule-path))))
+                  (core.errors/error-catched (str "Cannot read latest local commit message of submodule: '" submodule-path "' on branch: '" branch "'")))
+          (core.errors/error-catched (str "Unable to read config item ':commit-message-f' for submodule: '" submodule-path "'"))))
