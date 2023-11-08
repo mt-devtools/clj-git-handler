@@ -8,13 +8,13 @@ The <strong>clj-git-handler</strong> is a simple Clojure tool for managing Git.
 ### deps.edn
 
 ```
-{:deps {bithandshake/clj-git-handler {:git/url "https://github.com/bithandshake/clj-git-handler"
-                                      :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}
+{:deps {monotech-tools/clj-git-handler {:git/url "https://github.com/monotech-tools/clj-git-handler"
+                                        :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}
 ```
 
 ### Current version
 
-Check out the latest commit on the [release branch](https://github.com/bithandshake/clj-git-handler/tree/release).
+Check out the latest commit on the [release branch](https://github.com/monotech-tools/clj-git-handler/tree/release).
 
 ### Documentation
 
@@ -75,11 +75,11 @@ a pattern is added to the `.gitignore` file.
 
 The [`git-handler.api/update-submodule-dependencies!`](documentation/clj/git/API.md/#update-submodule-dependencies)
 function detects git submodules within the specified folders and builds a dependency tree
-of all found submodules and their relations to each other (using the deps.edn files to figure out relations).
+of all found submodules and their relations to each other (using their deps.edn files to figure out relations).
 After the dependency tree is built, the function iterates over the detected submodules
 to push their local changes to the specified branch. After every successful pushing
 it takes the returned commit SHA and updates every other submodules's deps.edn file
-whith it (only if they depend on the pushed submodule).
+with it (if they depend on the pushed submodule).
 
 With default options, this function detects submodules in the `submodules` folder,
 pushes changes to `main` branches and uses timestamps as commit messages.
@@ -88,8 +88,7 @@ pushes changes to `main` branches and uses timestamps as commit messages.
 (update-submodule-dependencies!)
 ```
 
-To specify which folders contain submodules in your project, use the `:source-paths`
-property.
+To specify which folders contain submodules in your project, use the `:source-paths` property.
 
 ```
 (update-submodule-dependencies! {:source-paths ["my-submodules"])
@@ -100,15 +99,36 @@ submodules, use the `:default` property.
 
 ```
 (defn my-commit-message-f [latest-commit-message] ...)
-(update-submodule-dependencies! {:default {:branch "my-branch"
-                                           :commit-message-f my-commit-message-f}})
+(update-submodule-dependencies! {:default {:commit-message-f my-commit-message-f
+                                           :target-branch "my-branch"}})
 ```
 
-To set a specific branch or specific commit message generator function for
-specific submodules, use the `:config` property.
+To use a specific branch or commit message generator function for submodules, use the `:config` property.
 
 ```
 (defn my-commit-message-f [latest-commit-message] ...)
-(update-submodule-dependencies! {:config {"author/my-repository" {:branch "my-branch"
-                                                                  :commit-message-f my-commit-message-f}}})
+(update-submodule-dependencies! {:config {"author/my-repository" {:commit-message-f my-commit-message-f
+                                                                  :target-branch "my-branch"}}})
+```
+
+This function updates dependencies in `deps.edn` files that are referenced as in one of the following formats:
+
+```
+{:deps {author/repository-name {:git/url "https://github.com/author/repository-name"
+                                :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}
+```
+
+```
+{:deps {author/repository-name {:git/url "https://github.com/author/repository-name.git"
+                                :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}
+```
+
+```
+{:deps {author/repository-name {:git/url "git@github.com:author/repository-name"
+                                :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}
+```
+
+```
+{:deps {author/repository-name {:git/url "git@github.com:author/repository-name.git"
+                                :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}
 ```

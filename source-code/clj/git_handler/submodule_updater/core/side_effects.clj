@@ -20,6 +20,9 @@
   ;   function and change the default target branch
   ; - By default the function uses an actual timestamp as commit messages and the "main" branch to push commits.
   ; - In addition you can specify these settings for each submodules separetely with using the ':config' property.
+  ; - This function updates dependencies in 'deps.edn' files that are referenced as in the following format:
+  ;   {:deps {author/repository-name {:git/url "https://github.com/author/repository-name"
+  ;                                   :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
   ;
   ; @param (map)(opt) options
   ; {:config (map)(opt)
