@@ -1,7 +1,6 @@
 
 (ns git-handler.submodule-updater.updater.side-effects
-    (:require [clj-jgit.porcelain                           :as porcelain]
-              [clojure.java.shell                           :as shell]
+    (:require [clojure.java.shell                           :as shell]
               [git-handler.core.env                         :as core.env]
               [git-handler.core.errors                      :as core.errors]
               [git-handler.submodule-updater.builder.state  :as submodule-updater.builder.state]
