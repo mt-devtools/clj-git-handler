@@ -50,8 +50,8 @@
   (if-let [deps-edn (io/read-file (str submodule-path "/deps.edn"))]
           (if-let [current-depended-sha (submodule-updater.updater.env/get-current-depended-sha submodule-path repository-name)]
                   (do (if (= current-depended-sha commit-sha)
-                          (println (str             submodule-path "/deps.edn already updated"))
-                          (println (str "Updating " submodule-path "/deps.edn")))
+                          (println (str          "'" submodule-path "/deps.edn' already updated"))
+                          (println (str "Updating '" submodule-path "/deps.edn'")))
                       (string/replace-part deps-edn current-depended-sha commit-sha))
                   (core.errors/error-catched (str "Error reading commit SHA of submodule: '" submodule-path "'")))))
 
@@ -63,9 +63,9 @@
   ; @param (string) commit-sha
   [options submodule-path commit-sha]
   (let [repository-name (get-in @submodule-updater.detector.state/DETECTED-SUBMODULES [submodule-path :repository-name])]
-       (println "Successful pushing from:" submodule-path)
-       (println "Returned commit SHA:" commit-sha)
-       (println "Updating" repository-name "dependency in the following submodule deps.edn files:")
+       (println (str "Successful pushing from: '" submodule-path "'"))
+       (println (str "Returned commit SHA: '" commit-sha "'"))
+       (println (str "Updating '" repository-name "' dependency in the following submodule 'deps.edn' files:"))
        (doseq [[% _] @submodule-updater.detector.state/DETECTED-SUBMODULES]
               (when (submodule-updater.reader.env/depends-on? % repository-name)
                     (if-let [deps-edn (get-updated-deps-edn options % repository-name commit-sha)]
@@ -82,13 +82,13 @@
   ; @param (string) submodule-path
   [options submodule-path]
   (println "-------------")
-  (println "Updating submodule:" submodule-path "...")
+  (println "Updating submodule: '" submodule-path "' ...")
   (cache-local-changes! options submodule-path)
   (if (submodule-updater.updater.env/submodule-locally-changed? submodule-path)
       (if-let [target-branch (submodule-updater.core.env/get-config-item options submodule-path :target-branch "main")]
               (if (core.env/submodule-branch-checked-out? submodule-path target-branch)
                   (if-let [commit-message (submodule-updater.updater.env/get-next-commit-message options submodule-path target-branch)]
-                          (do (println "Pushing commit:" commit-message "from submodule:" submodule-path "to branch:" target-branch "...")
+                          (do (println (str "Pushing commit: '" commit-message "' from submodule: '" submodule-path "' to branch: '" target-branch "' ..."))
                               (let [{:keys [exit] :as dbg} (push-cached-changes! options submodule-path target-branch commit-message)]
                                    (if (-> exit zero?)
                                        (if-let [latest-local-commit-sha (submodule-updater.updater.env/get-latest-local-commit-sha options submodule-path target-branch)]
@@ -99,7 +99,7 @@
                           (core.errors/error-catched (str "Error creating commit message for: '" submodule-path "'")))
                   (core.errors/error-catched (str "Submodule '" submodule-path"' is checked out on another branch than the provided '" target-branch "' target branch")))
               (core.errors/error-catched (str "Unable to read config item ':target-branch' for submodule: '" submodule-path "'")))
-      (println "Submodule unchanged:" submodule-path)))
+      (println (str "Submodule unchanged: '" submodule-path "'"))))
 
 (defn update-submodules!
   ; @param (map) options
