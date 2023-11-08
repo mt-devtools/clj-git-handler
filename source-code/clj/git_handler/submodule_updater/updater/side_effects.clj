@@ -20,9 +20,10 @@
   ;
   ; @param (map) options
   ; @param (string) submodule-path
-  [_ _]
+  [_ submodule-path]
   (println "Caching local changes ...")
-  (shell/sh "git" "add" "."))
+  (shell/with-sh-dir submodule-path
+   (shell/sh "git" "add" ".")))
 
 (defn push-cached-changes!
   ; @ignore
@@ -32,8 +33,10 @@
   ; @param (string) target-branch
   ; @param (string) commit-message
   [options submodule-path target-branch commit-message]
-  (shell/sh "git" "commit" "-m" commit-message)
-  (shell/sh "git" "push" "origin" target-branch))
+  (shell/with-sh-dir submodule-path
+    (do
+      (shell/sh "git" "commit" "-m" commit-message)
+      (shell/sh "git" "push" "origin" target-branch))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -104,6 +107,6 @@
   ; @param (map) options
   [options]
   (doseq [[submodule-path] @submodule-updater.builder.state/DEPENDENCY-TREE]
-         (shell/with-sh-dir submodule-path (update-submodule! options submodule-path)))
+         (update-submodule! options submodule-path))
   (println "-------------")
   (println "Submodules updated"))

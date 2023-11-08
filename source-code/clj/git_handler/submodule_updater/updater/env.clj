@@ -16,10 +16,11 @@
   ; @ignore
   ;
   ; @param (string) submodule-path
-  [_]
+  [submodule-path]
   ; cached = staged
-  (-> (shell/sh "git" "diff" "--name-only" "--cached")
-      :out empty? not))
+  (shell/with-sh-dir submodule-path
+    (-> (shell/sh "git" "diff" "--name-only" "--cached")
+        :out empty? not)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -59,7 +60,7 @@
   ;
   ; @return (string)
   [_ submodule-path branch]
-  (let [{:keys [exit out] :as dbg} (shell/sh "git" "log" "origin" branch)]
+  (let [{:keys [exit out] :as dbg} (shell/with-sh-dir submodule-path (shell/sh "git" "log" "origin" branch))]
        (if (-> exit zero?)
            (-> out (string/after-first-occurence  "commit" {:return? false})
                    (string/before-first-occurence "\n"     {:return? false})
@@ -79,7 +80,7 @@
   ;
   ; @return (string)
   [_ submodule-path branch]
-  (let [{:keys [exit out] :as dbg} (shell/sh "git" "log" "origin" branch)]
+  (let [{:keys [exit out] :as dbg} (shell/with-sh-dir submodule-path (shell/sh "git" "log" "origin" branch))]
        (if (-> exit zero?)
            (-> out (string/after-first-occurence  "Date:" {:return? false})
                    (string/after-first-occurence  "\n\n"  {:return? false})
