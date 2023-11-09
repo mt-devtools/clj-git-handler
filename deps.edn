@@ -7,5 +7,5 @@
          bithandshake/cljc-io     {:git/url "https://github.com/bithandshake/cljc-io"
                                    :sha     "8903a3b5d1f32078f2d5298ae6538c62b1d7dec9"}
          bithandshake/cljc-time   {:git/url "https://github.com/bithandshake/cljc-time"
-                                   :sha     "017b6f55ba96961e85f362daf8ce54cb12730f8b"}
+                                   :sha     "ae30bf98668a05b998804eb596629e1cd2cce8a4"}
          org.clojure/clojure      {:mvn/version "1.10.1"}}}
