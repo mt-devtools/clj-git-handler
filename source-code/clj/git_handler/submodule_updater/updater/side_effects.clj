@@ -24,7 +24,8 @@
        (println (str "Updating '" repository-name "' dependency in the following submodules' 'deps.edn' files:"))
        (doseq [[% _] @submodule-updater.detector.state/DETECTED-SUBMODULES]
               (if (submodule-updater.reader.env/depends-on? % repository-name)
-                  (deps-edn-handler/update-dependency-git-commit-sha! % repository-name commit-sha)))))
+                  (try (deps-edn-handler/update-dependency-git-commit-sha! % repository-name commit-sha)
+                       (catch Exception e (println e)))))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
