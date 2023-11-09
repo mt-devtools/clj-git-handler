@@ -1,7 +1,9 @@
 
 (ns git-handler.core.env
-    (:require [io.api     :as io]
-              [string.api :as string]))
+    (:require [clojure.java.shell      :as shell]
+              [git-handler.core.errors :as core.errors]
+              [io.api                  :as io]
+              [string.api              :as string]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -130,17 +132,94 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn read-submodule-deps-edn
+(defn get-submodule-local-commit-history
   ; @description
-  ; Returns the parsed content of the 'deps.edn' file found in the submodule's directory.
+  ; Returns the local commit history of the given branch of submodule.
+  ;
+  ; @param (string) submodule-path
+  ; @param (string) branch
+  ;
+  ; @usage
+  ; (get-submodule-local-commit-history "submodules/my-submodule" "main")
+  ;
+  ; @example
+  ; (get-submodule-local-commit-history "submodules/my-submodule" "main")
+  ; =>
+  ; {...}
+  ;
+  ; @return (string)
+  [submodule-path branch]
+  (let [{:keys [exit out] :as dbg} (shell/with-sh-dir submodule-path (shell/sh "git" "log" "origin" branch))]
+       (if (-> exit zero?)
+           (-> out)
+           (core.errors/error-catched (str "Cannot read local commit history of submodule: '" submodule-path "' on branch: '" branch "'")
+                                      (str "Error: " dbg)))))
+
+(defn get-submodule-last-local-commit-message
+  ; @description
+  ; Returns the last local commit message of the given branch of submodule.
+  ;
+  ; @param (string) submodule-path
+  ; @param (string) branch
+  ;
+  ; @usage
+  ; (get-submodule-last-local-commit-message "submodules/my-submodule" "main")
+  ;
+  ; @return (string)
+  [submodule-path branch]
+  (let [local-commit-history (get-submodule-local-commit-history submodule-path branch)]
+       (or (-> local-commit-history (string/after-first-occurence  "Date:" {:return? false})
+                                    (string/after-first-occurence  "\n\n"  {:return? false})
+                                    (string/before-first-occurence "\n"    {:return? false})
+                                    (string/trim)
+                                    (string/use-nil))
+           (core.errors/error-catched (str "Error getting last local commit message of: '" submodule-path "' on branch: '" branch "'")))))
+
+(defn get-submodule-last-local-commit-sha
+  ; @description
+  ; Returns the last local commit SHA of the given branch of submodule.
+  ;
+  ; @param (string) submodule-path
+  ; @param (string) branch
+  ;
+  ; @usage
+  ; (get-submodule-last-local-commit-sha "submodules/my-submodule" "main")
+  ;
+  ; @return (string)
+  [submodule-path branch]
+  (let [local-commit-history (get-submodule-local-commit-history submodule-path branch)]
+       (or (-> local-commit-history (string/after-first-occurence  "commit" {:return? false})
+                                    (string/before-first-occurence "\n"     {:return? false})
+                                    (string/trim)
+                                    (string/use-nil))
+           (core.errors/error-catched (str "Error getting last local commit SHA of: '" submodule-path "' on branch: '" branch "'")))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn submodule-local-branch-changed?
+  ; @description
+  ; Returns whether the given local branch of the submodule contains cached / staged changes.
+  ;
+  ; @param (string) submodule-path
+  ; @param (string) branch
+  ;
+  ; @usage
+  ; (submodule-local-branch-changed? "submodules/my-submodule" "main")
+  ;
+  ; @return (boolean)
+  [submodule-path branch])
+  ; TODO
+
+(defn submodule-head-branch-changed?
+  ; @description
+  ; Returns whether the HEAD branch of the submodule contains cached / staged changes.
   ;
   ; @param (string) submodule-path
   ;
-  ; @example
-  ; (read-submodule-deps-edn "submodules/my-submodule")
-  ; =>
-  ; "\n{:paths ["src"]\n :deps {author/repository-name {...}}}\n"
+  ; @usage
+  ; (submodule-head-branch-changed? "submodules/my-submodule")
   ;
-  ; @return (map)
+  ; @return (boolean)
   [submodule-path]
-  (io/read-edn-file (str submodule-path "/deps.edn")))
+  (shell/with-sh-dir submodule-path (-> (shell/sh "git" "diff" "--name-only" "--cached") :out empty? not)))

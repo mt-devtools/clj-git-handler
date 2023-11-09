@@ -6,5 +6,5 @@
 
 ; @ignore
 ;
-; @constant (map)
+; @constant (vector)
 (def DEPENDENCY-TREE (atom []))

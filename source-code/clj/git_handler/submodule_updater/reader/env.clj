@@ -12,8 +12,8 @@
   ;
   ; @description
   ; - Takes a git URL and iterates over the previously detected submodules.
-  ; - If one of the other detected submodules has the same URL as its dependency
-  ;   it qualifies the submodule as an inner dependency.
+  ; - If one of the other detected submodules has the same URL as its dependency it qualifies
+  ;   the the given git URL's corresponding submodule as an inner dependency and returns TRUE.
   ;
   ; @param (string) git-url
   ;

@@ -40,8 +40,8 @@
   ; @ignore
   ;
   ; @description
-  ; - Returns whether the submodule is depend on other submodules.
-  ; - It isn't necessary for a submodule to depend on other INNER submodules!
+  ; - Returns whether the submodule is depend on other submodules (it isn't necessary
+  ;   for a submodule to depend on other INNER submodules).
   ;
   ; @param (string) submodule-path
   ;
@@ -56,7 +56,7 @@
   ;
   ; @description
   ; - Returns whether the submodule has INNER dependencies that are not added to the dependency tree yet.
-  ; - A submodule can be non-depend if it has no known INNER dependencies,
+  ; - A submodule is qualified as non-depend if it has no known INNER dependencies,
   ;   or all of its inner dependencies are already added to the dependency tree.
   ;
   ; @param (string) submodule-path
@@ -76,7 +76,7 @@
   ; @ignore
   ;
   ; @description
-  ; Returns the submodules' paths (in a vector) that have INNER dependencies
+  ; Returns all the submodules' paths (in a vector) that have INNER dependencies
   ; but are not added to the dependency tree yet.
   ;
   ; @return (strings in vector)

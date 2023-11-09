@@ -9,8 +9,8 @@
   ; @ignore
   ;
   ; @description
-  ; Returns the submodule' git URL that is found by the 'detect-submodule!' function
-  ; in the config file of the submodule in the host project's '.git' directory
+  ; Returns the submodule's Git URL what is found in the config file of the submodule
+  ; in the host project's '.git' directory by the 'detect-submodule!' function.
   ;
   ; @param (string) submodule-path
   ;

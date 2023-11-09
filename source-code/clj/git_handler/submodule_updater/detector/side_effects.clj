@@ -28,22 +28,22 @@
   ; @ignore
   ;
   ; @description
-  ; - Stores the git URL and the repository name in the 'DETECTED-SUBMODULES' atom
-  ; - Git submodules has a '.git' file and not a '.git' directory as normal git modules.
-  ;   In that '.git' file there is a 'gitdir' path which points relatively to
+  ; - Stores the git URL and the repository name of the submodule in the 'DETECTED-SUBMODULES' atom.
+  ; - Git submodules has a '.git' file and not a '.git' directory as in normal git modules.
+  ;   In the '.git' file there is a 'gitdir' path which points relatively to
   ;   the submodule's '.git' directory (which is placed in the root project's '.git' directory).
   ;
-  ; @param (string) subdirectory-path
-  [subdirectory-path]
-  (if-let [git-url (core.env/get-submodule-git-url subdirectory-path)]
+  ; @param (string) submodule-path
+  [submodule-path]
+  (if-let [git-url (core.env/get-submodule-git-url submodule-path)]
           (if-let [repository-name (core.utils/git-url->repository-name git-url)]
-                  (store-detected-submodule! subdirectory-path {:git-url git-url :repository-name repository-name}))))
+                  (store-detected-submodule! submodule-path {:git-url git-url :repository-name repository-name}))))
 
 (defn detect-submodules!
   ; @ignore
   ;
   ; @description
-  ; 1. Detects the subdirectories on the give paths.
+  ; 1. Detects the subdirectories on the given paths that are contain a '.git' file.
   ; 2. Iterates over the subdirectory list and passes the found subdirectory paths to the 'detect-submodule!' function.
   ;
   ; @param (map) options

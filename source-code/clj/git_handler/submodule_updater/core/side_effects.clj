@@ -43,12 +43,12 @@
   ; (update-submodule-dependencies! {:source-paths ["my-submodules"]})
   ;
   ; @usage
-  ; (defn my-commit-message-f [latest-commit-message] ...)
+  ; (defn my-commit-message-f [last-commit-message] ...)
   ; (update-submodule-dependencies! {:default {:commit-message-f my-commit-message-f
   ;                                            :target-branch "my-branch"}})
   ;
   ; @usage
-  ; (defn my-commit-message-f [latest-commit-message] ...)
+  ; (defn my-commit-message-f [last-commit-message] ...)
   ; (update-submodule-dependencies! {:config {"author/my-repository" {:commit-message-f my-commit-message-f
   ;                                                                   :target-branch "my-branch"}}})
   ([]
