@@ -11,4 +11,4 @@
   [& error-message]
   (doseq [line error-message]
          (println line))
-  (throw :error-catched))
+  (throw (Exception. :error-catched)))
