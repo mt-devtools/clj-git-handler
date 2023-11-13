@@ -18,7 +18,7 @@
   ;
   ; @param (map) options
   ; @param (integer)(opt) kill-switch
-  ; In case of the function couldn't resolve a dependency it could easily go to an infinite loop
+  ; In case the function couldn't resolve a dependency it could easily go to an infinite loop
   ; and the 'kill-switch' parameter's job is to stop that runaway recursion.
   [options & [kill-switch]]
 
