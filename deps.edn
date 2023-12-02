@@ -5,7 +5,7 @@
          bithandshake/cljc-fruits {:git/url "https://github.com/bithandshake/cljc-fruits"
                                    :sha     "568ee3b7bb6b9d39e894c96754e12584d3490985"}
          bithandshake/cljc-io     {:git/url "https://github.com/bithandshake/cljc-io"
-                                   :sha     "a6edddf538d6143aea91a702df64f736cddeb50b"}
+                                   :sha     "b936261c0f1cfb82353ba3a30037c572420afba6"}
          bithandshake/cljc-time   {:git/url "https://github.com/bithandshake/cljc-time"
-                                   :sha     "4f3910cb6eb6d6af2a7a09b67990d259ba10e982"}
+                                   :sha     "9e6099cb0f1d7cbf398f8554280b51a658f266b1"}
          org.clojure/clojure      {:mvn/version "1.10.1"}}}
