@@ -1,9 +1,9 @@
 
 (ns git-handler.submodule-updater.updater.env
-    (:require [git-handler.core.env                       :as core.env]
-              [git-handler.core.errors                    :as core.errors]
-              [git-handler.submodule-updater.core.env     :as submodule-updater.core.env]
-              [time.api                                   :as time]))
+    (:require [git-handler.core.env                   :as core.env]
+              [git-handler.core.errors                :as core.errors]
+              [git-handler.submodule-updater.core.env :as submodule-updater.core.env]
+              [time.api                               :as time]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

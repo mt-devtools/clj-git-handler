@@ -1,7 +1,7 @@
 
 (ns git-handler.api
-    (:require [git-handler.core.side-effects                   :as core.side-effects]
-              [git-handler.core.env                            :as core.env]
+    (:require [git-handler.core.env                            :as core.env]
+              [git-handler.core.side-effects                   :as core.side-effects]
               [git-handler.core.utils                          :as core.utils]
               [git-handler.gitignore.env                       :as gitignore.env]
               [git-handler.gitignore.side-effects              :as gitignore.side-effects]
