@@ -26,11 +26,11 @@
   ;
   ; @return (string)
   [git-url]
-  (letfn [(f [[submodule-path submodule-props]]
-             (if (= (core.utils/git-url->repository-name   git-url)
-                    (core.utils/git-url->repository-name (:git-url submodule-props)))
-                 (-> submodule-path)))]
-         (some f @submodule-updater.detector.state/DETECTED-SUBMODULES)))
+  (letfn [(f0 [[submodule-path submodule-props]]
+              (if (= (core.utils/git-url->repository-name   git-url)
+                     (core.utils/git-url->repository-name (:git-url submodule-props)))
+                  (-> submodule-path)))]
+         (some f0 @submodule-updater.detector.state/DETECTED-SUBMODULES)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

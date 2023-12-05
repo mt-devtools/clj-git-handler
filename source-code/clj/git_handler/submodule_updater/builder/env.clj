@@ -18,8 +18,8 @@
   ;
   ; @return (boolean)
   [submodule-path]
-  (letfn [(f [[% _]] (= % submodule-path))]
-         (some f @submodule-updater.builder.state/DEPENDENCY-TREE)))
+  (letfn [(f0 [[% _]] (= % submodule-path))]
+         (some f0 @submodule-updater.builder.state/DEPENDENCY-TREE)))
 
 (defn dependency-tree-built?
   ; @ignore
@@ -29,9 +29,9 @@
   ;
   ; @return (boolean)
   []
-  (letfn [(f [[submodule-path _]]
-             (submodule-added-to-dependency-tree? submodule-path))]
-         (every? f @submodule-updater.detector.state/DETECTED-SUBMODULES)))
+  (letfn [(f0 [[submodule-path _]]
+              (submodule-added-to-dependency-tree? submodule-path))]
+         (every? f0 @submodule-updater.detector.state/DETECTED-SUBMODULES)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -64,9 +64,9 @@
   ; @return (boolean)
   [submodule-path]
   (if-let [dependencies (get @submodule-updater.reader.state/INNER-DEPENDENCIES submodule-path)]
-          (letfn [(f [[dep-name url sha]]
-                     (-> url submodule-updater.core.env/git-url->submodule-path submodule-added-to-dependency-tree?))]
-                 (every? f dependencies))
+          (letfn [(f0 [[dep-name url sha]]
+                      (-> url submodule-updater.core.env/git-url->submodule-path submodule-added-to-dependency-tree?))]
+                 (every? f0 dependencies))
           :submodule-has-no-inner-dependencies))
 
 ;; ----------------------------------------------------------------------------
@@ -81,9 +81,9 @@
   ;
   ; @return (strings in vector)
   []
-  (letfn [(f [result [submodule-path _]]
-             (if (or (submodule-added-to-dependency-tree? submodule-path)
-                     (submodule-non-depend?               submodule-path))
-                 (->   result)
-                 (conj result submodule-path)))]
-         (reduce f [] @submodule-updater.detector.state/DETECTED-SUBMODULES)))
+  (letfn [(f0 [result [submodule-path _]]
+              (if (or (submodule-added-to-dependency-tree? submodule-path)
+                      (submodule-non-depend?               submodule-path))
+                  (->   result)
+                  (conj result submodule-path)))]
+         (reduce f0 [] @submodule-updater.detector.state/DETECTED-SUBMODULES)))

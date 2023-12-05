@@ -19,9 +19,9 @@
   ;
   ; @return (boolean)
   [git-url]
-  (letfn [(f [[_ %]] (= (core.utils/git-url->repository-name (:git-url %))
-                        (core.utils/git-url->repository-name   git-url)))]
-         (some f @submodule-updater.detector.state/DETECTED-SUBMODULES)))
+  (letfn [(f0 [[_ %]] (= (core.utils/git-url->repository-name (:git-url %))
+                         (core.utils/git-url->repository-name   git-url)))]
+         (some f0 @submodule-updater.detector.state/DETECTED-SUBMODULES)))
 
 (defn get-submodule-inner-dependencies
   ; @ignore
@@ -48,6 +48,6 @@
   [submodule-path repository-name]
   ; The values have to be converted to strings, otherwise somehow they are always different!
   (let [dependencies (get @submodule-updater.reader.state/INNER-DEPENDENCIES submodule-path)]
-       (letfn [(f [[% _ _]] (= (str %)
-                               (str repository-name)))]
-              (some f dependencies))))
+       (letfn [(f0 [[% _ _]] (= (str %)
+                                (str repository-name)))]
+              (some f0 dependencies))))
