@@ -1,9 +1,9 @@
 
 (ns git-handler.gitignore.side-effects
-    (:require [git-handler.gitignore.config :as gitignore.config]
+    (:require [fruits.string.api            :as string]
+              [git-handler.gitignore.config :as gitignore.config]
               [git-handler.gitignore.env    :as gitignore.env]
-              [io.api                       :as io]
-              [string.api                   :as string]))
+              [io.api                       :as io]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

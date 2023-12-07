@@ -1,11 +1,11 @@
 
 (ns git-handler.submodule-updater.detector.side-effects
-    (:require [git-handler.core.env                         :as core.env]
+    (:require [fruits.string.api                            :as string]
+              [fruits.vector.api                            :as vector]
+              [git-handler.core.env                         :as core.env]
               [git-handler.core.utils                       :as core.utils]
               [git-handler.submodule-updater.detector.state :as submodule-updater.detector.state]
-              [io.api                                       :as io]
-              [string.api                                   :as string]
-              [vector.api                                   :as vector]))
+              [io.api                                       :as io]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

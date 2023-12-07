@@ -1,11 +1,11 @@
 
 (ns git-handler.submodule-updater.reader.side-effects
     (:require [deps-edn-handler.api                         :as deps-edn-handler]
+              [fruits.vector.api                            :as vector]
               [git-handler.core.env                         :as core.env]
               [git-handler.submodule-updater.detector.state :as submodule-updater.detector.state]
               [git-handler.submodule-updater.reader.env     :as submodule-updater.reader.env]
-              [git-handler.submodule-updater.reader.state   :as submodule-updater.reader.state]
-              [vector.api                                   :as vector]))
+              [git-handler.submodule-updater.reader.state   :as submodule-updater.reader.state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

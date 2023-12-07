@@ -1,10 +1,10 @@
 
 (ns git-handler.submodule-updater.builder.side-effects
-    (:require [git-handler.core.errors                      :as core.errors]
+    (:require [fruits.vector.api                            :as vector]
+              [git-handler.core.errors                      :as core.errors]
               [git-handler.submodule-updater.builder.env    :as submodule-updater.builder.env]
               [git-handler.submodule-updater.builder.state  :as submodule-updater.builder.state]
-              [git-handler.submodule-updater.detector.state :as submodule-updater.detector.state]
-              [vector.api                                   :as vector]))
+              [git-handler.submodule-updater.detector.state :as submodule-updater.detector.state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 
 (ns git-handler.gitignore.env
-    (:require [git-handler.gitignore.config :as gitignore.config]
-              [io.api                       :as io]
-              [string.api                   :as string]))
+    (:require [fruits.string.api            :as string]
+              [git-handler.gitignore.config :as gitignore.config]
+              [io.api                       :as io]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------

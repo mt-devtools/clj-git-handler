@@ -1,9 +1,9 @@
 
 (ns git-handler.core.env
     (:require [clojure.java.shell      :as shell]
+              [fruits.string.api       :as string]
               [git-handler.core.errors :as core.errors]
-              [io.api                  :as io]
-              [string.api              :as string]))
+              [io.api                  :as io]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
