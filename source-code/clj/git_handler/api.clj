@@ -10,7 +10,7 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; git-handler.core.env
+; @redirect (git-handler.core.env)
 (def read-submodule-git-file                 core.env/read-submodule-git-file)
 (def get-submodule-git-directory-path        core.env/get-submodule-git-directory-path)
 (def read-submodule-config-file              core.env/read-submodule-config-file)
@@ -24,19 +24,19 @@
 (def submodule-local-branch-changed?         core.env/submodule-local-branch-changed?)
 (def submodule-head-branch-changed?          core.env/submodule-head-branch-changed?)
 
-; git-handler.core.side-effects
+; @redirect (git-handler.core.side-effects)
 (def cache-submodule-local-changes! core.side-effects/cache-submodule-local-changes!)
 (def push-submodule-cached-changes! core.side-effects/push-submodule-cached-changes!)
 
-; git-handler.core.utils
+; @redirect (git-handler.core.utils)
 (def git-url->repository-name core.utils/git-url->repository-name)
 
-; git-handler.gitignore.env
+; @redirect (git-handler.gitignore.env)
 (def get-gitignore gitignore.env/get-gitignore)
 (def ignored?      gitignore.env/ignored?)
 
-; git-handler.gitignore.side-effects
+; @redirect (git-handler.gitignore.side-effects)
 (def ignore! gitignore.side-effects/ignore!)
 
-; git-handler.submodule-updater.core.side-effects
+; @redirect (git-handler.submodule-updater.core.side-effects)
 (def update-submodule-dependencies! submodule-updater.core.side-effects/update-submodule-dependencies!)
