@@ -172,7 +172,7 @@
                                     (string/after-first-occurence  "\n\n"  {:return? false})
                                     (string/before-first-occurence "\n"    {:return? false})
                                     (string/trim)
-                                    (string/use-nil))
+                                    (string/to-nil {:if-empty? true}))
            (core.errors/error-catched (str "Error getting last local commit message of: '" submodule-path "' on branch: '" branch "'")))))
 
 (defn get-submodule-last-local-commit-sha
@@ -191,7 +191,7 @@
        (or (-> local-commit-history (string/after-first-occurence  "commit" {:return? false})
                                     (string/before-first-occurence "\n"     {:return? false})
                                     (string/trim)
-                                    (string/use-nil))
+                                    (string/to-nil {:if-empty? true}))
            (core.errors/error-catched (str "Error getting last local commit SHA of: '" submodule-path "' on branch: '" branch "'")))))
 
 ;; ----------------------------------------------------------------------------
