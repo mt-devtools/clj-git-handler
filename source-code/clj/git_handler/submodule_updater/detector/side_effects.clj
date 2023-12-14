@@ -51,11 +51,11 @@
   ;   Default: ["submodules"]}
   [{:keys [source-paths] :or {source-paths ["submodules"]}}]
   (reset! submodule-updater.detector.state/DETECTED-SUBMODULES nil)
-  (letfn [; Cuts the "/.git" part from end of the '.git' file's path
+  (letfn [; Cuts off the "/.git" part from end of the '.git' file's path
           ; "my-submodule/.git" => "my-submodule"
           (cut-f [git-file] (-> git-file (string/not-ends-with! "/.git")))
 
-          ; Cuts the "/.git" part from the end of all '.git' file's paths in the given vector.
+          ; Cuts off the "/.git" part from the end of all '.git' file's paths in the given vector.
           ; ["my-submodule/.git"] => ["my-submodule"]
           (go-up-f [git-files] (-> git-files (vector/->items cut-f)))
 
