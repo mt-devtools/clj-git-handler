@@ -26,13 +26,16 @@
   ;
   ; @param (map)(opt) options
   ; {:config (map)(opt)
-  ;   {"author/my-repository" {:commit-message-f (function)(opt)
-  ;                            :target-branch (string)(opt)}}
-  ;  :default (map)(opt)
-  ;   {:commit-message-f (function)(opt)
-  ;     Default time.api/timestamp-string}
-  ;    :target-branch (string)(opt)
-  ;     Default: "main"
+  ;   {"author/my-repository" (map)(opt)
+  ;     {:commit-message-f (function)(opt)
+  ;      :on-pushed-f (function)(opt)
+  ;      :target-branch (string)(opt)}}
+  ;    :default (map)(opt)
+  ;     {:commit-message-f (function)(opt)
+  ;       Default time.api/timestamp-string
+  ;      :on-pushed-f (function)(opt)
+  ;      :target-branch (string)(opt)
+  ;       Default: "main"}}
   ;  :source-paths (vector)(opt)
   ;   Default: ["submodules"]}
   ;
@@ -44,13 +47,17 @@
   ;
   ; @usage
   ; (defn my-commit-message-f [last-commit-message] ...)
-  ; (update-submodule-dependencies! {:default {:commit-message-f my-commit-message-f
-  ;                                            :target-branch "my-branch"}})
+  ; (defn my-on-pushed-f      [submodule-path commit-message commit-sha] ...)
+  ; (update-submodule-dependencies! {:config {:default {:commit-message-f my-commit-message-f
+  ;                                                     :on-pushed-f      my-on-pushed-f
+  ;                                                     :target-branch    "my-branch"}})
   ;
   ; @usage
   ; (defn my-commit-message-f [last-commit-message] ...)
+  ; (defn my-on-pushed-f      [submodule-path commit-message commit-sha] ...)
   ; (update-submodule-dependencies! {:config {"author/my-repository" {:commit-message-f my-commit-message-f
-  ;                                                                   :target-branch "my-branch"}}})
+  ;                                                                   :on-pushed-f      my-on-pushed-f
+  ;                                                                   :target-branch    "my-branch"}}})
   ([]
    (update-submodule-dependencies! {}))
 

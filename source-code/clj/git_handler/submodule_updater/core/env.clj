@@ -40,9 +40,8 @@
   ;
   ; @description
   ; - Returns a specified configuration value.
-  ; - If the value is not found in the 'options' map under the submodule's name,
-  ;   it tries to get it from the default values (in the 'options' map) and if no
-  ;   default value is found either it returns the given 'default-value'.
+  ; - If the value is not found in the submodule's config, it tries to get it from the default config,
+  ;   and if no value is found in the default config either, it returns the given 'default-value'.
   ;
   ; @param (map) options
   ; @param (string) submodule-path
@@ -50,14 +49,14 @@
   ; @param (*) default-value
   ;
   ; @usage
-  ; (get-config-item {:config  {"author/my-repository" {:target-branch "development"}} <- 1. Tries to get the value from the submodule's config
-  ;                   :default {:target-branch "default-branch"}}                      <- 2. Tries to get the value from the default config
-  ;                  "fallback-branch")                                                <- 3. If neither is found, it returns the provided 'default-value'
+  ; (get-config-item {:config {"author/my-repository" {:target-branch "development"}     <- 1. Tries to get the value from the submodule's config
+  ;                            :default               {:target-branch "default-branch"}} <- 2. Tries to get the value from the default config
+  ;                  "fallback-branch")                                                  <- 3. If neither is found, it returns the provided 'default-value'
   ;
   ; @return (*)
   [options submodule-path config-key & [default-value]]
   (if-let [repository-name (-> submodule-path submodule-updater.detector.env/submodule-path->git-url core.utils/git-url->repository-name)]
           (or (get-in options [:config repository-name config-key])
-              (get-in options [:default                config-key] default-value)
+              (get-in options [:config :default        config-key] default-value)
               (core.errors/error-catched (str "Unable to read config item '" config-key "' for submodule: '" submodule-path "'")))
           (core.errors/error-catched (str "Cannot derive repository name from submodule path: '" submodule-path "'"))))

@@ -32,6 +32,16 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn apply-on-pushed-f!
+  ; @ignore
+  ;
+  ; @param (map) options
+  ; @param (string) submodule-path
+  [options submodule-path commit-message last-local-commit-sha]
+  (if-let [on-pushed-f (submodule-updater.core.env/get-config-item options submodule-path :on-pushed-f)]
+          (try (on-pushed-f submodule-path commit-message last-local-commit-sha)
+               (catch Exception e nil))))
+
 (defn- update-submodule!
   ; @ignore
   ;
@@ -46,8 +56,9 @@
                (if (core.env/submodule-branch-checked-out? submodule-path target-branch)
                    (if-let [commit-message (submodule-updater.updater.env/get-next-commit-message options submodule-path target-branch)]
                            (and (core.side-effects/push-submodule-cached-changes! submodule-path target-branch commit-message)
-                                (if-let [last-local-commit-sha (core.env/get-submodule-last-local-commit-sha submodule-path target-branch)]
-                                        (update-dependency-in-other-submodules! options submodule-path last-local-commit-sha))))
+                                (when-let [last-local-commit-sha (core.env/get-submodule-last-local-commit-sha submodule-path target-branch)]
+                                          (apply-on-pushed-f!                     options submodule-path commit-message last-local-commit-sha)
+                                          (update-dependency-in-other-submodules! options submodule-path                last-local-commit-sha))))
                    (core.errors/error-catched (str "Submodule '" submodule-path"' is checked out on another branch than the provided '" target-branch "' target branch"))))))
 
 (defn update-submodules!
