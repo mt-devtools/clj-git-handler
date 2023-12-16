@@ -29,4 +29,4 @@
               (if-let [last-local-commit-message (core.env/get-submodule-last-local-commit-message submodule-path branch)]
                       (or (try (commit-message-f last-local-commit-message)
                                (catch Exception e nil))
-                          (core.errors/error-catched (str "Error creating commit message for: '" submodule-path "'")))))))
+                          (core.errors/error-catched (str "Cannot create commit message for: '" submodule-path "'")))))))

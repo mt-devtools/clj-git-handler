@@ -37,6 +37,6 @@
 
                   ; Calls itself recursively ...
                   (build-dependency-tree! options (inc (or kill-switch 0)))))
-      (core.errors/error-catched (str "Building dependency tree stopped by kill switch, error while recursing!")
+      (core.errors/error-catched (str "Building dependency tree has been stopped by kill switch, error while recursing!")
                                  (str "Unresolved dependencies:")
                                  (submodule-updater.builder.env/get-unresolved-dependencies))))

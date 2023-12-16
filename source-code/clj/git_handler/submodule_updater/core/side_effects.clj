@@ -9,20 +9,11 @@
 ;; ----------------------------------------------------------------------------
 
 (defn update-submodule-dependencies!
-  ; @ignore
-  ;
   ; @description
-  ; - Pushes the changed submodules' commits and updates the other submodules'
-  ;   'deps.edn' files with the returned commit SHA.
-  ; - You can specify which folders in your project contains submodules,
-  ;   by default the function updates submodules in the '/submodules' folder.
-  ; - By using the ':default' property you can use your own commit message generator
-  ;   function and change the default target branch
-  ; - By default the function uses an actual timestamp as commit messages and the "main" branch to push commits.
-  ; - In addition you can specify these settings for each submodules separetely with using the ':config' property.
-  ; - This function updates dependencies in 'deps.edn' files that are referenced as in the following format:
-  ;   {:deps {author/repository-name {:git/url "https://github.com/author/repository-name"
-  ;                                   :sha     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
+  ; - Pushes commits of changed submodules, and updates the 'deps.edn' files in other submodules
+  ;   with the returned commit SHA.
+  ; - This function updates dependencies that are referenced in the following format:
+  ;   {:deps {author/my-repository {:git/url "..." :sha "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}}
   ;
   ; @param (map)(opt) options
   ; {:config (map)(opt)

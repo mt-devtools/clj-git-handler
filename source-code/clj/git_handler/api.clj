@@ -10,7 +10,64 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-; @redirect (git-handler.core.env)
+; @tutorial How to add a pattern to the '.gitignore' file?
+;
+; The ['git-handler.api/ignore!'](#ignore!) function appends the given pattern
+; to the '.gitignore' file, and returns the updated '.gitignore' file's content.
+;
+; @usage
+; (ignore! "my-file.txt")
+
+; @tutorial How to check whether a pattern is added to the '.gitignore' file?
+;
+; The ['git-handler.api/ignored?'](#ignored?) function checks whether the given
+; pattern is added to the '.gitignore' file.
+;
+; @usage
+; (ignored? "my-file.txt")
+
+; @tutorial How to update submodule dependencies?
+;
+; @note
+; This function operates only in Clojure projects that use 'deps.edn' files to manage dependencies!
+;
+; The ['git-handler.api/update-submodule-dependencies!'](#update-submodule-dependencies!) function detects git submodules
+; within the specified folders, and builds a dependency tree of the found submodules
+; and their relations to each other (using their 'deps.edn' files to figure out relations).
+;
+; When the dependency tree is built, the function iterates over the detected submodules
+; to push their local changes to the specified branches. After successful pushings,
+; it takes the returned commit SHA and updates the 'deps.edn' files in other submodules
+; (if they depend on the pushed submodule).
+;
+; With default options, this function detects submodules in the 'submodules' folder,
+; pushes changes to 'main' branches and uses timestamps as commit messages.
+;
+; @usage
+; (update-submodule-dependencies!)
+;
+; @usage
+; (update-submodule-dependencies! {:source-paths ["my-submodules"]})
+;
+; @usage
+; (defn my-commit-message-f [previous-commit-message] ...)
+; (update-submodule-dependencies! {:config {:default {:commit-message-f my-commit-message-f
+;                                                     :target-branch    "my-branch"}}})
+;
+; @usage
+; (defn my-commit-message-f [latest-commit-message] ...)
+; (update-submodule-dependencies! {:config {"author/my-repository" {:commit-message-f my-commit-message-f
+;                                                                   :target-branch    "my-branch"}}})
+;
+; This function updates dependencies that are referenced in the following format:
+;
+; @usage
+; {:deps {author/my-repository {:git/url "..." :sha "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}}
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+; @redirect (git-handler.core.env/*)
 (def read-submodule-git-file                 core.env/read-submodule-git-file)
 (def get-submodule-git-directory-path        core.env/get-submodule-git-directory-path)
 (def submodule-path?                         core.env/submodule-path?)
@@ -26,19 +83,19 @@
 (def submodule-local-branch-changed?         core.env/submodule-local-branch-changed?)
 (def submodule-head-branch-changed?          core.env/submodule-head-branch-changed?)
 
-; @redirect (git-handler.core.side-effects)
+; @redirect (git-handler.core.side-effects/*)
 (def cache-submodule-local-changes! core.side-effects/cache-submodule-local-changes!)
 (def push-submodule-cached-changes! core.side-effects/push-submodule-cached-changes!)
 
-; @redirect (git-handler.core.utils)
+; @redirect (git-handler.core.utils/*)
 (def git-url->repository-name core.utils/git-url->repository-name)
 
-; @redirect (git-handler.gitignore.env)
+; @redirect (git-handler.gitignore.env/*)
 (def get-gitignore gitignore.env/get-gitignore)
 (def ignored?      gitignore.env/ignored?)
 
-; @redirect (git-handler.gitignore.side-effects)
+; @redirect (git-handler.gitignore.side-effects/*)
 (def ignore! gitignore.side-effects/ignore!)
 
-; @redirect (git-handler.submodule-updater.core.side-effects)
+; @redirect (git-handler.submodule-updater.core.side-effects/*)
 (def update-submodule-dependencies! submodule-updater.core.side-effects/update-submodule-dependencies!)

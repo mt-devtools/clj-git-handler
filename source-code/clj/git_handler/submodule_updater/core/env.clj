@@ -22,7 +22,7 @@
   ; @param (string) git-url
   ;
   ; @usage
-  ; (git-url->submodule-path "git@github.com:author/repository")
+  ; (git-url->submodule-path "git@github.com:author/my-repository")
   ;
   ; @return (string)
   [git-url]

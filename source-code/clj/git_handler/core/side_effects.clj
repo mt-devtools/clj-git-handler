@@ -9,7 +9,7 @@
 
 (defn cache-submodule-local-changes!
   ; @description
-  ; - Caches / stages the local changes of the HEAD branch of submodule.
+  ; - Caches (stages) the local changes of the HEAD branch of the submodule.
   ; - Returns TRUE in case of successful caching.
   ;
   ; @param (string) submodule-path
@@ -23,7 +23,7 @@
   (let [{:keys [exit] :as dbg} (shell/with-sh-dir submodule-path (shell/sh "git" "add" "."))]
        ; ...
        (if (-> exit zero? not)
-           (core.errors/error-catched (str "Error caching local changes in submodule: '" submodule-path "'")
+           (core.errors/error-catched (str "Cannot cache local changes of submodule: '" submodule-path "'")
                                       (str "Error: " dbg)))
        ; ...
        (if (core.env/submodule-head-branch-changed? submodule-path)
@@ -34,7 +34,7 @@
 
 (defn push-submodule-cached-changes!
   ; @description
-  ; - Pushes the cached / staged local changes of the given branch of submodule.
+  ; - Pushes the cached (staged) local changes of the given branch of submodule.
   ; - Returns TRUE in case of successful pushing.
   ;
   ; @param (string) submodule-path
@@ -51,7 +51,7 @@
                                                                      (shell/sh "git" "push" "origin" target-branch)))]
        ; ...
        (if (-> exit zero? not)
-           (core.errors/error-catched (str "Error pushing commit for submodule: '" submodule-path "' to branch: '" target-branch "'")
+           (core.errors/error-catched (str "Cannot push commit for submodule: '" submodule-path "' to branch: '" target-branch "'")
                                       (str "Error: " dbg)))
        ; ...
        (println (str "Commit successfully pushed"))

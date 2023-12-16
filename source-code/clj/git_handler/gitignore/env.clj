@@ -9,7 +9,7 @@
 
 (defn get-gitignore
   ; @description
-  ; Reads and returns the content of the .gitignore file.
+  ; Returns the content of the '.gitignore' file.
   ;
   ; @param (map)(opt) options
   ; {:filepath (string)(opt)
@@ -30,7 +30,7 @@
 
 (defn ignored?
   ; @description
-  ; Checks whether the given pattern already ignored in the .gitignore file.
+  ; Checks whether the given pattern is added to the '.gitignore' file.
   ;
   ; @param (string) pattern
   ; @param (map)(opt) options

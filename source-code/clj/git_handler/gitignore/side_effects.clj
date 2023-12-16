@@ -10,8 +10,8 @@
 
 (defn ignore!
   ; @description
-  ; Writes the given pattern to the .gitignore file.
-  ; You can specify a group to the added pattern by passing the :group property.
+  ; - Appends the given pattern to the '.gitignore' file
+  ; - Returns the updated '.gitignore' file's content.
   ;
   ; @param (string) pattern
   ; @param (map)(opt) options
@@ -29,13 +29,12 @@
   ; @usage
   ; (ignore! "my-file.ext" {:filepath "my-directory/.gitignore"})
   ;
-  ; @example
+  ; @usage
   ; (ignore! "my-file.ext" {:group "My ignored files"})
   ; =>
   ; "\n# My ignored files\nmy-file.ext\n"
   ;
   ; @return (string)
-  ; Returns the updated .gitignore file's content.
   ([pattern]
    (ignore! pattern {}))
 

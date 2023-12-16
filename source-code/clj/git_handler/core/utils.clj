@@ -6,40 +6,35 @@
 ;; ----------------------------------------------------------------------------
 
 (defn git-url->repository-name
-  ; @ignore
-  ;
   ; @description
-  ; - Extracts the 'author/repository-name' from the given 'git-url'.
-  ; - It can read four types of 'git-url':
-  ;   - 'git@github.com:author/repository'
-  ;   - 'git@github.com:author/repository.git'
-  ;   - 'https://github.com/author/repository'
-  ;   - 'https://github.com/author/repository.git'
+  ; - Derives the 'author/my-repository' string from the given 'git-url'.
+  ; - It can read the following types of 'git-url':
+  ;   - 'git@github.com:author/my-repository'
+  ;   - 'git@github.com:author/my-repository.git'
+  ;   - 'https://github.com/author/my-repository'
+  ;   - 'https://github.com/author/my-repository.git'
   ;
   ; @param (string) git-url
   ;
   ; @usage
-  ; (git-url->repository-name "git@github.com:author/repository")
-  ;
-  ; @example
-  ; (git-url->repository-name "git@github.com:author/repository")
+  ; (git-url->repository-name "git@github.com:author/my-repository")
   ; =>
-  ; "author/repository"
+  ; "author/my-repository"
   ;
-  ; @example
-  ; (git-url->repository-name "git@github.com:author/repository.git")
+  ; @usage
+  ; (git-url->repository-name "git@github.com:author/my-repository.git")
   ; =>
-  ; "author/repository"
+  ; "author/my-repository"
   ;
-  ; @example
-  ; (git-url->repository-name "https://github.com/author/repository")
+  ; @usage
+  ; (git-url->repository-name "https://github.com/author/my-repository")
   ; =>
-  ; "author/repository"
+  ; "author/my-repository"
   ;
-  ; @example
-  ; (git-url->repository-name "https://github.com/author/repository.git")
+  ; @usage
+  ; (git-url->repository-name "https://github.com/author/my-repository.git")
   ; =>
-  ; "author/repository"
+  ; "author/my-repository"
   ;
   ; @return (string)
   [git-url]

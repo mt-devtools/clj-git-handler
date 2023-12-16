@@ -27,7 +27,7 @@
                     (println (str "Updating '" % "' submodule's 'deps.edn' ..."))
                     (or (try (deps-edn-handler/update-git-dependency-commit-sha! % repository-name commit-sha)
                              (catch Exception e (println e)))
-                        (core.errors/error-catched (str "Error updating 'deps.edn' file of submodule '" % "'")))))))
+                        (core.errors/error-catched (str "Cannot update 'deps.edn' file of submodule '" % "'")))))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -62,6 +62,8 @@
                 (core.errors/error-catched (str "Submodule '" submodule-path"' is checked out on another branch than the provided '" target-branch "' target branch"))))))
 
 (defn update-submodules!
+  ; @ignore
+  ;
   ; @param (map) options
   [options]
   (doseq [[submodule-path] @submodule-updater.builder.state/DEPENDENCY-TREE]

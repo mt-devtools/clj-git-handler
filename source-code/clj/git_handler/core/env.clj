@@ -16,7 +16,7 @@
   ;
   ; @param (string) submodule-path
   ;
-  ; @example
+  ; @usage
   ; (read-submodule-git-file "submodules/my-submodule")
   ; =>
   ; "gitdir: ../../.git/modules/submodules/my-submodule"
@@ -34,7 +34,7 @@
   ;
   ; @param (string) submodule-path
   ;
-  ; @example
+  ; @usage
   ; (get-submodule-git-directory-path "submodules/my-submodule")
   ; =>
   ; "../../.git/modules/submodules/my-submodule"
@@ -69,7 +69,7 @@
   ; @usage
   ; (get-submodule-paths "submodules")
   ;
-  ; @example
+  ; @usage
   ; (get-submodule-paths "submodules")
   ; =>
   ; ["submodules/my-submodule"]
@@ -105,7 +105,7 @@
   ;
   ; @param (string) submodule-path
   ;
-  ; @example
+  ; @usage
   ; (get-submodule-git-url "submodules/my-submodule")
   ; =>
   ; "git@github.com:author/my-submodule.git"
@@ -127,7 +127,7 @@
   ;
   ; @param (string) submodule-path
   ;
-  ; @example
+  ; @usage
   ; (read-submodule-head-file "submodules/my-submodule")
   ; =>
   ; "ref: refs/heads/main"
@@ -143,7 +143,7 @@
   ;
   ; @param (string) submodule-path
   ;
-  ; @example
+  ; @usage
   ; (get-submodule-head-branch "submodules/my-submodule")
   ; =>
   ; "main"
@@ -181,9 +181,6 @@
   ;
   ; @usage
   ; (get-submodule-local-commit-history "submodules/my-submodule" "main")
-  ;
-  ; @example
-  ; (get-submodule-local-commit-history "submodules/my-submodule" "main")
   ; =>
   ; "commit xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   ;  Author: Author <00000000+author@users.noreply.github.com>
@@ -214,9 +211,6 @@
   ;
   ; @usage
   ; (get-submodule-last-local-commit-message "submodules/my-submodule" "main")
-  ;
-  ; @example
-  ; (get-submodule-last-local-commit-message "submodules/my-submodule" "main")
   ; =>
   ; "Initial commit"
   ;
@@ -228,7 +222,7 @@
                                     (string/before-first-occurence "\n"    {:return? false})
                                     (string/trim)
                                     (string/to-nil {:if-empty? true}))
-           (core.errors/error-catched (str "Error getting last local commit message of: '" submodule-path "' on branch: '" branch "'")))))
+           (core.errors/error-catched (str "Cannot get last local commit message of submodule: '" submodule-path "' on branch: '" branch "'")))))
 
 (defn get-submodule-last-local-commit-sha
   ; @description
@@ -238,9 +232,6 @@
   ; @param (string) branch
   ;
   ; @usage
-  ; (get-submodule-last-local-commit-sha "submodules/my-submodule" "main")
-  ;
-  ; @example
   ; (get-submodule-last-local-commit-sha "submodules/my-submodule" "main")
   ; =>
   ; "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
@@ -252,7 +243,7 @@
                                     (string/before-first-occurence "\n"     {:return? false})
                                     (string/trim)
                                     (string/to-nil {:if-empty? true}))
-           (core.errors/error-catched (str "Error getting last local commit SHA of: '" submodule-path "' on branch: '" branch "'")))))
+           (core.errors/error-catched (str "Cannot get last local commit SHA of submodule: '" submodule-path "' on branch: '" branch "'")))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
