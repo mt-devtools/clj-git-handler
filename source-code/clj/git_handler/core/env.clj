@@ -12,7 +12,7 @@
 
 (defn read-submodule-git-file
   ; @description
-  ; Returns the content of the '.git' file in the given submodule's directory (if found)
+  ; Returns the content of the '.git' file in the given submodule's directory (if found).
   ;
   ; @param (string) submodule-path
   ;
@@ -29,8 +29,8 @@
 
 (defn get-submodule-git-directory-path
   ; @description
-  ; 1. Reads the '.git' file in the given submodule's directory (if found)
-  ; 2. Returns the 'gitdir' value from the '.git' file (if any)
+  ; - Reads the '.git' file in the given submodule's directory (if found).
+  ; - Returns the 'gitdir' value from the '.git' file (if any).
   ;
   ; @param (string) submodule-path
   ;
@@ -250,7 +250,7 @@
 
 (defn submodule-local-branch-changed?
   ; @description
-  ; Returns whether the given local branch of the submodule contains cached / staged changes.
+  ; Returns whether the given local branch of the submodule contains cached (staged) changes.
   ;
   ; @param (string) submodule-path
   ; @param (string) branch
@@ -264,7 +264,7 @@
 
 (defn submodule-head-branch-changed?
   ; @description
-  ; Returns whether the HEAD branch of the submodule contains cached / staged changes.
+  ; Returns whether the HEAD branch of the submodule contains cached (staged) changes.
   ;
   ; @param (string) submodule-path
   ;
