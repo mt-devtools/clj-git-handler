@@ -18,7 +18,7 @@ Check out the latest commit on the [release branch](https://github.com/mt-devtoo
 
 ### Documentation
 
-The <strong>clj-git-handler</strong> functional documentation is [available here](documentation/COVER.md).
+The <strong>clj-git-handler</strong> functional documentation is [available here](https://mt-devtools.github.io/clj-git-handler).
 
 ### Changelog
 
