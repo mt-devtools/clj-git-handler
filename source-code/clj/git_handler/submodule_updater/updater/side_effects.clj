@@ -52,14 +52,14 @@
   (println (str "Updating submodule: '" submodule-path "' ..."))
   (and (core.side-effects/cache-submodule-local-changes! submodule-path)
        (core.env/submodule-head-branch-changed?          submodule-path)
-       (if-let [target-branch (submodule-updater.core.env/get-config-item options submodule-path :target-branch "main")]
-               (if (core.env/submodule-branch-checked-out? submodule-path target-branch)
-                   (if-let [commit-message (submodule-updater.updater.env/get-next-commit-message options submodule-path target-branch)]
-                           (and (core.side-effects/push-submodule-cached-changes! submodule-path target-branch commit-message)
-                                (when-let [last-local-commit-sha (core.env/get-submodule-last-local-commit-sha submodule-path target-branch)]
-                                          (apply-on-pushed-f!                     options submodule-path commit-message last-local-commit-sha)
-                                          (update-dependency-in-other-submodules! options submodule-path                last-local-commit-sha))))
-                   (core.errors/error-catched (str "Submodule '" submodule-path"' is checked out on another branch than the provided '" target-branch "' target branch"))))))
+       (let [target-branch (submodule-updater.core.env/get-config-item options submodule-path :target-branch "main")]
+            (if (core.env/submodule-branch-checked-out? submodule-path target-branch)
+                (if-let [commit-message (submodule-updater.updater.env/get-next-commit-message options submodule-path target-branch)]
+                        (and (core.side-effects/push-submodule-cached-changes! submodule-path target-branch commit-message)
+                             (when-let [last-local-commit-sha (core.env/get-submodule-last-local-commit-sha submodule-path target-branch)]
+                                       (apply-on-pushed-f!                     options submodule-path commit-message last-local-commit-sha)
+                                       (update-dependency-in-other-submodules! options submodule-path                last-local-commit-sha))))
+                (core.errors/error-catched (str "Submodule '" submodule-path"' is checked out on another branch than the provided '" target-branch "' target branch"))))))
 
 (defn update-submodules!
   ; @param (map) options

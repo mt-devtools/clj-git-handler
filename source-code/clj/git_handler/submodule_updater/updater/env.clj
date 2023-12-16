@@ -13,18 +13,20 @@
   ;
   ; @param (map) options
   ; {:config (map)(opt)
-  ;   {"author/my-repository" {:commit-message-f (function)(opt)
-  ;                            :target-branch (string)(opt)}}
-  ;  :default (map)(opt)
-  ;   {:commit-message-f (function)(opt)
-  ;    :target-branch (string)(opt)}}
+  ;   {"author/my-repository" (map)(opt)
+  ;     {:commit-message-f (function)(opt)
+  ;      :target-branch (string)(opt)}
+  ;    :default (map)(opt)
+  ;     {:commit-message-f (function)(opt)
+  ;      :target-branch (string)(opt)}}
   ; @param (string) submodule-path
   ; @param (string) branch
   ;
   ; @return (string)
   [options submodule-path branch]
-  (if-let [commit-message-f (submodule-updater.core.env/get-config-item options submodule-path :commit-message-f (fn [%] (time/timestamp-string)))]
-          (if-let [last-local-commit-message (core.env/get-submodule-last-local-commit-message submodule-path branch)]
-                  (or (try (commit-message-f last-local-commit-message)
-                           (catch Exception e nil))
-                      (core.errors/error-catched (str "Error creating commit message for: '" submodule-path "'"))))))
+  (letfn [(f0 [_] (time/timestamp-string))]
+         (let [commit-message-f (submodule-updater.core.env/get-config-item options submodule-path :commit-message-f f0)]
+              (if-let [last-local-commit-message (core.env/get-submodule-last-local-commit-message submodule-path branch)]
+                      (or (try (commit-message-f last-local-commit-message)
+                               (catch Exception e nil))
+                          (core.errors/error-catched (str "Error creating commit message for: '" submodule-path "'")))))))

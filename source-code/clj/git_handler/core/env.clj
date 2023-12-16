@@ -2,6 +2,8 @@
 (ns git-handler.core.env
     (:require [clojure.java.shell      :as shell]
               [fruits.string.api       :as string]
+              [fruits.regex.api :as regex]
+              [fruits.vector.api :as vector]
               [git-handler.core.errors :as core.errors]
               [io.api                  :as io]))
 
@@ -21,7 +23,9 @@
   ;
   ; @return (string)
   [submodule-path]
-  (io/read-file (str submodule-path "/.git")))
+  ; The 'get-submodule-paths' function requires the '{:warn? false}' setting,
+  ; otherwise it would print warning messages for every subdirectory that does not contain a submodule.
+  (io/read-file (str submodule-path "/.git") {:warn? false}))
 
 (defn get-submodule-git-directory-path
   ; @description
@@ -40,6 +44,42 @@
   (if-let [git-file-content (read-submodule-git-file submodule-path)]
           (-> git-file-content (string/after-first-occurence  "gitdir: " {:return? false})
                                (string/before-first-occurence "\n"       {:return? false}))))
+
+(defn submodule-path?
+  ; @description
+  ; Returns whether the given directory path corresponds to a git submodule.
+  ;
+  ; @param (string) submodule-path
+  ;
+  ; @usage
+  ; (submodule-path? "submodules/my-submodule")
+  ;
+  ; @return (boolean)
+  [submodule-path]
+  (if-let [git-file-content (read-submodule-git-file submodule-path)]
+          (regex/re-match? git-file-content #"^gitdir\:")))
+
+(defn get-submodule-paths
+  ; @description
+  ; Returns whether the given directory path corresponds to a git submodule.
+  ;
+  ; @param (string)(opt) directory-path
+  ; Default: "."
+  ;
+  ; @usage
+  ; (get-submodule-paths "submodules")
+  ;
+  ; @example
+  ; (get-submodule-paths "submodules")
+  ; =>
+  ; ["submodules/my-submodule"]
+  ;
+  ; @return (strings in vector)
+  ([]
+   (get-submodule-paths "."))
+
+  ([directory-path]
+   (-> directory-path io/all-subdirectory-list (vector/keep-items-by submodule-path?))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -145,7 +185,17 @@
   ; @example
   ; (get-submodule-local-commit-history "submodules/my-submodule" "main")
   ; =>
-  ; {...}
+  ; "commit xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  ;  Author: Author <00000000+author@users.noreply.github.com>
+  ;  Date:   Fri Oct 21 14:14:14 2020 +0000
+  ;
+  ;      Second commit
+  ;
+  ;  commit xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  ;  Author: Author <00000000+author@users.noreply.github.com>
+  ;  Date:   Fri Oct 21 12:12:12 2020 +0000
+  ;
+  ;      Initial commit"
   ;
   ; @return (string)
   [submodule-path branch]
@@ -164,6 +214,11 @@
   ;
   ; @usage
   ; (get-submodule-last-local-commit-message "submodules/my-submodule" "main")
+  ;
+  ; @example
+  ; (get-submodule-last-local-commit-message "submodules/my-submodule" "main")
+  ; =>
+  ; "Initial commit"
   ;
   ; @return (string)
   [submodule-path branch]
@@ -184,6 +239,11 @@
   ;
   ; @usage
   ; (get-submodule-last-local-commit-sha "submodules/my-submodule" "main")
+  ;
+  ; @example
+  ; (get-submodule-last-local-commit-sha "submodules/my-submodule" "main")
+  ; =>
+  ; "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   ;
   ; @return (string)
   [submodule-path branch]

@@ -46,15 +46,15 @@
   ; (update-submodule-dependencies! {:source-paths ["my-submodules"]})
   ;
   ; @usage
-  ; (defn my-commit-message-f [last-commit-message] ...)
-  ; (defn my-on-pushed-f      [submodule-path commit-message commit-sha] ...)
+  ; (defn my-commit-message-f [previous-commit-message] ...)
+  ; (defn my-on-pushed-f      [submodule-path pushed-commit-message pushed-commit-sha] ...)
   ; (update-submodule-dependencies! {:config {:default {:commit-message-f my-commit-message-f
   ;                                                     :on-pushed-f      my-on-pushed-f
   ;                                                     :target-branch    "my-branch"}})
   ;
   ; @usage
-  ; (defn my-commit-message-f [last-commit-message] ...)
-  ; (defn my-on-pushed-f      [submodule-path commit-message commit-sha] ...)
+  ; (defn my-commit-message-f [previous-commit-message] ...)
+  ; (defn my-on-pushed-f      [submodule-path pushed-commit-message pushed-commit-sha] ...)
   ; (update-submodule-dependencies! {:config {"author/my-repository" {:commit-message-f my-commit-message-f
   ;                                                                   :on-pushed-f      my-on-pushed-f
   ;                                                                   :target-branch    "my-branch"}}})

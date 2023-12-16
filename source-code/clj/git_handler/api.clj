@@ -13,6 +13,8 @@
 ; @redirect (git-handler.core.env)
 (def read-submodule-git-file                 core.env/read-submodule-git-file)
 (def get-submodule-git-directory-path        core.env/get-submodule-git-directory-path)
+(def submodule-path?                         core.env/submodule-path?)
+(def get-submodule-paths                     core.env/get-submodule-paths)
 (def read-submodule-config-file              core.env/read-submodule-config-file)
 (def get-submodule-git-url                   core.env/get-submodule-git-url)
 (def read-submodule-head-file                core.env/read-submodule-head-file)
