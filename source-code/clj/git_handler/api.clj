@@ -61,7 +61,7 @@
 ;
 ; This function updates dependencies that are referenced in the following format:
 ;
-; @usage
+; @code
 ; {:deps {author/my-repository {:git/url "..." :sha "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}}
 
 ;; ----------------------------------------------------------------------------
