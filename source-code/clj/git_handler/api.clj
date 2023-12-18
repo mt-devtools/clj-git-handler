@@ -12,7 +12,7 @@
 
 ; @tutorial How to add a pattern to the '.gitignore' file?
 ;
-; The ['git-handler.api/ignore!'](#ignore!) function appends the given pattern
+; The [git-handler.api/ignore!](#ignore!) function appends the given pattern
 ; to the '.gitignore' file, and returns the updated '.gitignore' file's content.
 ;
 ; @usage
@@ -20,7 +20,7 @@
 
 ; @tutorial How to check whether a pattern is added to the '.gitignore' file?
 ;
-; The ['git-handler.api/ignored?'](#ignored?) function checks whether the given
+; The [git-handler.api/ignored?](#ignored?) function checks whether the given
 ; pattern is added to the '.gitignore' file.
 ;
 ; @usage
@@ -31,7 +31,7 @@
 ; @note
 ; This function operates only in Clojure projects that use 'deps.edn' files to manage dependencies!
 ;
-; The ['git-handler.api/update-submodule-dependencies!'](#update-submodule-dependencies!) function detects git submodules
+; The [git-handler.api/update-submodule-dependencies!](#update-submodule-dependencies!) function detects git submodules
 ; within the specified folders, and builds a dependency tree of the found submodules
 ; and their relations to each other (using their 'deps.edn' files to figure out relations).
 ;

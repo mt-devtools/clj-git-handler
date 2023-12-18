@@ -1,9 +1,9 @@
 
 (ns git-handler.core.env
     (:require [clojure.java.shell      :as shell]
+              [fruits.regex.api        :as regex]
               [fruits.string.api       :as string]
-              [fruits.regex.api :as regex]
-              [fruits.vector.api :as vector]
+              [fruits.vector.api       :as vector]
               [git-handler.core.errors :as core.errors]
               [io.api                  :as io]))
 

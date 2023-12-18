@@ -43,7 +43,7 @@
   ; @ignore
   ;
   ; @description
-  ; 1. Detects the subdirectories on the given paths that are contain a '.git' file.
+  ; 1. Detects the subdirectories at the given source paths that contain a '.git' file.
   ; 2. Iterates over the subdirectory list and passes the found subdirectory paths to the 'detect-submodule!' function.
   ;
   ; @param (map) options
@@ -59,7 +59,7 @@
           ; ["my-submodule/.git"] => ["my-submodule"]
           (go-up-f [git-files] (-> git-files (vector/->items cut-f)))
 
-          ; Searches for .git files on the given source path.
+          ; Searches for '.git' files at the given source path.
           (search-f [source-path] (-> source-path (io/search-files #"\.git\b")))
 
           ; Collects all the submodule paths into the 'submodule-paths' vector.

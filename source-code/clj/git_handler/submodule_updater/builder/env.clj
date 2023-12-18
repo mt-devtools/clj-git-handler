@@ -55,7 +55,7 @@
   ; @ignore
   ;
   ; @description
-  ; - Returns whether the submodule has INNER dependencies that are not added to the dependency tree yet.
+  ; - Returns whether the submodule has INNER dependencies that are not added to the dependency tree (yet).
   ; - A submodule is qualified as non-depend if it has no known INNER dependencies,
   ;   or all of its inner dependencies are already added to the dependency tree.
   ;
