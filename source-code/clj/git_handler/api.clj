@@ -13,15 +13,14 @@
 ; @tutorial How to add a pattern to the '.gitignore' file?
 ;
 ; The [git-handler.api/ignore!](#ignore!) function appends the given pattern
-; to the '.gitignore' file, and returns the updated '.gitignore' file's content.
+; to the '.gitignore' file, and returns the updated file content.
 ;
 ; @usage
 ; (ignore! "my-file.txt")
 
 ; @tutorial How to check whether a pattern is added to the '.gitignore' file?
 ;
-; The [git-handler.api/ignored?](#ignored?) function checks whether the given
-; pattern is added to the '.gitignore' file.
+; The [git-handler.api/ignored?](#ignored?) function checks whether the given pattern is added to the '.gitignore' file.
 ;
 ; @usage
 ; (ignored? "my-file.txt")
@@ -29,15 +28,15 @@
 ; @tutorial How to update submodule dependencies?
 ;
 ; @note
-; This function operates only in Clojure projects that use 'deps.edn' files to manage dependencies!
+; This function operates only in Clojure projects that use 'deps.edn' file to manage dependencies!
 ;
 ; The [git-handler.api/update-submodule-dependencies!](#update-submodule-dependencies!) function detects git submodules
 ; within the specified folders, and builds a dependency tree of the found submodules
-; and their relations to each other (using their 'deps.edn' files to figure out relations).
+; and their relations to each other (using their 'deps.edn' file to figure out relations).
 ;
 ; When the dependency tree is built, the function iterates over the detected submodules
 ; to push their local changes to the specified branches. After successful pushings,
-; it takes the returned commit SHA and updates the 'deps.edn' files in other submodules
+; it takes the returned commit SHA and updates the 'deps.edn' file in other submodules
 ; (if they depend on the pushed submodule).
 ;
 ; With default options, this function detects submodules in the 'submodules' folder,
@@ -59,7 +58,7 @@
 ; (update-submodule-dependencies! {:config {"author/my-repository" {:commit-message-f my-commit-message-f
 ;                                                                   :target-branch    "my-branch"}}})
 ;
-; This function updates dependencies that are referenced in the following format:
+; This function updates dependencies (in 'deps.edn' files) that are referenced in the following format:
 ;
 ; @code
 ; {:deps {author/my-repository {:git/url "..." :sha "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}}

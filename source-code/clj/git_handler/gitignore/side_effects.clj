@@ -10,7 +10,7 @@
 
 (defn ignore!
   ; @description
-  ; - Appends the given pattern to the '.gitignore' file
+  ; - Appends the given pattern to the '.gitignore' file-
   ; - Returns the updated '.gitignore' file's content.
   ;
   ; @param (string) pattern

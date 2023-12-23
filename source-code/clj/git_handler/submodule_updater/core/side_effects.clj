@@ -10,9 +10,9 @@
 
 (defn update-submodule-dependencies!
   ; @description
-  ; - Pushes commits of changed submodules, and updates the 'deps.edn' files in other submodules
+  ; - Pushes commits of changed submodules, and updates the 'deps.edn' file in other submodules
   ;   with the returned commit SHA.
-  ; - This function updates dependencies that are referenced in the following format:
+  ; - This function updates dependencies (in 'deps.edn' files) that are referenced in the following format:
   ;   {:deps {author/my-repository {:git/url "..." :sha "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}}
   ;
   ; @param (map)(opt) options

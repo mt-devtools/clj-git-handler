@@ -12,7 +12,7 @@
 
 (defn read-submodule-git-file
   ; @description
-  ; Returns the content of the '.git' file in the given submodule's directory (if found).
+  ; Returns the content of the '.git' file (if found) at the given submodule path.
   ;
   ; @param (string) submodule-path
   ;
@@ -29,8 +29,8 @@
 
 (defn get-submodule-git-directory-path
   ; @description
-  ; - Reads the '.git' file in the given submodule's directory (if found).
-  ; - Returns the 'gitdir' value from the '.git' file (if any).
+  ; - Reads the '.git' file (if found) at the given submodule path.
+  ; - Returns the 'gitdir' value (if any) from the '.git' file.
   ;
   ; @param (string) submodule-path
   ;
@@ -61,7 +61,7 @@
 
 (defn get-submodule-paths
   ; @description
-  ; Returns whether the given directory path corresponds to a git submodule.
+  ; Returns the submodule paths found at the given directory path.
   ;
   ; @param (string)(opt) directory-path
   ; Default: "."
@@ -86,8 +86,8 @@
 
 (defn read-submodule-config-file
   ; @description
-  ; Returns the config file's content found in the git directory of the submodule
-  ; (nested in the host project's '.git' directory).
+  ; Returns the content of the config file that corresponds to the given submodule.
+  ; (Submodule config files are placed in the host project's '.git' directory).
   ;
   ; @param (string) submodule-path
   ;
@@ -101,7 +101,8 @@
 
 (defn get-submodule-git-url
   ; @description
-  ; Reads the remote origin git url of the submodule from the submodule's config file.
+  ; Returns the remote origin git url from the config file that corresponds to the given submodule.
+  ; (Submodule config files are placed in the host project's '.git' directory).
   ;
   ; @param (string) submodule-path
   ;
@@ -122,8 +123,8 @@
 
 (defn read-submodule-head-file
   ; @description
-  ; Returns the HEAD file's content found in the git directory of the submodule
-  ; (nested in the host project's '.git' directory).
+  ; Returns the content of the HEAD file that corresponds to the given submodule.
+  ; (Submodule HEAD files are placed in the host project's '.git' directory).
   ;
   ; @param (string) submodule-path
   ;
@@ -139,7 +140,7 @@
 
 (defn get-submodule-head-branch
   ; @description
-  ; Returns the actual HEAD branch of the submodule.
+  ; Returns the actual HEAD branch of the given submodule.
   ;
   ; @param (string) submodule-path
   ;
@@ -157,7 +158,7 @@
 
 (defn submodule-branch-checked-out?
   ; @description
-  ; Returns TRUE if the the passed branch is the actual HEAD branch of the submodule.
+  ; Returns TRUE if the the given branch is the actual HEAD branch of the submodule.
   ;
   ; @param (string) submodule-path
   ; @param (string) branch
@@ -174,7 +175,7 @@
 
 (defn get-submodule-local-commit-history
   ; @description
-  ; Returns the local commit history of the given branch of submodule.
+  ; Returns the local commit history of the given branch of the given submodule.
   ;
   ; @param (string) submodule-path
   ; @param (string) branch
@@ -204,7 +205,7 @@
 
 (defn get-submodule-last-local-commit-message
   ; @description
-  ; Returns the last local commit message of the given branch of submodule.
+  ; Returns the last local commit message of the given branch of the given submodule.
   ;
   ; @param (string) submodule-path
   ; @param (string) branch
@@ -226,7 +227,7 @@
 
 (defn get-submodule-last-local-commit-sha
   ; @description
-  ; Returns the last local commit SHA of the given branch of submodule.
+  ; Returns the last local commit SHA of the given branch of the given submodule.
   ;
   ; @param (string) submodule-path
   ; @param (string) branch
@@ -250,7 +251,7 @@
 
 (defn submodule-local-branch-changed?
   ; @description
-  ; Returns whether the given local branch of the submodule contains cached (staged) changes.
+  ; Returns whether the given local branch of the given submodule contains cached (staged) changes.
   ;
   ; @param (string) submodule-path
   ; @param (string) branch
@@ -264,7 +265,7 @@
 
 (defn submodule-head-branch-changed?
   ; @description
-  ; Returns whether the HEAD branch of the submodule contains cached (staged) changes.
+  ; Returns whether the HEAD branch of the given submodule contains cached (staged) changes.
   ;
   ; @param (string) submodule-path
   ;

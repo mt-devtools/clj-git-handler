@@ -9,7 +9,7 @@
 
 (defn cache-submodule-local-changes!
   ; @description
-  ; - Caches (stages) the local changes of the HEAD branch of the submodule.
+  ; - Caches (stages) the local changes of the HEAD branch of the given submodule.
   ; - Returns TRUE in case of successful caching.
   ;
   ; @param (string) submodule-path
@@ -34,7 +34,7 @@
 
 (defn push-submodule-cached-changes!
   ; @description
-  ; - Pushes the cached (staged) local changes of the given branch of submodule.
+  ; - Pushes the cached (staged) local changes of the given branch of the given submodule.
   ; - Returns TRUE in case of successful pushing.
   ;
   ; @param (string) submodule-path
