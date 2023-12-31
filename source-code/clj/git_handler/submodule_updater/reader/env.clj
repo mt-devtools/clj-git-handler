@@ -46,7 +46,7 @@
   ;
   ; @return (boolean)
   [submodule-path repository-name]
-  ; The values have to be converted to strings, otherwise somehow they are always different!
+  ; The values have to be converted to strings. Otherwise, somehow they are always different!
   (let [dependencies (get @submodule-updater.reader.state/INNER-DEPENDENCIES submodule-path)]
        (letfn [(f0 [[% _ _]] (= (str %)
                                 (str repository-name)))]

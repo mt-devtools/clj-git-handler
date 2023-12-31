@@ -18,12 +18,16 @@
 ; @usage
 ; (ignore! "my-file.txt")
 
+
+
 ; @tutorial How to check whether a pattern is added to the '.gitignore' file?
 ;
 ; The [git-handler.api/ignored?](#ignored?) function checks whether the given pattern is added to the '.gitignore' file.
 ;
 ; @usage
 ; (ignored? "my-file.txt")
+
+
 
 ; @tutorial How to update submodule dependencies?
 ;

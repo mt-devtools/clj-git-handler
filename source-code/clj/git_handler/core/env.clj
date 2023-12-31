@@ -23,8 +23,8 @@
   ;
   ; @return (string)
   [submodule-path]
-  ; The 'get-submodule-paths' function requires the '{:warn? false}' setting,
-  ; otherwise it would print warning messages for every subdirectory that does not contain a submodule.
+  ; The 'get-submodule-paths' function requires the '{:warn? false}' setting.
+  ; Otherwise, it would print warning messages for every subdirectory that does not contain a submodule.
   (io/read-file (str submodule-path "/.git") {:warn? false}))
 
 (defn get-submodule-git-directory-path
