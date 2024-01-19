@@ -250,6 +250,9 @@
 ;; ----------------------------------------------------------------------------
 
 (defn submodule-local-branch-changed?
+  ; @important
+  ; This function is incomplete and may not behave as expected.
+  ;
   ; @description
   ; Returns whether the given local branch of the given submodule contains cached (staged) changes.
   ;
