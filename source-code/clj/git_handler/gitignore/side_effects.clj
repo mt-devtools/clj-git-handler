@@ -52,6 +52,6 @@
                                           (string/after-first-occurence gitignore (str "# "group)))]
                           (write-gitignore! gitignore))
                      :else
-                     (let [gitignore (str (string/ends-with! gitignore "\n")
+                     (let [gitignore (str (string/end-with gitignore "\n")
                                           (str "\n# "group"\n"pattern"\n"))]
                           (write-gitignore! gitignore)))))))
