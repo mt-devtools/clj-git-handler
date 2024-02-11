@@ -12,8 +12,7 @@
 
 ; @tutorial How to add a pattern to the '.gitignore' file?
 ;
-; The [git-handler.api/ignore!](#ignore_) function appends the given pattern
-; to the '.gitignore' file, and returns the updated file content.
+; The [ignore!](#ignore_) function appends the given pattern to the '.gitignore' file, and returns the updated file content.
 ;
 ; @usage
 ; (ignore! "my-file.txt")
@@ -22,7 +21,7 @@
 
 ; @tutorial How to check whether a pattern is added to the '.gitignore' file?
 ;
-; The [git-handler.api/ignored?](#ignored_) function checks whether the given pattern is added to the '.gitignore' file.
+; The [ignored?](#ignored_) function checks whether the given pattern is added to the '.gitignore' file.
 ;
 ; @usage
 ; (ignored? "my-file.txt")
@@ -31,16 +30,15 @@
 
 ; @tutorial How to update submodule dependencies?
 ;
-; @note
-; This function operates only in Clojure projects that use 'deps.edn' file to manage dependencies!
+; @important
+; The 'update-submodule-dependencies!' function operates only in Clojure projects that use 'deps.edn' file to manage dependencies!
 ;
-; The [git-handler.api/update-submodule-dependencies!](#update-submodule-dependencies_) function detects git submodules
-; within the specified folders, and builds a dependency tree of the found submodules
-; and their relations to each other (using their 'deps.edn' file to figure out relations).
+; The [update-submodule-dependencies!](#update-submodule-dependencies_) function detects git submodules within the specified folders,
+; and builds a dependency tree of the found submodules and their relations to each other (using their 'deps.edn' file to figure out relations).
 ;
 ; When the dependency tree is built, the function iterates over the detected submodules
-; to push their local changes to the specified branches. After successful pushings,
-; it takes the returned commit SHA and updates the 'deps.edn' file in other submodules
+; and pushes their local changes to the specified branches. After successful pushings,
+; it takes the returned commit SHAs and updates the 'deps.edn' file in other submodules
 ; (if they depend on the pushed submodule).
 ;
 ; With default options, this function detects submodules in the 'submodules' folder,

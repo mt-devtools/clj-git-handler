@@ -9,9 +9,11 @@
 ;; ----------------------------------------------------------------------------
 
 (defn update-submodule-dependencies!
+  ; @important
+  ; This function operates only in Clojure projects that use 'deps.edn' file to manage dependencies!
+  ;
   ; @description
-  ; - Pushes commits of changed submodules, and updates the 'deps.edn' file in other submodules
-  ;   with the returned commit SHA.
+  ; - Pushes commits of changed submodules, and updates the 'deps.edn' file in other submodules with the returned commit SHA.
   ; - This function updates dependencies (in 'deps.edn' files) that are referenced in the following format:
   ;   {:deps {author/my-repository {:git/url "..." :sha "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}}
   ;
