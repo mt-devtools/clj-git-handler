@@ -17,7 +17,8 @@
 ; @usage
 ; (ignore! "my-file.txt")
 
-
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 ; @tutorial How to check whether a pattern is added to the '.gitignore' file?
 ;
@@ -26,12 +27,10 @@
 ; @usage
 ; (ignored? "my-file.txt")
 
-
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 ; @tutorial How to update submodule dependencies?
-;
-; @important
-; The 'update-submodule-dependencies!' function operates only in Clojure projects that use 'deps.edn' file to manage dependencies!
 ;
 ; The [update-submodule-dependencies!](#update-submodule-dependencies_) function detects git submodules within the specified folders,
 ; and builds a dependency tree of the found submodules and their relations to each other (using their 'deps.edn' file to figure out relations).
@@ -41,7 +40,7 @@
 ; it takes the returned commit SHAs and updates the 'deps.edn' file in other submodules
 ; (if they depend on the pushed submodule).
 ;
-; With default options, this function detects submodules in the 'submodules' folder,
+; With default options, the function detects submodules in the 'submodules' folder,
 ; pushes changes to 'main' branches and uses timestamps as commit messages.
 ;
 ; @usage
@@ -59,11 +58,6 @@
 ; (defn my-commit-message-f [latest-commit-message] ...)
 ; (update-submodule-dependencies! {:config {"author/my-repository" {:commit-message-f my-commit-message-f
 ;                                                                   :target-branch    "my-branch"}}})
-;
-; This function updates dependencies (in 'deps.edn' files) that are referenced in the following format:
-;
-; @code
-; {:deps {author/my-repository {:git/url "..." :sha "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}}}
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
