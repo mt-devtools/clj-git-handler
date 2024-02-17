@@ -9,6 +9,8 @@
   ;
   ; @param (list of strings) error-message
   [& error-message]
+  (println)
   (doseq [line error-message]
          (println line))
-  (throw (Exception. :error-catched)))
+  (println)
+  (throw (Exception. "Error catched")))

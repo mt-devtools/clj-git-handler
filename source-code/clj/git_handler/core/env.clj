@@ -197,6 +197,8 @@
   ;
   ; @return (string)
   [submodule-path branch]
+  (if-not (io/directory? submodule-path)
+          (core.errors/error-catched (str "Submodule path: \"" submodule-path "\" is not a directory!")))
   (let [{:keys [exit out] :as dbg} (shell/with-sh-dir submodule-path (shell/sh "git" "log" "origin" branch))]
        (if (-> exit zero?)
            (-> out)
@@ -277,4 +279,6 @@
   ;
   ; @return (boolean)
   [submodule-path]
+  (if-not (io/directory? submodule-path)
+          (core.errors/error-catched (str "Submodule path: \"" submodule-path "\" is not a directory!")))
   (shell/with-sh-dir submodule-path (-> (shell/sh "git" "diff" "--name-only" "--cached") :out empty? not)))

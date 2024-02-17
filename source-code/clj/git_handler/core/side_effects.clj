@@ -2,7 +2,8 @@
 (ns git-handler.core.side-effects
     (:require [clojure.java.shell      :as shell]
               [git-handler.core.env    :as core.env]
-              [git-handler.core.errors :as core.errors]))
+              [git-handler.core.errors :as core.errors]
+              [io.api                  :as io]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -20,6 +21,8 @@
   ; @return (boolean)
   [submodule-path]
   (println (str "Caching local changes for submodule: '" submodule-path "' ..."))
+  (if-not (io/directory? submodule-path)
+          (core.errors/error-catched (str "Submodule path: \"" submodule-path "\" is not a directory!")))
   (let [{:keys [exit] :as dbg} (shell/with-sh-dir submodule-path (shell/sh "git" "add" "."))]
        ; ...
        (if (-> exit zero? not)
@@ -47,6 +50,8 @@
   ; @return (boolean)
   [submodule-path target-branch commit-message]
   (println (str "Pushing commit: '" commit-message "' from submodule: '" submodule-path "' to branch: '" target-branch "' ..."))
+  (if-not (io/directory? submodule-path)
+          (core.errors/error-catched (str "Submodule path: \"" submodule-path "\" is not a directory!")))
   (let [{:keys [exit] :as dbg} (shell/with-sh-dir submodule-path (do (shell/sh "git" "commit" "-m" commit-message)
                                                                      (shell/sh "git" "push" "origin" target-branch)))]
        ; ...
