@@ -136,37 +136,3 @@
   [submodule-path]
   (if-let [git-directory-path (get-submodule-git-directory-path submodule-path)]
           (io/read-file (str submodule-path"/"git-directory-path"/HEAD"))))
-
-(defn get-submodule-head-branch
-  ; @description
-  ; Returns the actual HEAD branch of the given submodule.
-  ;
-  ; @param (string) submodule-path
-  ;
-  ; @usage
-  ; (get-submodule-head-branch "my-submodules/my-submodule")
-  ; =>
-  ; "main"
-  ;
-  ; @return (string)
-  [submodule-path]
-  (if-let [head-file-content (read-submodule-head-file submodule-path)]
-          (-> head-file-content (string/after-first-occurence  "refs/heads/" {:return? false})
-                                (string/before-first-occurence " "           {:return? true})
-                                (string/before-first-occurence "\n"          {:return? true}))))
-
-(defn submodule-branch-checked-out?
-  ; @description
-  ; Returns TRUE if the the given branch is the actual HEAD branch of the submodule.
-  ;
-  ; @param (string) submodule-path
-  ; @param (string) branch
-  ;
-  ; @usage
-  ; (submodule-branch-checked-out? "my-submodules/my-submodule" "main")
-  ; =>
-  ; true
-  ;
-  ; @return (boolean)
-  [submodule-path branch]
-  (= branch (get-submodule-head-branch submodule-path)))

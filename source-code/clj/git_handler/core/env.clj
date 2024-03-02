@@ -17,7 +17,7 @@
   ; @param (string) branch
   ;
   ; @usage
-  ; (get-local-commit-history "main")
+  ; (get-local-commit-history "my-branch")
   ; =>
   ; "commit xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   ;  Author: Author <00000000+author@users.noreply.github.com>
@@ -37,7 +37,7 @@
 
   ([git-path branch]
    (if-not (io/directory? git-path)
-           (core.errors/error-catched (str "Git path: \"" git-path "\" is not a directory!")))
+           (core.errors/error-catched (str "Git path: '" git-path "' is not a directory!")))
    (let [{:keys [exit out] :as dbg} (shell/with-sh-dir git-path (shell/sh "git" "log" "origin" branch))]
         (if (-> exit zero?)
             (-> out)
@@ -53,7 +53,7 @@
   ; @param (string) branch
   ;
   ; @usage
-  ; (get-last-local-commit-message "main")
+  ; (get-last-local-commit-message "my-branch")
   ; =>
   ; "Second commit"
   ;
@@ -79,7 +79,7 @@
   ; @param (string) branch
   ;
   ; @usage
-  ; (get-last-local-commit-sha "main")
+  ; (get-last-local-commit-sha "my-branch")
   ; =>
   ; "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   ;
@@ -98,6 +98,50 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
+(defn get-head-branch-name
+  ; @description
+  ; Returns the name of the actual HEAD branch.
+  ;
+  ; @param (string)(opt) git-path
+  ; Default: "."
+  ;
+  ; @usage
+  ; (get-head-branch-name)
+  ; =>
+  ; "my-branch"
+  ;
+  ; @return (string)
+  ([]
+   (get-head-branch-name "."))
+
+  ([git-path]
+   (if-not (io/directory? git-path)
+           (core.errors/error-catched (str "Git path: '" git-path "' is not a directory!")))
+   (shell/with-sh-dir git-path (-> (shell/sh "git" "rev-parse" "--abbrev-ref" "HEAD") :out string/trim))))
+
+(defn branch-checked-out?
+  ; @description
+  ; Returns TRUE if the the given branch is the actual HEAD branch.
+  ;
+  ; @param (string)(opt) git-path
+  ; Default: "."
+  ; @param (string) branch
+  ;
+  ; @usage
+  ; (branch-checked-out? "my-branch")
+  ; =>
+  ; true
+  ;
+  ; @return (boolean)
+  ([branch]
+   (branch-checked-out? "." branch))
+
+  ([git-path branch]
+   (= branch (get-head-branch-name git-path))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
 (defn local-branch-has-changes?
   ; @important
   ; This function is incomplete and may not behave as expected.
@@ -110,7 +154,7 @@
   ; @param (string) branch
   ;
   ; @usage
-  ; (local-branch-has-changes? "main")
+  ; (local-branch-has-changes? "my-branch")
   ; =>
   ; true
   ;
@@ -130,7 +174,7 @@
   ; @param (string) branch
   ;
   ; @usage
-  ; (local-branch-has-cached-changes? "main")
+  ; (local-branch-has-cached-changes? "my-branch")
   ; =>
   ; true
   ;
@@ -156,7 +200,7 @@
 
   ([git-path]
    (if-not (io/directory? git-path)
-           (core.errors/error-catched (str "Git path: \"" git-path "\" is not a directory!")))
+           (core.errors/error-catched (str "Git path: '" git-path "' is not a directory!")))
    (shell/with-sh-dir git-path (-> (shell/sh "git" "diff" "--name-only") :out empty? not))))
 
 (defn head-branch-has-cached-changes?
@@ -177,5 +221,5 @@
 
   ([git-path]
    (if-not (io/directory? git-path)
-           (core.errors/error-catched (str "Git path: \"" git-path "\" is not a directory!")))
+           (core.errors/error-catched (str "Git path: '" git-path "' is not a directory!")))
    (shell/with-sh-dir git-path (-> (shell/sh "git" "diff" "--name-only" "--cached") :out empty? not))))

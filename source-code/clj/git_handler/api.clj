@@ -67,12 +67,15 @@
 (def get-local-commit-history         core.env/get-local-commit-history)
 (def get-last-local-commit-message    core.env/get-last-local-commit-message)
 (def get-last-local-commit-sha        core.env/get-last-local-commit-sha)
+(def get-head-branch-name             core.env/get-head-branch-name)
+(def branch-checked-out?              core.env/branch-checked-out?)
 (def local-branch-has-changes?        core.env/local-branch-has-changes?)
 (def local-branch-has-cached-changes? core.env/local-branch-has-cached-changes?)
 (def head-branch-has-changes?         core.env/head-branch-has-changes?)
 (def head-branch-has-cached-changes?  core.env/head-branch-has-cached-changes?)
 
 ; @redirect (git-handler.core.side-effects/*)
+(def check-out-to-branch! core.side-effects/check-out-to-branch!)
 (def cache-local-changes! core.side-effects/cache-local-changes!)
 (def push-cached-changes! core.side-effects/push-cached-changes!)
 
@@ -97,5 +100,3 @@
 (def read-submodule-config-file       submodules.env/read-submodule-config-file)
 (def get-submodule-git-url            submodules.env/get-submodule-git-url)
 (def read-submodule-head-file         submodules.env/read-submodule-head-file)
-(def get-submodule-head-branch        submodules.env/get-submodule-head-branch)
-(def submodule-branch-checked-out?    submodules.env/submodule-branch-checked-out?)
