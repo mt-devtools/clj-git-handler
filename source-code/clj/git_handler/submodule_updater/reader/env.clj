@@ -42,7 +42,7 @@
   ; @param (string) repository-name
   ;
   ; @usage
-  ; (depends-on? "submodules/my-repository" "author/another-repository")
+  ; (depends-on? "my-submodules/my-repository" "author/another-repository")
   ;
   ; @return (boolean)
   [submodule-path repository-name]

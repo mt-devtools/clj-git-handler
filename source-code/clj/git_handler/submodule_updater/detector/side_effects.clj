@@ -2,7 +2,7 @@
 (ns git-handler.submodule-updater.detector.side-effects
     (:require [fruits.string.api                            :as string]
               [fruits.vector.api                            :as vector]
-              [git-handler.core.env                         :as core.env]
+              [git-handler.submodules.env                         :as submodules.env]
               [git-handler.core.utils                       :as core.utils]
               [git-handler.submodule-updater.detector.state :as submodule-updater.detector.state]
               [io.api                                       :as io]))
@@ -35,7 +35,7 @@
   ;
   ; @param (string) submodule-path
   [submodule-path]
-  (if-let [git-url (core.env/get-submodule-git-url submodule-path)]
+  (if-let [git-url (submodules.env/get-submodule-git-url submodule-path)]
           (if-let [repository-name (core.utils/git-url->repository-name git-url)]
                   (store-detected-submodule! submodule-path {:git-url git-url :repository-name repository-name}))))
 

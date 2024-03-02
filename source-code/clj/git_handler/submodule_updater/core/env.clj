@@ -35,13 +35,13 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn get-config-item
+(defn get-config-value
   ; @ignore
   ;
   ; @description
-  ; - Returns a specified configuration value.
-  ; - If the value is not found in the submodule's config, it tries to get it from the default config,
-  ;   and if no value is found in the default config either, it returns the given 'default-value'.
+  ; - Returns a specific configuration value.
+  ; - If the value is not found in the config map of the submodule, it tries to get it from the default config map,
+  ;   and if no value is found in the default config map either, it returns the given 'default-value'.
   ;
   ; @param (map) options
   ; @param (string) submodule-path
@@ -49,9 +49,14 @@
   ; @param (*) default-value
   ;
   ; @usage
-  ; (get-config-item {:config {"author/my-repository" {:target-branch "development"}     <- 1. Tries to get the value from the submodule's config
-  ;                            :default               {:target-branch "default-branch"}} <- 2. Tries to get the value from the default config
-  ;                  "fallback-branch")                                                  <- 3. If neither is found, it returns the provided 'default-value'
+  ; (get-config-value {:config {"author/my-repository" {:target-branch "development"}      ;; <- The primary source of the configuration value is the configuration map of the submodule.
+  ;                             :default               {:target-branch "default-branch"}}} ;; <- The secondary source of the configuration value is the default configuration map.
+  ;                   "my-submodules/my-repository"
+  ;                   :target-branch
+  ;                   "fallback-branch")                                                   ;; <-  The fallback source of the configuration value is the given 'default-value'.
+  ; =>
+  ; "development"
+  ;
   ;
   ; @return (*)
   [options submodule-path config-key & [default-value]]

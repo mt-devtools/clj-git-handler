@@ -22,12 +22,13 @@
   ;
   ; @usage
   ; (ignore! "my-file.ext")
-  ;
-  ; @usage
-  ; (ignore! "my-file.ext" {:group "My ignored files"})
+  ; =>
+  ; "\n# clj-git-handler\nmy-file.ext"
   ;
   ; @usage
   ; (ignore! "my-file.ext" {:filepath "my-directory/.gitignore"})
+  ; =>
+  ; "\n# clj-git-handler\nmy-file.ext"
   ;
   ; @usage
   ; (ignore! "my-file.ext" {:group "My ignored files"})

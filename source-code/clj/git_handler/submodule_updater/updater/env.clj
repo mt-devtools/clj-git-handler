@@ -25,8 +25,8 @@
   ; @return (string)
   [options submodule-path branch]
   (letfn [(f0 [_] (time/timestamp-string))]
-         (let [commit-message-f (submodule-updater.core.env/get-config-item options submodule-path :commit-message-f f0)]
-              (if-let [last-local-commit-message (core.env/get-submodule-last-local-commit-message submodule-path branch)]
+         (let [commit-message-f (submodule-updater.core.env/get-config-value options submodule-path :commit-message-f f0)]
+              (if-let [last-local-commit-message (core.env/get-last-local-commit-message submodule-path branch)]
                       (or (try (commit-message-f last-local-commit-message)
                                (catch Exception e nil))
                           (core.errors/error-catched (str "Cannot create commit message for: '" submodule-path "'")))))))

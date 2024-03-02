@@ -2,6 +2,7 @@
 (ns git-handler.submodule-updater.updater.side-effects
     (:require [deps-edn-handler.api                         :as deps-edn-handler]
               [git-handler.core.env                         :as core.env]
+              [git-handler.submodules.env                         :as submodules.env]
               [git-handler.core.errors                      :as core.errors]
               [git-handler.core.side-effects                :as core.side-effects]
               [git-handler.submodule-updater.builder.state  :as submodule-updater.builder.state]
@@ -38,7 +39,7 @@
   ; @param (map) options
   ; @param (string) submodule-path
   [options submodule-path commit-message last-local-commit-sha]
-  (if-let [on-pushed-f (submodule-updater.core.env/get-config-item options submodule-path :on-pushed-f)]
+  (if-let [on-pushed-f (submodule-updater.core.env/get-config-value options submodule-path :on-pushed-f)]
           (try (on-pushed-f submodule-path commit-message last-local-commit-sha)
                (catch Exception e nil))))
 
@@ -50,13 +51,13 @@
   [options submodule-path]
   (println "-------------")
   (println (str "Updating submodule: '" submodule-path "' ..."))
-  (and (core.side-effects/cache-submodule-local-changes! submodule-path)
-       (core.env/submodule-head-branch-changed?          submodule-path)
-       (let [target-branch (submodule-updater.core.env/get-config-item options submodule-path :target-branch "main")]
-            (if (core.env/submodule-branch-checked-out? submodule-path target-branch)
+  (and (core.side-effects/cache-local-changes!   submodule-path)
+       (core.env/head-branch-has-cached-changes? submodule-path)
+       (let [target-branch (submodule-updater.core.env/get-config-value options submodule-path :target-branch "main")]
+            (if (submodules.env/submodule-branch-checked-out? submodule-path target-branch)
                 (if-let [commit-message (submodule-updater.updater.env/get-next-commit-message options submodule-path target-branch)]
-                        (and (core.side-effects/push-submodule-cached-changes! submodule-path target-branch commit-message)
-                             (when-let [last-local-commit-sha (core.env/get-submodule-last-local-commit-sha submodule-path target-branch)]
+                        (and (core.side-effects/push-cached-changes! submodule-path target-branch commit-message)
+                             (when-let [last-local-commit-sha (core.env/get-last-local-commit-sha submodule-path target-branch)]
                                        (apply-on-pushed-f!                     options submodule-path commit-message last-local-commit-sha)
                                        (update-dependency-in-other-submodules! options submodule-path                last-local-commit-sha))))
                 (core.errors/error-catched (str "Submodule '" submodule-path"' is checked out on another branch than the provided '" target-branch "' target branch"))))))

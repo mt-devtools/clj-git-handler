@@ -15,7 +15,7 @@
   ; @param (string) submodule-path
   ;
   ; @usage
-  ; (submodule-path->git-url "submodules/my-repository")
+  ; (submodule-path->git-url "my-submodules/my-repository")
   ;
   ; @return (string)
   [submodule-path]

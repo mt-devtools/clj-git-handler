@@ -1,6 +1,7 @@
 
 (ns git-handler.api
     (:require [git-handler.core.env                            :as core.env]
+              [git-handler.submodules.env                            :as submodules.env]
               [git-handler.core.side-effects                   :as core.side-effects]
               [git-handler.core.utils                          :as core.utils]
               [git-handler.gitignore.env                       :as gitignore.env]
@@ -63,24 +64,17 @@
 ;; ----------------------------------------------------------------------------
 
 ; @redirect (git-handler.core.env/*)
-(def read-submodule-git-file                 core.env/read-submodule-git-file)
-(def get-submodule-git-directory-path        core.env/get-submodule-git-directory-path)
-(def submodule-path?                         core.env/submodule-path?)
-(def get-submodule-paths                     core.env/get-submodule-paths)
-(def read-submodule-config-file              core.env/read-submodule-config-file)
-(def get-submodule-git-url                   core.env/get-submodule-git-url)
-(def read-submodule-head-file                core.env/read-submodule-head-file)
-(def get-submodule-head-branch               core.env/get-submodule-head-branch)
-(def submodule-branch-checked-out?           core.env/submodule-branch-checked-out?)
-(def get-submodule-local-commit-history      core.env/get-submodule-local-commit-history)
-(def get-submodule-last-local-commit-message core.env/get-submodule-last-local-commit-message)
-(def get-submodule-last-local-commit-sha     core.env/get-submodule-last-local-commit-sha)
-(def submodule-local-branch-changed?         core.env/submodule-local-branch-changed?)
-(def submodule-head-branch-changed?          core.env/submodule-head-branch-changed?)
+(def get-local-commit-history         core.env/get-local-commit-history)
+(def get-last-local-commit-message    core.env/get-last-local-commit-message)
+(def get-last-local-commit-sha        core.env/get-last-local-commit-sha)
+(def local-branch-has-changes?        core.env/local-branch-has-changes?)
+(def local-branch-has-cached-changes? core.env/local-branch-has-cached-changes?)
+(def head-branch-has-changes?         core.env/head-branch-has-changes?)
+(def head-branch-has-cached-changes?  core.env/head-branch-has-cached-changes?)
 
 ; @redirect (git-handler.core.side-effects/*)
-(def cache-submodule-local-changes! core.side-effects/cache-submodule-local-changes!)
-(def push-submodule-cached-changes! core.side-effects/push-submodule-cached-changes!)
+(def cache-local-changes! core.side-effects/cache-local-changes!)
+(def push-cached-changes! core.side-effects/push-cached-changes!)
 
 ; @redirect (git-handler.core.utils/*)
 (def git-url->repository-name core.utils/git-url->repository-name)
@@ -94,3 +88,14 @@
 
 ; @redirect (git-handler.submodule-updater.core.side-effects/*)
 (def update-submodule-dependencies! submodule-updater.core.side-effects/update-submodule-dependencies!)
+
+; @redirect (git-handler.submodules.env/*)
+(def read-submodule-git-file          submodules.env/read-submodule-git-file)
+(def get-submodule-git-directory-path submodules.env/get-submodule-git-directory-path)
+(def submodule-path?                  submodules.env/submodule-path?)
+(def get-submodule-paths              submodules.env/get-submodule-paths)
+(def read-submodule-config-file       submodules.env/read-submodule-config-file)
+(def get-submodule-git-url            submodules.env/get-submodule-git-url)
+(def read-submodule-head-file         submodules.env/read-submodule-head-file)
+(def get-submodule-head-branch        submodules.env/get-submodule-head-branch)
+(def submodule-branch-checked-out?    submodules.env/submodule-branch-checked-out?)

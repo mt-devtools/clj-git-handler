@@ -8,57 +8,69 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn cache-submodule-local-changes!
+(defn cache-local-changes!
   ; @description
-  ; - Caches (stages) the local changes of the HEAD branch of the given submodule.
+  ; - Caches (stages) the local changes of the HEAD branch.
   ; - Returns TRUE in case of successful caching.
   ;
-  ; @param (string) submodule-path
+  ; @param (string)(opt) git-path
+  ; Default: "."
   ;
   ; @usage
-  ; (cache-submodule-local-changes! "submodules/my-submodule")
+  ; (cache-local-changes!)
+  ; =>
+  ; true
   ;
   ; @return (boolean)
-  [submodule-path]
-  (println (str "Caching local changes for submodule: '" submodule-path "' ..."))
-  (if-not (io/directory? submodule-path)
-          (core.errors/error-catched (str "Submodule path: \"" submodule-path "\" is not a directory!")))
-  (let [{:keys [exit] :as dbg} (shell/with-sh-dir submodule-path (shell/sh "git" "add" "."))]
-       ; ...
-       (if (-> exit zero? not)
-           (core.errors/error-catched (str "Cannot cache local changes of submodule: '" submodule-path "'")
-                                      (str "Error: " dbg)))
-       ; ...
-       (if (core.env/submodule-head-branch-changed? submodule-path)
-           (println (str "Local changes cached for submodule: '" submodule-path "'"))
-           (println (str "Submodule '" submodule-path "' has no local changes")))
-       ; ...
-       (-> exit zero?)))
+  ([]
+   (cache-local-changes! "."))
 
-(defn push-submodule-cached-changes!
+  ([git-path]
+   (println (str "Caching local changes of git path: '" git-path "' ..."))
+   (if-not (io/directory? git-path)
+           (core.errors/error-catched (str "Git path: \"" git-path "\" is not a directory!")))
+   (let [{:keys [exit] :as dbg} (shell/with-sh-dir git-path (shell/sh "git" "add" "."))]
+        ; ...
+        (if (-> exit zero? not)
+            (core.errors/error-catched (str "Cannot cache local changes of git path: '" git-path "'")
+                                       (str "Error: " dbg)))
+        ; ...
+        (if (core.env/head-branch-has-cached-changes? git-path)
+            (println (str "Local changes cached of git path: '" git-path "'"))
+            (println (str "Git path '" git-path "' has no local changes")))
+        ; ...
+        (-> exit zero?))))
+
+(defn push-cached-changes!
   ; @description
-  ; - Pushes the cached (staged) local changes of the given branch of the given submodule.
+  ; - Pushes the cached (staged) local changes of the given branch.
   ; - Returns TRUE in case of successful pushing.
   ;
-  ; @param (string) submodule-path
+  ; @param (string)(opt) git-path
+  ; Default: "."
   ; @param (string) target-branch
   ; @param (string) commit-message
   ;
   ; @usage
-  ; (push-submodule-cached-changes! "submodules/my-submodule" "main" "My commit")
+  ; (push-cached-changes! "main" "My commit")
+  ; =>
+  ; true
   ;
   ; @return (boolean)
-  [submodule-path target-branch commit-message]
-  (println (str "Pushing commit: '" commit-message "' from submodule: '" submodule-path "' to branch: '" target-branch "' ..."))
-  (if-not (io/directory? submodule-path)
-          (core.errors/error-catched (str "Submodule path: \"" submodule-path "\" is not a directory!")))
-  (let [{:keys [exit] :as dbg} (shell/with-sh-dir submodule-path (do (shell/sh "git" "commit" "-m" commit-message)
-                                                                     (shell/sh "git" "push" "origin" target-branch)))]
-       ; ...
-       (if (-> exit zero? not)
-           (core.errors/error-catched (str "Cannot push commit for submodule: '" submodule-path "' to branch: '" target-branch "'")
-                                      (str "Error: " dbg)))
-       ; ...
-       (println (str "Commit successfully pushed"))
-       ; ...
-       (-> exit zero?)))
+  ([target-branch commit-message]
+   (push-cached-changes! "." target-branch commit-message))
+
+  ([git-path target-branch commit-message]
+   (println (str "Pushing commit: '" commit-message "' of git git: '" git-path "' to branch: '" target-branch "' ..."))
+   (if-not (io/directory? git-path)
+           (core.errors/error-catched (str "Git path: \"" git-path "\" is not a directory!")))
+   (let [{:keys [exit] :as dbg} (shell/with-sh-dir git-path (do (shell/sh "git" "commit" "-m"     commit-message)
+                                                                (shell/sh "git" "push"   "origin" target-branch)))]
+        ; ...
+        (if (-> exit zero? not)
+            (core.errors/error-catched (str "Cannot push commit of git path: '" git-path "' to branch: '" target-branch "'")
+                                       (str "Error: " dbg)))
+        ; ...
+        (println (str "Commit successfully pushed"))
+        ; ...
+        (-> exit zero?))))
