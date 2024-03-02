@@ -75,9 +75,11 @@
 (def head-branch-has-cached-changes?  core.env/head-branch-has-cached-changes?)
 
 ; @redirect (git-handler.core.side-effects/*)
-(def check-out-to-branch! core.side-effects/check-out-to-branch!)
-(def cache-local-changes! core.side-effects/cache-local-changes!)
-(def push-cached-changes! core.side-effects/push-cached-changes!)
+(def rebase-to-branch!      core.side-effects/rebase-to-branch!)
+(def checkout-to-branch!    core.side-effects/checkout-to-branch!)
+(def cache-local-changes!   core.side-effects/cache-local-changes!)
+(def commit-cached-changes! core.side-effects/commit-cached-changes!)
+(def push-local-commits!    core.side-effects/push-local-commits!)
 
 ; @redirect (git-handler.core.utils/*)
 (def git-url->repository-name core.utils/git-url->repository-name)

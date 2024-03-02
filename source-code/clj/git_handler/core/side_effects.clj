@@ -8,7 +8,42 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn check-out-to-branch!
+(defn rebase-to-branch!
+  ; @description
+  ; - Performs a rebase of the HEAD branch to the tip of the given branch.
+  ; - Returns TRUE in case of rebase.
+  ;
+  ; @param (string)(opt) git-path
+  ; Default: "."
+  ; @param (string) base-branch
+  ;
+  ; @usage
+  ; (rebase-to-branch! "another-branch")
+  ; =>
+  ; true
+  ;
+  ; @return (boolean)
+  ([base-branch]
+   (rebase-to-branch! "." base-branch))
+
+  ([git-path base-branch]
+   (println (str "Rebasing HEAD branch to branch '" base-branch "' on git path: '" git-path "' ..."))
+   (if-not (io/directory? git-path)
+           (core.errors/error-catched (str "Git path: '" git-path "' is not a directory!")))
+   (let [{:keys [exit] :as dbg} (shell/with-sh-dir git-path (shell/sh "git" "rebase" (str "refs/heads/" base-branch)))]
+        ; ...
+        (if (-> exit zero? not)
+            (core.errors/error-catched (str "Cannot rebase HEAD branch to branch '" base-branch "' on git path: '" git-path "'")
+                                       (str "Error: " dbg)))
+        ; ...
+        (println (str "HEAD branch successfully rebased to '" base-branch "'"))
+        ; ...
+        (-> exit zero?))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn checkout-to-branch!
   ; @description
   ; - Checks out to the given branch.
   ; - Returns TRUE in case of checkout.
@@ -18,13 +53,13 @@
   ; @param (string) branch
   ;
   ; @usage
-  ; (check-out-to-branch! "my-branch")
+  ; (checkout-to-branch! "my-branch")
   ; =>
   ; true
   ;
   ; @return (boolean)
   ([branch]
-   (check-out-to-branch! "." branch))
+   (checkout-to-branch! "." branch))
 
   ([git-path branch]
    (println (str "Checking out to branch '" branch "' on git path: '" git-path "' ..."))
@@ -39,6 +74,9 @@
         (println (str "Branch successfully checked out"))
         ; ...
         (-> exit zero?))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 
 (defn cache-local-changes!
   ; @description
@@ -73,36 +111,72 @@
         ; ...
         (-> exit zero?))))
 
-(defn push-cached-changes!
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn commit-cached-changes!
   ; @description
-  ; - Pushes the cached (staged) local changes of the given branch.
+  ; - Commits the cached (staged) local changes of the given branch.
+  ; - Returns TRUE in case of successful commiting.
+  ;
+  ; @param (string)(opt) git-path
+  ; Default: "."
+  ; @param (string) commit-message
+  ;
+  ; @usage
+  ; (commit-cached-changes! "My commit")
+  ; =>
+  ; true
+  ;
+  ; @return (boolean)
+  ([commit-message]
+   (commit-cached-changes! "." commit-message))
+
+  ([git-path commit-message]
+   (println (str "Commiting cached changes on git path: '" git-path "' as commit: '" commit-message "' ..."))
+   (if-not (io/directory? git-path)
+           (core.errors/error-catched (str "Git path: '" git-path "' is not a directory!")))
+   (let [{:keys [exit] :as dbg} (shell/with-sh-dir git-path (shell/sh "git" "commit" "-m" commit-message))]
+        ; ...
+        (if (-> exit zero? not)
+            (core.errors/error-catched (str "Cannot commit cached changes on git path: '" git-path "'")
+                                       (str "Error: " dbg)))
+        ; ...
+        (println (str "Cached changes successfully commited"))
+        ; ...
+        (-> exit zero?))))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn push-local-commits!
+  ; @description
+  ; - Pushes the local commits of the given branch.
   ; - Returns TRUE in case of successful pushing.
   ;
   ; @param (string)(opt) git-path
   ; Default: "."
   ; @param (string) target-branch
-  ; @param (string) commit-message
   ;
   ; @usage
-  ; (push-cached-changes! "my-branch" "My commit")
+  ; (push-local-commits! "my-branch")
   ; =>
   ; true
   ;
   ; @return (boolean)
-  ([target-branch commit-message]
-   (push-cached-changes! "." target-branch commit-message))
+  ([target-branch]
+   (push-local-commits! "." target-branch))
 
-  ([git-path target-branch commit-message]
-   (println (str "Pushing commit: '" commit-message "' on git path: '" git-path "' to branch: '" target-branch "' ..."))
+  ([git-path target-branch]
+   (println (str "Pushing local commits on git path: '" git-path "' to branch: '" target-branch "' ..."))
    (if-not (io/directory? git-path)
            (core.errors/error-catched (str "Git path: '" git-path "' is not a directory!")))
-   (let [{:keys [exit] :as dbg} (shell/with-sh-dir git-path (do (shell/sh "git" "commit" "-m"     commit-message)
-                                                                (shell/sh "git" "push"   "origin" target-branch)))]
+   (let [{:keys [exit] :as dbg} (shell/with-sh-dir git-path (shell/sh "git" "push" "origin" target-branch))]
         ; ...
         (if (-> exit zero? not)
-            (core.errors/error-catched (str "Cannot push commit on git path: '" git-path "' to branch: '" target-branch "'")
+            (core.errors/error-catched (str "Cannot push local commits on git path: '" git-path "' to branch: '" target-branch "'")
                                        (str "Error: " dbg)))
         ; ...
-        (println (str "Commit successfully pushed"))
+        (println (str "Local commits successfully pushed"))
         ; ...
         (-> exit zero?))))

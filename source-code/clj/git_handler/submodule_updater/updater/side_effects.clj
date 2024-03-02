@@ -55,7 +55,8 @@
        (let [target-branch (submodule-updater.core.env/get-config-value options submodule-path :target-branch "main")]
             (if (core.env/branch-checked-out? submodule-path target-branch)
                 (if-let [commit-message (submodule-updater.updater.env/get-next-commit-message options submodule-path target-branch)]
-                        (and (core.side-effects/push-cached-changes! submodule-path target-branch commit-message)
+                        (and (core.side-effects/commit-cached-changes! submodule-path commit-message)
+                             (core.side-effects/push-local-commits!    submodule-path target-branch)
                              (when-let [last-local-commit-sha (core.env/get-last-local-commit-sha submodule-path target-branch)]
                                        (apply-on-pushed-f!                     options submodule-path commit-message last-local-commit-sha)
                                        (update-dependency-in-other-submodules! options submodule-path                last-local-commit-sha))))
