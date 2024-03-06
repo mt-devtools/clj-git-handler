@@ -1,9 +1,9 @@
 
 (ns git-handler.submodules.env
-    (:require [fruits.regex.api        :as regex]
-              [fruits.string.api       :as string]
-              [fruits.vector.api       :as vector]
-              [io.api                  :as io]))
+    (:require [fruits.regex.api  :as regex]
+              [fruits.string.api :as string]
+              [fruits.vector.api :as vector]
+              [io.api            :as io]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
