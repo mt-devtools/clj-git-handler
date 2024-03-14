@@ -40,7 +40,7 @@
   ; @ignore
   ;
   ; @description
-  ; - Returns whether the submodule is depend on other submodules (it isn't necessary
+  ; - Returns whether the submodule is depend on other submodules (it is not necessary
   ;   for a submodule to depend on other INNER submodules).
   ;
   ; @param (string) submodule-path

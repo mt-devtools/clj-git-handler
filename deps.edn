@@ -3,9 +3,9 @@
  :deps  {clj-git/clj-jgit         {:git/url "https://github.com/clj-jgit/clj-jgit"
                                    :sha     "55bfc2d49d38ac47663db19d38accf71d76fc551"}
          bithandshake/cljc-fruits {:git/url "https://github.com/bithandshake/cljc-fruits"
-                                   :sha     "c053563cd20419db3b1f1a58356d5de8c07952cf"}
+                                   :sha     "6b5c9c060bdff84d0cd0bce908b64b268e5e6f0e"}
          bithandshake/cljc-io     {:git/url "https://github.com/bithandshake/cljc-io"
-                                   :sha     "ce7a00daae8bc02a8f61acd7d1491f7baa5abfad"}
+                                   :sha     "6076761e68196fdca1790e51ff157a2253e31cbf"}
          bithandshake/cljc-time   {:git/url "https://github.com/bithandshake/cljc-time"
-                                   :sha     "b3a7ee09227464309fa1460a3f0f02b70a8acec1"}
+                                   :sha     "4ff4569020723d2c6eab21afd096e155fdab413c"}
          org.clojure/clojure      {:mvn/version "1.10.1"}}}
