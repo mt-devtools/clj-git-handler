@@ -39,6 +39,7 @@
   ; @param (map) submodule-props
   ; {:git-url (string)}
   [submodule-path {:keys [git-url]}]
+  (println (str "Reading 'deps.edn' file of submodule: '" submodule-path "' ..."))
   (if-let [{:keys [deps]} (deps-edn-handler/read-deps-edn submodule-path)]
           (doseq [[dependency-name {:git/keys [url] :as dependency-props}] deps]
                  (if (submodule-updater.reader.env/inner-dependency? url)

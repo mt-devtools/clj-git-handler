@@ -5,7 +5,7 @@
          mt-utilities/cljc-fruits {:git/url "https://github.com/mt-utilities/cljc-fruits"
                                    :sha     "6b5c9c060bdff84d0cd0bce908b64b268e5e6f0e"}
          mt-utilities/cljc-io     {:git/url "https://github.com/mt-utilities/cljc-io"
-                                   :sha     "6076761e68196fdca1790e51ff157a2253e31cbf"}
+                                   :sha     "29f54d08e2d030fa704c64bdf48efe5f62eada9b"}
          mt-utilities/cljc-time   {:git/url "https://github.com/mt-utilities/cljc-time"
-                                   :sha     "cb5bba453d022b5248196ac73e8f3916b06d441c"}
+                                   :sha     "46082e5ba96db821e2027e3a5d1dfbc3ae445705"}
          org.clojure/clojure      {:mvn/version "1.10.1"}}}
