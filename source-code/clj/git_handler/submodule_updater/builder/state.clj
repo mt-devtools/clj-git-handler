@@ -7,4 +7,4 @@
 ; @ignore
 ;
 ; @constant (vector)
-(def DEPENDENCY-TREE (atom []))
+(def DEPENDENCY-CASCADE (atom []))

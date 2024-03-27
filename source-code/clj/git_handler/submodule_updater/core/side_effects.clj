@@ -59,8 +59,9 @@
    (update-submodule-dependencies! {}))
 
   ([options]
-   (try (do (submodule-updater.detector.side-effects/detect-submodules!    options)
-            (submodule-updater.reader.side-effects/read-submodules!        options)
-            (submodule-updater.builder.side-effects/build-dependency-tree! options)
-            (submodule-updater.updater.side-effects/update-submodules!     options))
+   (try (do (submodule-updater.detector.side-effects/detect-submodules!       options)
+            (submodule-updater.reader.side-effects/read-submodules!           options)
+            (submodule-updater.builder.side-effects/build-dependency-cascade! options)
+            (submodule-updater.builder.side-effects/build-dependency-tree!    options)
+            (submodule-updater.updater.side-effects/update-submodules!        options))
         (catch Exception e nil))))

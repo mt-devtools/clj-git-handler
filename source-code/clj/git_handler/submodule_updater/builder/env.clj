@@ -8,29 +8,29 @@
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn submodule-added-to-dependency-tree?
+(defn submodule-added-to-dependency-cascade?
   ; @ignore
   ;
   ; @description
-  ; Returns whether the submodule is added to the dependency tree.
+  ; Returns whether the submodule is added to the dependency cascade.
   ;
   ; @param (string) submodule-path
   ;
   ; @return (boolean)
   [submodule-path]
   (letfn [(f0 [[% _]] (= % submodule-path))]
-         (some f0 @submodule-updater.builder.state/DEPENDENCY-TREE)))
+         (some f0 @submodule-updater.builder.state/DEPENDENCY-CASCADE)))
 
-(defn dependency-tree-built?
+(defn dependency-cascade-built?
   ; @ignore
   ;
   ; @description
-  ; Returns whether the dependency tree is complete or some submodules are missing yet.
+  ; Returns whether the dependency cascade is complete or some submodules are missing yet.
   ;
   ; @return (boolean)
   []
   (letfn [(f0 [[submodule-path _]]
-              (submodule-added-to-dependency-tree? submodule-path))]
+              (submodule-added-to-dependency-cascade? submodule-path))]
          (every? f0 @submodule-updater.detector.state/DETECTED-SUBMODULES)))
 
 ;; ----------------------------------------------------------------------------
@@ -55,9 +55,9 @@
   ; @ignore
   ;
   ; @description
-  ; - Returns whether the submodule has INNER dependencies that are not added to the dependency tree (yet).
+  ; - Returns whether the submodule has INNER dependencies that are not added to the dependency cascade (yet).
   ; - A submodule is qualified as non-depend if it has no known INNER dependencies,
-  ;   or all of its inner dependencies are already added to the dependency tree.
+  ;   or all of its inner dependencies are already added to the dependency cascade.
   ;
   ; @param (string) submodule-path
   ;
@@ -65,7 +65,7 @@
   [submodule-path]
   (if-let [dependencies (get @submodule-updater.reader.state/INNER-DEPENDENCIES submodule-path)]
           (letfn [(f0 [[dep-name url sha]]
-                      (-> url submodule-updater.core.env/git-url->submodule-path submodule-added-to-dependency-tree?))]
+                      (-> url submodule-updater.core.env/git-url->submodule-path submodule-added-to-dependency-cascade?))]
                  (every? f0 dependencies))
           :submodule-has-no-inner-dependencies))
 
@@ -77,13 +77,13 @@
   ;
   ; @description
   ; Returns all the submodules' paths (in a vector) that have INNER dependencies
-  ; but are not added to the dependency tree yet.
+  ; but are not added to the dependency cascade yet.
   ;
   ; @return (strings in vector)
   []
   (letfn [(f0 [result [submodule-path _]]
-              (if (or (submodule-added-to-dependency-tree? submodule-path)
-                      (submodule-non-depend?               submodule-path))
+              (if (or (submodule-added-to-dependency-cascade? submodule-path)
+                      (submodule-non-depend?                  submodule-path))
                   (->   result)
                   (conj result submodule-path)))]
          (reduce f0 [] @submodule-updater.detector.state/DETECTED-SUBMODULES)))

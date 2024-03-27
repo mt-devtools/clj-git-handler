@@ -28,7 +28,7 @@
   ; @ignore
   ;
   ; @description
-  ; - Stores the git URL and the repository name of the submodule in the 'DETECTED-SUBMODULES' atom.
+  ; - Stores the git URL and repository name of the submodule in the 'DETECTED-SUBMODULES' atom.
   ; - Git submodules has a '.git' file and not a '.git' directory as in normal git modules.
   ;   In the '.git' file there is a 'gitdir' path which points relatively to
   ;   the submodule's '.git' directory (which is placed in the root project's '.git' directory).

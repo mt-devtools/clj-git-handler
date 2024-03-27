@@ -8,7 +8,8 @@
               [git-handler.submodule-updater.core.env       :as submodule-updater.core.env]
               [git-handler.submodule-updater.detector.state :as submodule-updater.detector.state]
               [git-handler.submodule-updater.reader.env     :as submodule-updater.reader.env]
-              [git-handler.submodule-updater.updater.env    :as submodule-updater.updater.env]))
+              [git-handler.submodule-updater.updater.env    :as submodule-updater.updater.env]
+              [common-state.api :as common-state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -67,9 +68,11 @@
   ;
   ; @param (map) options
   [options]
+  (println "dependency-cascade:")
+  (println @submodule-updater.builder.state/DEPENDENCY-CASCADE)
   (println "dependency-tree:")
-  (println @submodule-updater.builder.state/DEPENDENCY-TREE)
-  (doseq [[submodule-path] @submodule-updater.builder.state/DEPENDENCY-TREE]
+  (println (common-state/get-state :git-handler :submodule-updater))
+  (doseq [[submodule-path] @submodule-updater.builder.state/DEPENDENCY-CASCADE]
          (update-submodule! options submodule-path))
   (println "-------------")
   (println "Submodules updated"))
