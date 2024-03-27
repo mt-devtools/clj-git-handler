@@ -13,8 +13,7 @@
   ; @ignore
   ;
   ; @description
-  ; Iterates over the detected submodules and adds their paths to the dependency tree
-  ; if they have INNER dependencies.
+  ; Iterates over the detected submodules adding their paths to the dependency tree (if they have INNER dependencies).
   ;
   ; @param (map) options
   ; @param (integer)(opt) kill-switch
@@ -29,14 +28,14 @@
   ; Builds a dependency tree of inner dependencies in the host project of the submodules
   ; that are detected in the provided source directories.
   (if (< (or kill-switch 0) 256) ; <- Stops a runaway recursion
-      (if-not (submodule-updater.builder.env/dependency-tree-built?)
-              (do (doseq [[submodule-path _] @submodule-updater.detector.state/DETECTED-SUBMODULES]
-                         (if-not (submodule-updater.builder.env/submodule-added-to-dependency-tree? submodule-path)
-                                 (if (submodule-updater.builder.env/submodule-non-depend? submodule-path)
-                                     (swap! submodule-updater.builder.state/DEPENDENCY-TREE vector/conj-item [submodule-path]))))
+      (when-not (submodule-updater.builder.env/dependency-tree-built?)
+                (doseq [[submodule-path _] @submodule-updater.detector.state/DETECTED-SUBMODULES]
+                       (if-not (submodule-updater.builder.env/submodule-added-to-dependency-tree? submodule-path)
+                               (if (submodule-updater.builder.env/submodule-non-depend? submodule-path)
+                                   (swap! submodule-updater.builder.state/DEPENDENCY-TREE vector/conj-item [submodule-path]))))
 
-                  ; Calls itself recursively ...
-                  (build-dependency-tree! options (inc (or kill-switch 0)))))
+                ; Calls itself recursively ...
+                (build-dependency-tree! options (inc (or kill-switch 0))))
       (core.errors/error-catched (str "Building dependency tree has been stopped by kill switch, maximum call stack size exceeded!")
                                  (str "Unresolved dependencies:")
                                  (submodule-updater.builder.env/get-unresolved-dependencies))))

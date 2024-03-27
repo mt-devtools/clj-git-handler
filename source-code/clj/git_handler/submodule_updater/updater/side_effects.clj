@@ -67,6 +67,8 @@
   ;
   ; @param (map) options
   [options]
+  (println "dependency-tree:")
+  (println @submodule-updater.builder.state/DEPENDENCY-TREE)
   (doseq [[submodule-path] @submodule-updater.builder.state/DEPENDENCY-TREE]
          (update-submodule! options submodule-path))
   (println "-------------")
