@@ -144,11 +144,6 @@
   ;
   ; @return (boolean)
   [options submodule-path repository-name]
-  ; The values must be converted into strings. Otherwise, somehow they are always different!
-  (letfn [(f0 [[% _ _]]
-              (println (type %)
-                       (type repository-name))
-              (= (str %)
-                 (str repository-name)))]
+  (letfn [(f0 [[% _ _]] (= % repository-name))]
          (-> (get-submodule-dependencies options submodule-path)
              (vector/any-item-matches? f0))))
