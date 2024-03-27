@@ -3,9 +3,7 @@
     (:require [fruits.vector.api                            :as vector]
               [git-handler.core.errors                      :as core.errors]
               [git-handler.submodule-updater.builder.env    :as submodule-updater.builder.env]
-              [git-handler.submodule-updater.builder.state  :as submodule-updater.builder.state]
-              [git-handler.submodule-updater.reader.env :as submodule-updater.reader.env]
-              [git-handler.submodule-updater.detector.state :as submodule-updater.detector.state]
+              [git-handler.submodule-updater.detector.env :as submodule-updater.detector.env]
               [common-state.api :as common-state]))
 
 ;; ----------------------------------------------------------------------------
@@ -14,53 +12,46 @@
 (defn build-dependency-cascade!
   ; @ignore
   ;
+  ; @note
+  ; The dependency cascade is an ordered vector of submodules where submodules cannot precede their dependencies.
+  ;
   ; @description
-  ; Iterates over the detected submodules adding their paths to the dependency cascade (if they have INNER dependencies).
+  ; Iterates over the detected submodules adding their paths to the dependency cascade.
   ;
   ; @param (map) options
-  ; @param (integer)(opt) kill-switch
-  ; In case the function couldn't resolve a dependency it could easily go to an infinite loop
-  ; and the 'kill-switch' parameter's job is to stop that runaway recursion.
-  [options & [kill-switch]]
-
-  ; When this function is called the first time, it clears the 'DEPENDENCY-CASCADE' atom
-  ; and it uses the 'kill-switch' to determine whether the function is applied for the first time.
-  (if-not kill-switch (reset! submodule-updater.builder.state/DEPENDENCY-CASCADE nil))
-
-  ; Builds a dependency cascade of inner dependencies within the host project of the submodules
-  ; that are detected in the provided source directories.
-  (if (< (or kill-switch 0) 256) ; <- Stops a runaway recursion
-      (when-not (submodule-updater.builder.env/dependency-cascade-built?)
-                (doseq [[submodule-path _] @submodule-updater.detector.state/DETECTED-SUBMODULES]
-                       (if-not (submodule-updater.builder.env/submodule-added-to-dependency-cascade? submodule-path)
-                               (if (submodule-updater.builder.env/submodule-non-depend? submodule-path)
-                                   (swap! submodule-updater.builder.state/DEPENDENCY-CASCADE vector/conj-item [submodule-path]))))
-
-                ; Calls itself recursively ...
-                (build-dependency-cascade! options (inc (or kill-switch 0))))
-      (core.errors/error-catched (str "Building dependency cascade has been stopped by kill switch, maximum call stack size exceeded!")
-                                 (str "Unresolved dependencies:")
-                                 (submodule-updater.builder.env/get-unresolved-dependencies))))
+  [options]
+  (let [dependency-cascade (submodule-updater.builder.env/get-dependency-cascade options)]
+       (when-not (submodule-updater.builder.env/dependency-cascade-built? options)
+                 (doseq [[submodule-path _] (submodule-updater.detector.env/get-detected-submodules options)]
+                        (if-not (submodule-updater.builder.env/submodule-added-to-dependency-cascade? options submodule-path)
+                                (if (submodule-updater.builder.env/add-submodule-to-dependency-cascade? options submodule-path)
+                                    (common-state/update-state! :git-handler :submodule-updater update :dependency-cascade vector/conj-item submodule-path))))
+                 ; The 'build-dependency-cascade!' function calls itself recursively if the dependency cascade has changed during its last iteration.
+                 ; If the cascade hasn't changed, there is no need to continue the recursion.
+                 (if-not (= dependency-cascade (submodule-updater.builder.env/get-dependency-cascade options))
+                         (build-dependency-cascade! options)
+                         (if-not (submodule-updater.builder.env/dependency-cascade-built? options)
+                                 (core.errors/error-catched (str "Cannot build dependency cascade!")
+                                                            (str "Unresolved dependencies:")
+                                                            (submodule-updater.builder.env/get-unresolved-dependencies options)))))))
 
 (defn build-dependency-tree!
   ; @ignore
   ;
+  ; @note
+  ; The dependency tree is a dependency cascade extending submodule with their dependencies.
+  ;
   ; @description
-  ; ...
+  ; Iterates over the dependency cascade adding each submodule and its dependencies to the dependency tree.
   ;
   ; @param (map) options
   [options]
-  (doseq [[submodule-path] @submodule-updater.builder.state/DEPENDENCY-CASCADE]
-         (common-state/update-state! :git-handler :submodule-updater vector/conj-item [submodule-path []])
-         (let [repository-name (get-in @submodule-updater.detector.state/DETECTED-SUBMODULES [submodule-path :repository-name])]
-              (when (= repository-name "mt-app-kit/cljs-react-references")
-                    (println)
-                    (println)
-                    (println "cljs-react-references ..."))
-              (doseq [[% _] @submodule-updater.detector.state/DETECTED-SUBMODULES]
-                     (when (= repository-name "mt-app-kit/cljs-react-references")
-                           (println % (submodule-updater.reader.env/depends-on? % repository-name)))
-                     (if (submodule-updater.reader.env/depends-on? % repository-name)
-                         (common-state/update-state! :git-handler :submodule-updater vector/update-last-item
+  (doseq [submodule-path (submodule-updater.builder.env/get-dependency-cascade options)]
+         (common-state/update-state! :git-handler :submodule-updater update :dependency-tree vector/conj-item [submodule-path []])
+         (doseq [% (submodule-updater.builder.env/get-dependency-cascade options)]
+                (let [repository-name (submodule-updater.detector.env/get-submodule-repository-name options %)]
+                     (if (submodule-updater.detector.env/submodule-depends-on? options submodule-path repository-name)
+                         (common-state/update-state! :git-handler :submodule-updater update :dependency-tree
+                                                                                     vector/update-last-item
                                                                                      vector/update-last-item
                                                                                      vector/conj-item %))))))

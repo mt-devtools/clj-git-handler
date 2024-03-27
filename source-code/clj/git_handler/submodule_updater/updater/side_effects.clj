@@ -4,10 +4,9 @@
               [git-handler.core.env                         :as core.env]
               [git-handler.core.errors                      :as core.errors]
               [git-handler.core.side-effects                :as core.side-effects]
-              [git-handler.submodule-updater.builder.state  :as submodule-updater.builder.state]
               [git-handler.submodule-updater.core.env       :as submodule-updater.core.env]
-              [git-handler.submodule-updater.detector.state :as submodule-updater.detector.state]
-              [git-handler.submodule-updater.reader.env     :as submodule-updater.reader.env]
+              [git-handler.submodule-updater.detector.env    :as submodule-updater.detector.env]
+              [git-handler.submodule-updater.builder.env    :as submodule-updater.builder.env]
               [git-handler.submodule-updater.updater.env    :as submodule-updater.updater.env]
               [common-state.api :as common-state]))
 
@@ -21,11 +20,11 @@
   ; @param (string) submodule-path
   ; @param (string) commit-sha
   [options submodule-path commit-sha]
-  (let [repository-name (get-in @submodule-updater.detector.state/DETECTED-SUBMODULES [submodule-path :repository-name])]
-       (println (str "Updating '" repository-name "' dependency in the following submodules' 'deps.edn' files:"))
-       (doseq [[% _] @submodule-updater.detector.state/DETECTED-SUBMODULES]
-              (when (submodule-updater.reader.env/depends-on? % repository-name)
-                    (println (str "Updating '" % "' submodule's 'deps.edn' ..."))
+  (let [repository-name (submodule-updater.detector.env/get-submodule-repository-name options submodule-path)]
+       (println (str "Updating '" repository-name "' dependency in the 'deps.edn' file of the following submodules:"))
+       (doseq [% (submodule-updater.builder.env/get-dependency-cascade options)]
+              (when (submodule-updater.detector.env/submodule-depends-on? options % repository-name)
+                    (println (str "Updating 'deps.edn' file of submodule: '" % "' ..."))
                     (or (try (deps-edn-handler/update-git-dependency-commit-sha! % repository-name commit-sha)
                              (catch Exception e (println e)))
                         (core.errors/error-catched (str "Cannot update 'deps.edn' file of submodule '" % "'")))))))
@@ -68,11 +67,7 @@
   ;
   ; @param (map) options
   [options]
-  (println "dependency-cascade:")
-  (println @submodule-updater.builder.state/DEPENDENCY-CASCADE)
-  (println "dependency-tree:")
-  (println (common-state/get-state :git-handler :submodule-updater))
-  (doseq [[submodule-path] @submodule-updater.builder.state/DEPENDENCY-CASCADE]
+  (doseq [submodule-path (submodule-updater.builder.env/get-dependency-cascade options)]
          (update-submodule! options submodule-path))
   (println "-------------")
   (println "Submodules updated"))

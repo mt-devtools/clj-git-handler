@@ -100,7 +100,7 @@
 
 (defn get-submodule-git-url
   ; @description
-  ; Returns the remote origin git url from the config file that corresponds to the given submodule.
+  ; Returns the remote origin Git URL from the config file that corresponds to the given submodule.
   ; (Submodule config files are placed in the host project's '.git' directory).
   ;
   ; @param (string) submodule-path

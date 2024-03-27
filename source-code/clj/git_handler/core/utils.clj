@@ -7,8 +7,8 @@
 
 (defn git-url->repository-name
   ; @description
-  ; - Derives the 'author/my-repository' string from the given 'git-url'.
-  ; - It can read the following types of 'git-url':
+  ; - Derives the 'author/my-repository' string from the given Git URL.
+  ; - Reads the following types of Git URL:
   ;   - 'git@github.com:author/my-repository'
   ;   - 'git@github.com:author/my-repository.git'
   ;   - 'https://github.com/author/my-repository'

@@ -1,9 +1,36 @@
 
 (ns git-handler.submodule-updater.builder.env
-    (:require [git-handler.submodule-updater.builder.state  :as submodule-updater.builder.state]
-              [git-handler.submodule-updater.core.env       :as submodule-updater.core.env]
-              [git-handler.submodule-updater.detector.state :as submodule-updater.detector.state]
-              [git-handler.submodule-updater.reader.state   :as submodule-updater.reader.state]))
+    (:require [fruits.map.api :as map]
+              [fruits.vector.api :as vector]
+              [git-handler.submodule-updater.detector.env :as submodule-updater.detector.env]
+              [common-state.api :as common-state]))
+
+;; ----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
+
+(defn get-dependency-cascade
+  ; @ignore
+  ;
+  ; @description
+  ; Returns the dependency cascade.
+  ;
+  ; @param (map) options
+  ;
+  ; @return (strings in vector)
+  [_]
+  (common-state/get-state :git-handler :submodule-updater :dependency-cascade))
+
+(defn get-dependency-tree
+  ; @ignore
+  ;
+  ; @description
+  ; Returns the dependency tree.
+  ;
+  ; @param (map) options
+  ;
+  ; @return (strings in vector)
+  [_]
+  (common-state/get-state :git-handler :submodule-updater :dependency-tree))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -12,62 +39,50 @@
   ; @ignore
   ;
   ; @description
-  ; Returns whether the submodule is added to the dependency cascade.
+  ; Returns TRUE if a specific submodule is added to the dependency cascade.
   ;
+  ; @param (map) options
   ; @param (string) submodule-path
   ;
   ; @return (boolean)
-  [submodule-path]
-  (letfn [(f0 [[% _]] (= % submodule-path))]
-         (some f0 @submodule-updater.builder.state/DEPENDENCY-CASCADE)))
+  [options submodule-path]
+  (letfn [(f0 [%] (= % submodule-path))]
+         (-> (get-dependency-cascade options)
+             (vector/any-item-matches? f0))))
 
 (defn dependency-cascade-built?
   ; @ignore
   ;
   ; @description
-  ; Returns whether the dependency cascade is complete or some submodules are missing yet.
+  ; Returns TRUE if all detected submodules are added to the dependency cascade.
+  ;
+  ; @param (map) options
   ;
   ; @return (boolean)
-  []
-  (letfn [(f0 [[submodule-path _]]
-              (submodule-added-to-dependency-cascade? submodule-path))]
-         (every? f0 @submodule-updater.detector.state/DETECTED-SUBMODULES)))
+  [options]
+  (letfn [(f0 [%] (submodule-added-to-dependency-cascade? options %))]
+         (-> (submodule-updater.detector.env/get-detected-submodules options)
+             (map/all-keys-match? f0))))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
 
-(defn submodule-has-inner-dependencies?
+(defn add-submodule-to-dependency-cascade?
   ; @ignore
   ;
   ; @description
-  ; - Returns whether the submodule is depend on other submodules (it is not necessary
-  ;   for a submodule to depend on other INNER submodules).
+  ; Returns TRUE if all detected dependencies of a specific submodule are added to the dependency cascade.
   ;
+  ; @param (map) options
   ; @param (string) submodule-path
   ;
   ; @return (boolean)
-  [submodule-path]
-  (if-let [dependencies (get @submodule-updater.reader.state/INNER-DEPENDENCIES submodule-path)]
-          (and (-> dependencies vector?)
-               (-> dependencies empty? not))))
-
-(defn submodule-non-depend?
-  ; @ignore
-  ;
-  ; @description
-  ; - Returns whether the submodule has INNER dependencies that are not added to the dependency cascade (yet).
-  ; - A submodule is qualified as non-depend if it has no known INNER dependencies,
-  ;   or all of its inner dependencies are already added to the dependency cascade.
-  ;
-  ; @param (string) submodule-path
-  ;
-  ; @return (boolean)
-  [submodule-path]
-  (if-let [dependencies (get @submodule-updater.reader.state/INNER-DEPENDENCIES submodule-path)]
-          (letfn [(f0 [[dep-name url sha]]
-                      (-> url submodule-updater.core.env/git-url->submodule-path submodule-added-to-dependency-cascade?))]
-                 (every? f0 dependencies))
-          :submodule-has-no-inner-dependencies))
+  [options submodule-path]
+  (letfn [(f0 [[_ git-url _]] (->> (submodule-updater.detector.env/get-submodule-of-git-url options git-url)
+                                   (submodule-added-to-dependency-cascade? options)))]
+         (if-let [dependencies (submodule-updater.detector.env/get-submodule-dependencies options submodule-path)]
+                 (-> dependencies (vector/all-items-match? f0))
+                 :submodule-has-no-detected-dependencies)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -76,14 +91,13 @@
   ; @ignore
   ;
   ; @description
-  ; Returns all the submodules' paths (in a vector) that have INNER dependencies
-  ; but are not added to the dependency cascade yet.
+  ; Returns the submodules that are not added to the dependency cascade.
+  ;
+  ; @param (map) options
   ;
   ; @return (strings in vector)
-  []
-  (letfn [(f0 [result [submodule-path _]]
-              (if (or (submodule-added-to-dependency-cascade? submodule-path)
-                      (submodule-non-depend?                  submodule-path))
-                  (->   result)
-                  (conj result submodule-path)))]
-         (reduce f0 [] @submodule-updater.detector.state/DETECTED-SUBMODULES)))
+  [options]
+  (letfn [(f0 [submodule-path] (submodule-added-to-dependency-cascade? options submodule-path))]
+         (-> (submodule-updater.detector.env/get-detected-submodules options)
+             (map/remove-keys-by f0)
+             (map/keys))))

@@ -121,7 +121,7 @@
 
 (defn branch-checked-out?
   ; @description
-  ; Returns TRUE if the the given branch is the actual HEAD branch.
+  ; Returns TRUE if the given branch is the actual HEAD branch.
   ;
   ; @param (string)(opt) git-path
   ; Default: "."

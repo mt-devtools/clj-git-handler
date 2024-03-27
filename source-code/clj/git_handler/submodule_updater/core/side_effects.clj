@@ -2,8 +2,9 @@
 (ns git-handler.submodule-updater.core.side-effects
     (:require [git-handler.submodule-updater.builder.side-effects  :as submodule-updater.builder.side-effects]
               [git-handler.submodule-updater.detector.side-effects :as submodule-updater.detector.side-effects]
-              [git-handler.submodule-updater.reader.side-effects   :as submodule-updater.reader.side-effects]
-              [git-handler.submodule-updater.updater.side-effects  :as submodule-updater.updater.side-effects]))
+              [git-handler.submodule-updater.updater.side-effects  :as submodule-updater.updater.side-effects]
+              [git-handler.submodule-updater.print.side-effects    :as submodule-updater.print.side-effects]
+              [common-state.api :as common-state]))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -59,9 +60,11 @@
    (update-submodule-dependencies! {}))
 
   ([options]
-   (try (do (submodule-updater.detector.side-effects/detect-submodules!       options)
-            (submodule-updater.reader.side-effects/read-submodules!           options)
-            (submodule-updater.builder.side-effects/build-dependency-cascade! options)
-            (submodule-updater.builder.side-effects/build-dependency-tree!    options)
-            (submodule-updater.updater.side-effects/update-submodules!        options))
-        (catch Exception e nil))))
+   (try (do (common-state/dissoc-state! :git-handler :submodule-updater)
+            (submodule-updater.detector.side-effects/detect-submodules!             options)
+            (submodule-updater.detector.side-effects/detect-submodule-dependencies! options)
+            (submodule-updater.builder.side-effects/build-dependency-cascade!       options)
+            (submodule-updater.builder.side-effects/build-dependency-tree!          options)
+            (submodule-updater.print.side-effects/print-dependency-tree!            options)
+            (submodule-updater.updater.side-effects/update-submodules!              options))
+        (catch Exception e (println e)))))

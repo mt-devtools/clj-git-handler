@@ -1,36 +1,8 @@
 
 (ns git-handler.submodule-updater.core.env
     (:require [git-handler.core.errors                      :as core.errors]
-              [git-handler.core.utils                       :as core.utils]
               [git-handler.submodule-updater.detector.env   :as submodule-updater.detector.env]
-              [git-handler.submodule-updater.detector.state :as submodule-updater.detector.state]
               [io.api                                       :as io]))
-
-;; ----------------------------------------------------------------------------
-;; ----------------------------------------------------------------------------
-
-(defn git-url->submodule-path
-  ; @ignore
-  ;
-  ; @description
-  ; - Iterates over the detected submodules and finds which submodule has the same
-  ;   'git-url' stored in the 'SUBMODULES' atom.
-  ; - If a submodule has the same 'git-url', it returns the matching submodule's path
-  ;   (found in the 'SUBMODULES' atom).
-  ; - It can read four types of 'git-url' by using the 'git-url->repository-name' function.
-  ;
-  ; @param (string) git-url
-  ;
-  ; @usage
-  ; (git-url->submodule-path "git@github.com:author/my-repository")
-  ;
-  ; @return (string)
-  [git-url]
-  (letfn [(f0 [[submodule-path submodule-props]]
-              (if (= (core.utils/git-url->repository-name   git-url)
-                     (core.utils/git-url->repository-name (:git-url submodule-props)))
-                  (-> submodule-path)))]
-         (some f0 @submodule-updater.detector.state/DETECTED-SUBMODULES)))
 
 ;; ----------------------------------------------------------------------------
 ;; ----------------------------------------------------------------------------
@@ -60,7 +32,7 @@
   ;
   ; @return (*)
   [options submodule-path config-key & [default-value]]
-  (if-let [repository-name (-> submodule-path submodule-updater.detector.env/submodule-path->git-url core.utils/git-url->repository-name)]
+  (if-let [repository-name (submodule-updater.detector.env/get-submodule-repository-name options submodule-path)]
           (or (get-in options [:config repository-name config-key])
               (get-in options [:config :default        config-key] default-value))
           (core.errors/error-catched (str "Cannot derive repository name from submodule path: '" submodule-path "'"))))
