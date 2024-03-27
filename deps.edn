@@ -3,11 +3,11 @@
  :deps  {clj-git/clj-jgit             {:git/url "https://github.com/clj-jgit/clj-jgit"
                                        :sha     "55bfc2d49d38ac47663db19d38accf71d76fc551"}
          bithandshake/cljc-fruits     {:git/url "https://github.com/bithandshake/cljc-fruits"
-                                       :sha     "fc7f9978b1b8a5e6c75bc6523fb6c8631cfab4bc"}
+                                       :sha     "289bfaa76c90632b4332e89a226eb657e7eb4107"}
          mt-app-kit/cljc-common-state {:git/url "https://github.com/mt-app-kit/cljc-common-state"
-                                       :sha     "9fd5c78e546b568dd256264105b1c3e37c396a34"}
+                                       :sha     "41379336fd91e512f42c52106aa7d9e873f77d31"}
          mt-utilities/cljc-io         {:git/url "https://github.com/mt-utilities/cljc-io"
-                                       :sha     "e5cbb451841acffac5d278e98b7952679064dd11"}
+                                       :sha     "e915435d249325e009c3129d0028402683000c59"}
          mt-utilities/cljc-time       {:git/url "https://github.com/mt-utilities/cljc-time"
-                                       :sha     "f9e5466938f549e9690d9f2dbea880de71c64b9e"}
+                                       :sha     "880512f25278823fb72bb1fe96036be32573a83a"}
          org.clojure/clojure          {:mvn/version "1.10.1"}}}
