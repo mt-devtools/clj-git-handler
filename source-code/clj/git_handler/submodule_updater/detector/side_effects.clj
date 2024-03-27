@@ -61,7 +61,7 @@
          (println (str "Reading 'deps.edn' file of submodule: '" submodule-path "' ..."))
          (if-let [{:keys [deps]} (deps-edn-handler/read-deps-edn submodule-path)]
                  (doseq [[repository-name {:git/keys [url] :keys [sha]}] deps]
-                        (let [repository-name (str repository-name)] ; The repository names are read as symbols from 'deps.edn' files.
+                        (let [repository-name (str repository-name)] ; Repository names are read as symbols from 'deps.edn' files.
                              (if (submodule-updater.detector.env/git-url-detected? options url)
                                  (common-state/update-state! :git-handler :submodule-updater update-in [:detected-dependencies submodule-path]
                                                                                              vector/conj-item [repository-name url sha]))))
