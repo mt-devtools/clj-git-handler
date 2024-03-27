@@ -58,7 +58,8 @@
                     (println)
                     (println "cljs-react-references ..."))
               (doseq [[% _] @submodule-updater.detector.state/DETECTED-SUBMODULES]
-                     (println % (submodule-updater.reader.env/depends-on? % repository-name))
+                     (when (= repository-name "mt-app-kit/cljs-react-references")
+                           (println % (submodule-updater.reader.env/depends-on? % repository-name)))
                      (if (submodule-updater.reader.env/depends-on? % repository-name)
                          (common-state/update-state! :git-handler :submodule-updater vector/update-last-item
                                                                                      vector/update-last-item
