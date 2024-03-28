@@ -9,5 +9,5 @@
          mt-utilities/cljc-io         {:git/url "https://github.com/mt-utilities/cljc-io"
                                        :sha     "69c0e421d606d131be3991efd8ce47d45034dd24"}
          mt-utilities/cljc-time       {:git/url "https://github.com/mt-utilities/cljc-time"
-                                       :sha     "798bb57c5d0d421618bcef7071d49580e16b61aa"}
+                                       :sha     "66a0d8c02a26d9cfe4b1bfbae1b30989d5595864"}
          org.clojure/clojure          {:mvn/version "1.10.1"}}}
