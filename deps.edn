@@ -5,7 +5,7 @@
          bithandshake/cljc-fruits     {:git/url "https://github.com/bithandshake/cljc-fruits"
                                        :sha     "108070d0bb8d85f3682e04956a2066a3162afbd7"}
          mt-app-kit/cljc-common-state {:git/url "https://github.com/mt-app-kit/cljc-common-state"
-                                       :sha     "858d3a8306ffdd894355415928c113cee82535a1"}
+                                       :sha     "73c1d92ee628a63b93c78324a6762453ec699b16"}
          mt-utilities/cljc-io         {:git/url "https://github.com/mt-utilities/cljc-io"
                                        :sha     "f0e53d4b5c556bf649e162cc85addd8cb4e3a51b"}
          mt-utilities/cljc-time       {:git/url "https://github.com/mt-utilities/cljc-time"
